@@ -1,0 +1,66 @@
+<!-- Halaman 1: Dashboard Utama -->
+<!DOCTYPE html>
+<html data-theme="light" class="bg-background">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="/campuseats/dist/output.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;400;600&display=swap" rel="stylesheet" />
+    <title>Dashboard Penjual</title>
+  </head>
+  <body class="min-h-screen flex flex-col">
+    <?php include '../../partials/navbar.php'; ?>
+
+    <main class="w-[90%] mx-auto mt-6">
+      <h2 class="text-2xl font-bold mb-4">Dashboard Penjual</h2>
+
+      <!-- Statistik -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+        <div class="bg-white border border-black rounded-lg p-4 text-center">
+          <h3 class="text-lg font-semibold">Pendapatan Hari Ini</h3>
+          <p class="text-xl font-bold text-green-600">Rp 125.000</p>
+        </div>
+        <div class="bg-white border border-black rounded-lg p-4 text-center">
+          <h3 class="text-lg font-semibold">Pesanan Hari Ini</h3>
+          <p class="text-xl font-bold text-blue-600">8 Pesanan</p>
+        </div>
+      </div>
+
+      <!-- List Pesanan Masuk -->
+      <div class="mb-8">
+        <h3 class="text-xl font-semibold mb-2">Pesanan Masuk</h3>
+        <div class="space-y-4">
+          <?php
+          $pesanan = [
+            ["id" => 1, "nama" => "Nasi Goreng", "jumlah" => 2, "total" => 30000, "status" => "Menunggu"],
+            ["id" => 2, "nama" => "Mie Ayam", "jumlah" => 1, "total" => 12000, "status" => "Sedang Dimasak"],
+          ];
+          foreach ($pesanan as $p) {
+            echo '  
+            <div class="bg-white border border-black rounded-lg p-4 flex justify-between items-center">
+              <div>
+                <p class="font-bold">'.$p["nama"].'</p>
+                <p class="text-sm text-gray-500">Jumlah: '.$p["jumlah"].' | Total: Rp '.number_format($p["total"]).'</p>
+              </div>
+              <form method="post" action="update_status.php">
+                <input type="hidden" name="id" value="'.$p["id"].'">
+                <fieldset class="fieldset w-64">
+                    <legend class="fieldset-legend">Status Pesanan</legend>
+                    <select name="status" class="select">
+                        <option disabled selected>Menunggu</option>
+                        <option>Dimasak</option>
+                        <option>Siap Diambil</option>
+                    </select>
+                    <button type="submit" class="btn btn-sm bg-kuning w-full text-white rounded-lg">Update</button>
+                </fieldset>
+              </form>
+            </div>';
+          }
+          ?>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>
+
+<!-- Halaman-halaman selanjutnya (manajemen menu, riwayat penjualan, dan profil kantin) akan ditambahkan berikutnya sesuai format yang sama dengan desain rapi menggunakan TailwindCSS & DaisyUI -->

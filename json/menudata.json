@@ -1,0 +1,37 @@
+[
+  {
+    "id": 1,
+    "nama": "Ayam Geprek",
+    "harga": 20000,
+    "gambar": "/campuseats/assets/img/geprek.png",
+    "kantin_id": 1
+  },
+  {
+    "id": 2,
+    "nama": "Mie Ayam",
+    "harga": 15000,
+    "gambar": "/campuseats/assets/img/mieayam.png",
+    "kantin_id": 1
+  },
+  {
+    "id": 3,
+    "nama": "Sate Ayam Lontong",
+    "harga": 18000,
+    "gambar": "/campuseats/assets/img/sate.png",
+    "kantin_id": 3
+  },
+  {
+    "id": 3,
+    "nama": "Mie Ayam",
+    "harga": 15000,
+    "gambar": "/campuseats/assets/img/mieayam.png",
+    "kantin_id": 4
+  },
+  {
+    "id": 3,
+    "nama": "Sate Ayam Lontong",
+    "harga": 18000,
+    "gambar": "/campuseats/assets/img/sate.png",
+    "kantin_id": 5
+  }
+]

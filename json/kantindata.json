@@ -1,0 +1,32 @@
+[
+  {
+    "id": 1,
+    "nama": "Kantin Teknik",
+    "fakultas": "Teknik",
+    "gambar": "/campuseats/assets/img/kantinteknik.png"
+  },
+  {
+    "id": 2,
+    "nama": "Kantin Kedokteran",
+    "fakultas": "Kedokteran",
+    "gambar": "/campuseats/assets/img/kantinkedokteran.png"
+  },
+  {
+    "id": 3,
+    "nama": "Kantin FKIP",
+    "fakultas": "FKIP",
+    "gambar": "/campuseats/assets/img/kantinfkip.png"
+  },
+  {
+    "id": 4,
+    "nama": "Kantin Hukum",
+    "fakultas": "Hukum",
+    "gambar": "/campuseats/assets/img/kantinhukum.png"
+  },
+  {
+    "id": 5,
+    "nama": "Kantin FEB",
+    "fakultas": "FEB",
+    "gambar": "/campuseats/assets/img/kantinfeb.png"
+  }
+]
