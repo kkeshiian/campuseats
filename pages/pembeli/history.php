@@ -1,3 +1,9 @@
+<?php
+require_once '../../middleware/role_auth.php';
+
+require_role('pembeli');
+?>
+
 <!DOCTYPE html>
 <html data-theme="light" class="bg-background">
   <head>
@@ -11,7 +17,7 @@
   <body class="min-h-screen flex flex-col">
     <?php 
     $activePage = 'history';
-    include '../../partials/navbar.php'; 
+    include '../../partials/navbar-pembeli.php'; 
     ?>
 
     <h2 class="text-2xl font-bold mx-auto m-4">Riwayat Pembelian</h2>

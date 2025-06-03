@@ -1,3 +1,9 @@
+<?php
+require_once '../../middleware/role_auth.php';
+
+require_role('pembeli');
+?>
+
 <!DOCTYPE html>
 <html data-theme="light" class="bg-background">
 <head>
@@ -14,15 +20,15 @@
 
 <?php 
 $activePage = 'cart';
-include '../../partials/navbar.php'; 
+include '../../partials/navbar-pembeli.php'; 
 ?>
 
 <div class="w-full max-w-4xl mx-auto m-4">
-  <h1 class="text-2xl font-bold mb-4 text-center">Keranjang Kamu</h1>
+  <h1 class="text-2xl font-bold mb-4 text-center">Your Cart</h1>
 
-  <div id="cartContainer" class="space-y-4 p-4 shadow-md border border-1 border-black rounded-lg "></div>
+  <div id="cartContainer" class="space-y-4 p-4 shadow-md border border-1 border-black rounded-lg mx-4"></div>
 
-  <div class="text-right mt-4">
+  <div class="text-right mt-4 mx-4">
     <p class="text-xl font-semibold">Total: Rp <span id="totalHarga">0</span></p>
     <button id="checkoutButton" class="mt-2 bg-kuning text-white px-4 py-2 rounded hover:bg-yellow-600">
       Checkout
@@ -38,7 +44,7 @@ function loadCart() {
   container.innerHTML = '';
 
   if (cart.length === 0) {
-    container.innerHTML = '<p class="text-center text-gray-500">Keranjang kamu kosong.</p>';
+    container.innerHTML = '<p class="text-center text-gray-500">Empty.</p>';
     totalHargaElem.textContent = '0';
     return;
   }

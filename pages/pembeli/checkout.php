@@ -1,3 +1,8 @@
+<?php
+require_once '../../middleware/role_auth.php';
+
+require_role('pembeli');
+?>
 <?php session_start(); ?>
 <!DOCTYPE html>
 <html>

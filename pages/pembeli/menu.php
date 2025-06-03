@@ -1,4 +1,9 @@
 <?php
+require_once '../../middleware/role_auth.php';
+
+require_role('pembeli');
+?>
+<?php
 if (isset($_GET['id'])) {
     $id = (int) $_GET['id'];
 } else {
@@ -20,7 +25,7 @@ if (isset($_GET['id'])) {
 
 <?php
 $activePage = 'canteen';
-include '../../partials/navbar.php';
+include '../../partials/navbar-pembeli.php';
 ?>
 
 <h2 class="mx-auto text-2xl font-bold m-4">Where do You want to eat today?</h2>

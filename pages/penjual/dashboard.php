@@ -1,3 +1,11 @@
+<?php
+require_once '../../middleware/role_auth.php';
+
+// Pastikan user sudah login dan role-nya penjual
+require_role('penjual');
+?>
+
+
 <!-- Halaman 1: Dashboard Utama -->
 <!DOCTYPE html>
 <html data-theme="light" class="bg-background">
@@ -9,7 +17,7 @@
     <title>Dashboard Penjual</title>
   </head>
   <body class="min-h-screen flex flex-col">
-    <?php include '../../partials/navbar.php'; ?>
+    <?php include '../../partials/navbar-penjual.php'; ?>
 
     <main class="w-[90%] mx-auto mt-6">
       <h2 class="text-2xl font-bold mb-4">Dashboard Penjual</h2>
@@ -39,8 +47,9 @@
             echo '  
             <div class="bg-white border border-black rounded-lg p-4 flex justify-between items-center">
               <div>
-                <p class="font-bold">'.$p["nama"].'</p>
-                <p class="text-sm text-gray-500">Jumlah: '.$p["jumlah"].' | Total: Rp '.number_format($p["total"]).'</p>
+                <p class="font-bold text-xl mb-1">'.$p["nama"].'</p>
+                <p class="text-sm text-gray-500">Jumlah: '.$p["jumlah"].'</p>
+                <p class="text-sm text-gray-500">Total: Rp '.number_format($p["total"]).'</p>
               </div>
               <form method="post" action="update_status.php">
                 <input type="hidden" name="id" value="'.$p["id"].'">
