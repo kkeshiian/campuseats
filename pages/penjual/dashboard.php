@@ -39,8 +39,9 @@
             echo '  
             <div class="bg-white border border-black rounded-lg p-4 flex justify-between items-center">
               <div>
-                <p class="font-bold">'.$p["nama"].'</p>
-                <p class="text-sm text-gray-500">Jumlah: '.$p["jumlah"].' | Total: Rp '.number_format($p["total"]).'</p>
+                <p class="font-bold text-xl mb-1">'.$p["nama"].'</p>
+                <p class="text-sm text-gray-500">Jumlah: '.$p["jumlah"].'</p>
+                <p class="text-sm text-gray-500">Total: Rp '.number_format($p["total"]).'</p>
               </div>
               <form method="post" action="update_status.php">
                 <input type="hidden" name="id" value="'.$p["id"].'">

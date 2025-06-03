@@ -10,7 +10,7 @@
 <body class="min-h-screen flex flex-col">
   <?php 
     $activePage = 'login';
-    include '../../partials/navbar.php'; 
+    include '../../partials/navbar-pembeli.php'; 
   ?>
 
   <div class="flex justify-center items-center flex-1">
@@ -19,8 +19,8 @@
 
       <form action="proses_login.php" method="POST" class="space-y-4">
         <div>
-          <label class="label">Email</label>
-          <input type="email" name="email" class="input input-bordered w-full" required />
+          <label class="label">Username</label>
+          <input type="text" name="email" class="input input-bordered w-full" required />
         </div>
         <div>
           <label class="label">Password</label>

@@ -10,7 +10,7 @@
 <body class="min-h-screen flex flex-col">
   <?php 
     $activePage = 'register';
-    include '../../partials/navbar.php'; 
+    include '../../partials/navbar-pembeli.php'; 
   ?>
 
   <div class="flex justify-center items-center flex-1">
@@ -23,8 +23,8 @@
           <input type="text" name="nama" class="input input-bordered w-full" required />
         </div>
         <div>
-          <label class="label">Email</label>
-          <input type="email" name="email" class="input input-bordered w-full" required />
+          <label class="label">Username</label>
+          <input type="text" name="email" class="input input-bordered w-full" required />
         </div>
         <div>
           <label class="label">Password</label>
@@ -33,6 +33,14 @@
         <div>
           <label class="label">Konfirmasi Password</label>
           <input type="password" name="konfirmasi_password" class="input input-bordered w-full" required />
+        </div>
+        <div>
+          <label class="label">Daftar Sebagai</label>
+          <select name="role" class="select select-bordered w-full" required>
+            <option disabled selected>Pilih peran</option>
+            <option value="pembeli">Pembeli</option>
+            <option value="penjual">Penjual</option>
+          </select>
         </div>
 
         <button type="submit" class="btn bg-kuning text-black w-full hover:bg-yellow-600">
