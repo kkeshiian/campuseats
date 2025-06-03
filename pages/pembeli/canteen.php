@@ -14,7 +14,7 @@
   <body class="min-h-screen flex flex-col">
     <?php 
     $activePage = 'canteen';
-    include '../../partials/navbar.php'; ?>
+    include '../../partials/navbar-pembeli.php'; ?>
     
     <!-- main content --> 
     <h2 class="mx-auto text-2xl font-bold m-4">

@@ -9,7 +9,7 @@
     <title>Dashboard Penjual</title>
   </head>
   <body class="min-h-screen flex flex-col">
-    <?php include '../../partials/navbar.php'; ?>
+    <?php include '../../partials/navbar-penjual.php'; ?>
 
     <main class="w-[90%] mx-auto mt-6">
       <h2 class="text-2xl font-bold mb-4">Dashboard Penjual</h2>

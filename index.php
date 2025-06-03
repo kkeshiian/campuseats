@@ -14,7 +14,7 @@ $activePage = 'index';
     />
   </head>
   <body class="min-h-screen flex flex-col">
-    <?php include 'partials/navbar.php'; ?>
+    <?php include 'partials/navbar-pembeli.php'; ?>
 
     <!-- main content -->
     <div class="flex-1 flex items-center justify-center -mt-16">
