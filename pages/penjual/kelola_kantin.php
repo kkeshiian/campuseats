@@ -5,39 +5,50 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="/campuseats/dist/output.css" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;400;600&display=swap" rel="stylesheet" />
-    <title>Kelola Kantin</title>
+    <title>Manage Canteen</title>
   </head>
   <body class="min-h-screen flex flex-col">
     <?php include '../../partials/navbar-penjual.php'; ?>
 
-    <main class="w-[90%] mx-auto mt-6">
-      <h2 class="text-2xl font-bold mb-4">Kelola Informasi Kantin</h2>
+    <main class="w-[90%] mx-auto mt-6 max-w-2xl">
+      <h2 class="text-2xl font-bold mb-4">Manage Canteen</h2>
 
-      <!-- Informasi Kantin -->
-      <?php
-      // Contoh data kantin
-      $kantin = [
-        "id" => 1,
-        "nama" => "Kantin Teknik",
-        "fakultas" => "Fakultas Teknik",
-        "deskripsi" => "Kantin yang menyediakan makanan dan minuman murah dan enak.",
-        "gambar" => "/campuseats/assets/img/kantin-teknik.jpg"
-      ];
-      ?>
+      <form action="proses_kelola_kantin.php" method="POST" enctype="multipart/form-data" class="space-y-4 bg-white p-6 rounded-lg shadow border">
+        <!-- Canteen Name -->
+        <div>
+          <label class="block font-semibold mb-1">Canteen Name</label>
+          <input type="text" name="nama_kantin" value="Kantin Pak Jangkung" class="input input-bordered w-full" required />
+        </div>
 
-      <div class="bg-white border border-black rounded-lg p-6">
-        <div class="flex flex-col md:flex-row items-start md:items-center mb-6">
-          <img src="<?= $kantin['gambar']; ?>" alt="Foto Kantin" class="w-32 h-32 rounded-lg object-cover mr-6 mb-4 md:mb-0" />
+        <!-- Location -->
+        <div>
+          <label class="block font-semibold mb-1">Location</label>
+          <input type="text" name="lokasi" value="Fakultas Teknik" class="input input-bordered w-full" required />
+        </div>
+
+        <!-- Coordinates -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <h3 class="text-2xl font-semibold"><?= $kantin['nama']; ?></h3>
-            <p class="text-gray-600"><?= $kantin['fakultas']; ?></p>
-            <p class="mt-2"><?= $kantin['deskripsi']; ?></p>
+            <label class="block font-semibold mb-1">Latitude</label>
+            <input type="text" name="latitude" value="-6.200000" class="input input-bordered w-full" required />
+          </div>
+          <div>
+            <label class="block font-semibold mb-1">Longitude</label>
+            <input type="text" name="longitude" value="106.816666" class="input input-bordered w-full" required />
           </div>
         </div>
-        <a href="edit-kantin.php?id=<?= $kantin['id']; ?>" class="btn bg-blue-500 text-white font-semibold rounded-lg hover:bg-blue-600">
-          Edit Informasi Kantin
-        </a>
-      </div>
+
+        <!-- Upload Canteen Photo -->
+        <div>
+          <label class="block font-semibold mb-1">Canteen Photo</label>
+          <input type="file" name="foto_kantin" accept="image/*" class="file-input file-input-bordered w-full" />
+        </div>
+
+        <!-- Save Button -->
+        <div class="flex justify-end">
+          <button type="submit" class="btn bg-kuning text-white hover:bg-yellow-600">Save Changes</button>
+        </div>
+      </form>
     </main>
   </body>
 </html>
