@@ -14,7 +14,7 @@
   ?>
 
   <div class="flex justify-center items-center flex-1">
-    <div class="bg-white shadow-md rounded-xl p-8 w-full max-w-md">
+    <div class="bg-white shadow-md rounded-xl p-8 w-full max-w-md m-4">
       <h2 class="text-2xl font-bold mb-6 text-center">Register</h2>
 
       <form action="proses_register.php" method="POST" class="space-y-4">
@@ -42,7 +42,6 @@
             <option value="penjual">Penjual</option>
           </select>
         </div>
-
         <button type="submit" class="btn bg-kuning text-black w-full hover:bg-yellow-600">
           Register
         </button>

@@ -11,7 +11,7 @@
         <li><a href="/campuseats/pages/pembeli/canteen.php" class="<?= ($activePage == 'canteen') ? 'underline decoration-kuning decoration-1 underline-offset-4' :  '' ?>">Canteen</a></li>
         <li><a href="/campuseats/pages/pembeli/history.php" class="<?= ($activePage == 'history') ? 'underline decoration-kuning decoration-1 underline-offset-4' :  '' ?>">History</a></li>
         <li><a href="/campuseats/pages/pembeli/cart.php" class="<?= ($activePage == 'cart') ? 'underline decoration-kuning decoration-1 underline-offset-4' :  '' ?>">Cart</a></li>
-        <li><a href="/campuseats/pages/pembeli/about_us.php">About Us</a></li>
+        <li><a href="">About Us</a></li>
       </ul>
     </div>
   <a class="btn btn-ghost normal-case text-xl">CampusEats</a>
@@ -22,14 +22,14 @@
       <li><a href="/campuseats/pages/pembeli/canteen.php" class="<?= ($activePage == 'canteen') ? 'underline decoration-kuning decoration-1 underline-offset-4' :  '' ?>">Canteen</a></li>
       <li><a href="/campuseats/pages/pembeli/history.php" class="<?= ($activePage == 'history') ? 'underline decoration-kuning decoration-1 underline-offset-4' :  '' ?>">History</a></li>
       <li><a href="/campuseats/pages/pembeli/cart.php" class="<?= ($activePage == 'cart') ? 'underline decoration-kuning decoration-1 underline-offset-4' :  '' ?>">Cart</a></li>
-      <li><a href="/campuseats/pages/pembeli/about_us.php">About Us</a></li>
+      <li><a href="">About Us</a></li>
     </ul>
   </div>
   <div class="navbar-end flex items-center gap-4 z-10">
-    <a href="/campuseats/pages/auth/login.php" class="bg-yellow-500 text-white p-2 px-4 rounded hover:bg-yellow-600 transition">
+    <a href="/campuseats/pages/auth/login.php" class="bg-kuning text-white p-2 px-4 rounded hover:bg-yellow-600 transition">
       Login
     </a>
-    <a href="/campuseats/pages/auth/register.php" class=" text-yellow-500 border border-1 border-kuning p-2 px-4 rounded hover:bg-gray-300 transition">
+    <a href="/campuseats/pages/auth/register.php" class=" text-kuning border border-1 border-kuning p-2 px-4 rounded hover:bg-gray-300 transition">
       Register
     </a>
   </div>

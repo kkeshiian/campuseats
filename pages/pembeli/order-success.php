@@ -1,22 +1,19 @@
 <?php
-session_start();
-// if (!isset($_SESSION['order_id'])) {
-//   header("Location: ../../cart.php");
-//   exit;
-// }
+$orderId = $_GET['order_id'] ?? null;
 ?>
 <!DOCTYPE html>
-<html lang="id">
+<html data-theme="light" class="bg-background">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Pembayaran Sukses</title>
-  <script src="https://cdn.tailwindcss.com"></script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="/campuseats/dist/output.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;400;600&display=swap" rel="stylesheet" />
+    <title>Menu Kantin</title>
 </head>
 <body>  
   <?php 
-  include '../../partials/navbar.php'; 
-  ?>
+  include '../../partials/navbar-pembeli.php';
+  ; ?>
 
   <!-- Konten utama setelah navbar -->
   <div class="flex justify-center items-center pt-24 px-4">
@@ -29,7 +26,7 @@ session_start();
       <h1 class="text-2xl font-bold text-gray-800 mb-2">Pembayaran Berhasil!</h1>
       <p class="text-gray-600 mb-4">
         Terima kasih atas pembelian Anda.<br>
-        Pembayaran untuk <strong>Order ID #<?= htmlspecialchars($_SESSION['order_id']) ?></strong> telah berhasil diproses.
+        Pembayaran untuk <strong>Order ID #<?= htmlspecialchars($orderId) ?></strong> telah berhasil diproses.
       </p>
 
       <a href="../../index.php" class="inline-block mt-4 bg-yellow-500 hover:bg-yellow-600 text-white font-semibold py-2 px-4 rounded transition duration-300">
