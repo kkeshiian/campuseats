@@ -15,16 +15,7 @@
     </div>
   <a class="btn btn-ghost normal-case text-xl">CampusEats</a>
   </div>
-  <div class="navbar-center hidden lg:flex">
-    <ul class="menu menu-horizontal px-1">
-      <li><a href="/campuseats/pages/pembeli/canteen.php" class="<?= ($activePage == 'canteen') ? 'underline decoration-kuning decoration-1 underline-offset-4' :  '' ?>">Canteen</a></li>
-      <li><a href="/campuseats/pages/pembeli/history.php" class="<?= ($activePage == 'history') ? 'underline decoration-kuning decoration-1 underline-offset-4' :  '' ?>">History</a></li>
-      <li><a href="/campuseats/pages/pembeli/cart.php" class="<?= ($activePage == 'cart') ? 'underline decoration-kuning decoration-1 underline-offset-4' :  '' ?>">Cart</a></li>
-      <li><a href="">About Us</a></li>
-    </ul>
-  </div>
   <div class="navbar-end flex items-center gap-4 z-10">
-<<<<<<<< HEAD:partials/navbar-pembeli.php
     <a href="/campuseats/pages/auth/login.php" class="bg-yellow-500 text-white p-2 px-4 rounded hover:bg-yellow-600 transition">
       Logout
     </a>

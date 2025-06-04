@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <?php
 include "../../database/koneksi.php";
 include "../../database/model.php";
@@ -27,10 +26,6 @@ if (isset($_POST['submit'])) {
 <!DOCTYPE html>
 <html data-theme="light" class="bg-background">
 
-=======
-<!DOCTYPE html>
-<html data-theme="light" class="bg-background">
->>>>>>> 77e72642b738b219083e3c50caed0f0f5c4f1756
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -38,12 +33,11 @@ if (isset($_POST['submit'])) {
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;400;600&display=swap" rel="stylesheet" />
   <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
 </head>
-<<<<<<< HEAD
 
 <body class="min-h-screen flex flex-col">
   <?php 
     $activePage = 'register';
-    include '../../partials/navbar-pembeli-belum-login.php'; 
+    include '../../partials/navbar-belum-login.php'; 
   ?>
 
   <div class="flex justify-center items-center flex-1">
@@ -58,30 +52,13 @@ if (isset($_POST['submit'])) {
 
 
       <form method="POST" class="space-y-4">
-=======
-<body class="min-h-screen flex flex-col">
-  <?php 
-    $activePage = 'register';
-    include '../../partials/navbar-pembeli.php'; 
-  ?>
-
-  <div class="flex justify-center items-center flex-1">
-    <div class="bg-white shadow-md rounded-xl p-8 w-full max-w-md m-4">
-      <h2 class="text-2xl font-bold mb-6 text-center">Register</h2>
-
-      <form action="proses_register.php" method="POST" class="space-y-4">
->>>>>>> 77e72642b738b219083e3c50caed0f0f5c4f1756
         <div>
           <label class="label">Nama Lengkap</label>
           <input type="text" name="nama" class="input input-bordered w-full" required />
         </div>
         <div>
           <label class="label">Username</label>
-<<<<<<< HEAD
           <input type="text" name="username" class="input input-bordered w-full" required />
-=======
-          <input type="text" name="email" class="input input-bordered w-full" required />
->>>>>>> 77e72642b738b219083e3c50caed0f0f5c4f1756
         </div>
         <div>
           <label class="label">Password</label>
@@ -99,12 +76,8 @@ if (isset($_POST['submit'])) {
             <option value="penjual">Penjual</option>
           </select>
         </div>
-<<<<<<< HEAD
 
         <button type="submit" name="submit" class="btn bg-kuning text-black w-full hover:bg-yellow-600">
-=======
-        <button type="submit" class="btn bg-kuning text-black w-full hover:bg-yellow-600">
->>>>>>> 77e72642b738b219083e3c50caed0f0f5c4f1756
           Register
         </button>
       </form>
@@ -117,8 +90,5 @@ if (isset($_POST['submit'])) {
   </div>
 </body>
 </html>
-<<<<<<< HEAD
 
 
-=======
->>>>>>> 77e72642b738b219083e3c50caed0f0f5c4f1756

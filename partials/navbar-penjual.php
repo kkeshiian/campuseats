@@ -26,11 +26,8 @@
     </ul>
   </div>
   <div class="navbar-end flex items-center gap-4 z-10">
-    <a href="/campuseats/pages/auth/login.php" class="bg-yellow-500 text-white p-2 px-4 rounded hover:bg-yellow-600 transition">
-      Login
-    </a>
-    <a href="/campuseats/pages/auth/register.php" class=" text-yellow-500 border border-1 border-kuning p-2 px-4 rounded hover:bg-gray-300 transition">
-      Register
+    <a href="/campuseats/pages/auth/logout.php" class="bg-yellow-500 text-white p-2 px-4 rounded hover:bg-yellow-600 transition">
+      Logout
     </a>
   </div>
 </div>

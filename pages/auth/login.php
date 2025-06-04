@@ -18,8 +18,15 @@ if (isset($_POST['submit'])) {
         $_SESSION['Role'] = $user['Role'];
         $_SESSION['nama'] = $user['nama'];
 
-        header("Location: /campuseats/pages/pembeli/canteen.php");
-        exit();
+        if ($_SESSION['Role']=='penjual') {
+          header("Location: /campuseats/pages/penjual/dashboard.php");
+          exit();
+        }elseif ($_SESSION['Role']=='pembeli') {
+          header("Location: /campuseats/pages/pembeli/canteen.php");
+          exit();
+        }
+
+
     } else {
         $error = "Username atau password salah.";
     }
@@ -43,17 +50,17 @@ if (isset($_POST['submit'])) {
 <body class="min-h-screen flex flex-col">
   <?php 
     $activePage = 'login';
-    include '../../partials/navbar-pembeli.php';
+    include '../../partials/navbar-belum-login.php'; 
   ?>
-
+    
   <div class="flex justify-center items-center flex-1">
     <div class="bg-white shadow-md rounded-xl p-8 w-full max-w-md m-4">
       <h2 class="text-2xl font-bold mb-6 text-center">Login</h2>
 
-      <form action="proses_login.php" method="POST" class="space-y-4">
+      <form method="POST" class="space-y-4">
         <div>
           <label class="label">Username</label>
-          <input type="text" name="email" class="input input-bordered w-full" required />
+          <input type="text" name="username" class="input input-bordered w-full" required />
         </div>
         <div>
           <label class="label">Password</label>

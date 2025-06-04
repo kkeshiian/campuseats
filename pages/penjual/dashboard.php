@@ -1,7 +1,6 @@
 <?php
 require_once '../../middleware/role_auth.php';
 
-// Pastikan user sudah login dan role-nya penjual
 require_role('penjual');
 ?>
 
@@ -52,11 +51,7 @@ require_role('penjual');
             <div class="bg-white border border-black rounded-lg p-4 flex justify-between items-center">
               <div>
                 <p class="font-bold text-xl mb-1">'.$p["nama"].'</p>
-<<<<<<< HEAD
-                <p class="text-sm text-gray-500">Jumlah: '.$p["jumlah"].'</p>
-=======
                 <p class="text-sm text-gray-500">Quantity: '.$p["jumlah"].'</p>
->>>>>>> 77e72642b738b219083e3c50caed0f0f5c4f1756
                 <p class="text-sm text-gray-500">Total: Rp '.number_format($p["total"]).'</p>
               </div>
               <form method="post" action="update_status.php">
@@ -79,5 +74,3 @@ require_role('penjual');
     </main>
   </body>
 </html>
-
-<!-- Halaman-halaman selanjutnya (manajemen menu, riwayat penjualan, dan profil kantin) akan ditambahkan berikutnya sesuai format yang sama dengan desain rapi menggunakan TailwindCSS & DaisyUI -->
