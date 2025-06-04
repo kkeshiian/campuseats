@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <?php
 require_once '../../middleware/role_auth.php';
 
@@ -6,9 +5,6 @@ require_once '../../middleware/role_auth.php';
 require_role('penjual');
 ?>
 
-
-=======
->>>>>>> 77e72642b738b219083e3c50caed0f0f5c4f1756
 <!DOCTYPE html>
 <html data-theme="light" class="bg-background">
   <head>
@@ -16,11 +12,7 @@ require_role('penjual');
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="/campuseats/dist/output.css" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;400;600&display=swap" rel="stylesheet" />
-<<<<<<< HEAD
-    <title>Kelola Kantin</title>
-=======
     <title>Manage Canteen</title>
->>>>>>> 77e72642b738b219083e3c50caed0f0f5c4f1756
   </head>
   <body class="min-h-screen flex flex-col">
     <?php include '../../partials/navbar-penjual.php'; ?>
