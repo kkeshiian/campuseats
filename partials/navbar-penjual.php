@@ -11,7 +11,6 @@
         <li><a href="/campuseats/pages/penjual/kelola_menu.php" class="<?= ($activePage == 'manage_menu_seller') ? 'underline decoration-kuning decoration-1 underline-offset-4' :  '' ?>"></a>Manage Menu</li>
         <li><a href="/campuseats/pages/penjual/kelola_kantin.php" class="<?= ($activePage == 'manage_canteen_seller') ? 'underline decoration-kuning decoration-1 underline-offset-4' :  '' ?>">Manage Canteen</a></li>
         <li><a href="/campuseats/pages/penjual/laporan_penjualan.php" class="<?= ($activePage == 'laporan_penjualan') ? 'underline decoration-kuning decoration-1 underline-offset-4' :  '' ?>">Sales Report</a></li>
-        <li><a href="/campuseats/pages/penjual/history_kantin.php" class="<?= ($activePage == 'manage_canteen_seller') ? 'underline decoration-kuning decoration-1 underline-offset-4' :  '' ?>">History(skip)</a></li>
       </ul>
     </div>
   <a class="btn btn-ghost normal-case text-xl">CampusEats</a>
@@ -22,7 +21,6 @@
       <li><a href="/campuseats/pages/penjual/kelola_menu.php" class="<?= ($activePage == 'manage_menu_seller') ? 'underline decoration-kuning decoration-1 underline-offset-4' :  '' ?>">Manage Menu</a></li>
       <li><a href="/campuseats/pages/penjual/kelola_kantin.php" class="<?= ($activePage == 'manage_canteen_seller') ? 'underline decoration-kuning decoration-1 underline-offset-4' :  '' ?>">Manage Canteen</a></li>
       <li><a href="/campuseats/pages/penjual/laporan_penjualan.php" class="<?= ($activePage == 'laporan_penjualan.php') ? 'underline decoration-kuning decoration-1 underline-offset-4' :  '' ?>">Sales Report</a></li>
-      <li><a href="/campuseats/pages/penjual/history_kantin.php" class="<?= ($activePage == 'manage_canteen_seller') ? 'underline decoration-kuning decoration-1 underline-offset-4' :  '' ?>">History(skip)</a></li>
     </ul>
   </div>
   <div class="navbar-end flex items-center gap-4 z-10">

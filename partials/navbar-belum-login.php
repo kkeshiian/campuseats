@@ -17,7 +17,7 @@
     </div>
   </div>
 
-    <div class="navbar-end flex items-center gap-4 z-10 p-10">
+    <div class="navbar-end flex items-center gap-4 z-10">
       <a href="/campuseats/pages/auth/login.php" class="bg-yellow-500 text-white p-2 px-4 rounded hover:bg-yellow-600 transition">
         Login
       </a>
