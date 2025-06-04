@@ -1377,6 +1377,21 @@ video {
   isolation: isolate;
 }
 
+.btn-primary {
+  --btn-color: var(--color-primary);
+  --btn-fg: var(--color-primary-content);
+}
+
+.btn-warning {
+  --btn-color: var(--color-warning);
+  --btn-fg: var(--color-warning-content);
+}
+
+.btn-error {
+  --btn-color: var(--color-error);
+  --btn-fg: var(--color-error-content);
+}
+
 .btn-ghost:not(.btn-active, :hover, :active:focus, :focus-visible) {
   --btn-shadow: "";
   --btn-bg: #0000;
