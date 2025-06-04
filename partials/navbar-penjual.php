@@ -7,31 +7,22 @@
       <ul
         tabindex="0"
         class="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
-        <li><a href="../../index.php" class="<?= ($activePage == 'index') ? 'underline decoration-kuning decoration-1 underline-offset-4 ' :  '' ?>">Dashboard</a></li>
-        <li><a href="/campuseats/pages/penjual/kelola_menu.php" class="<?= ($activePage == 'canteen') ? 'underline decoration-kuning decoration-1 underline-offset-4' :  '' ?>"></a>Kelola Menu</li>
-        <li><a href="/campuseats/pages/penjual/kelola_kantin.php" class="<?= ($activePage == 'history') ? 'underline decoration-kuning decoration-1 underline-offset-4' :  '' ?>">Kelola Kantin</a></li>
-        <li><a href="/campuseats/pages/penjual/cart.php" class="<?= ($activePage == 'cart') ? 'underline decoration-kuning decoration-1 underline-offset-4' :  '' ?>">Cart</a></li>
-        <li><a href="">About Us</a></li>
+        <li><a href="../../pages/penjual/dashboard.php" class="<?= ($activePage == 'dashboard_seller') ? 'underline decoration-kuning decoration-1 underline-offset-4 ' :  '' ?>">Dashboard</a></li>
+        <li><a href="/campuseats/pages/penjual/kelola_menu.php" class="<?= ($activePage == 'manage_menu_seller') ? 'underline decoration-kuning decoration-1 underline-offset-4' :  '' ?>"></a>Manage Menu</li>
+        <li><a href="/campuseats/pages/penjual/kelola_kantin.php" class="<?= ($activePage == 'manage_canteen_seller') ? 'underline decoration-kuning decoration-1 underline-offset-4' :  '' ?>">Manage Canteen</a></li>
+        <li><a href="/campuseats/pages/penjual/laporan_penjualan.php" class="<?= ($activePage == 'laporan_penjualan') ? 'underline decoration-kuning decoration-1 underline-offset-4' :  '' ?>">Sales Report</a></li>
+        <li><a href="/campuseats/pages/penjual/history_kantin.php" class="<?= ($activePage == 'manage_canteen_seller') ? 'underline decoration-kuning decoration-1 underline-offset-4' :  '' ?>">History(skip)</a></li>
       </ul>
     </div>
-    <div class="flex-1">
-    <button onclick="history.back()" class="btn btn-ghost btn-circle">
-      <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none"
-        viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-          d="M15 19l-7-7 7-7" />
-      </svg>
-    </button>
-    <a class="btn btn-ghost normal-case text-xl">CampusEats</a>
-  </div>
+  <a class="btn btn-ghost normal-case text-xl">CampusEats</a>
   </div>
   <div class="navbar-center hidden lg:flex">
     <ul class="menu menu-horizontal px-1">
-      <li><a href="../../index.php" class="<?= ($activePage == 'index') ? 'underline decoration-kuning decoration-1 underline-offset-4 ' :  '' ?>">Dashboard</a></li>
-      <li><a href="/campuseats/pages/penjual/kelola_menu.php" class="<?= ($activePage == 'canteen') ? 'underline decoration-kuning decoration-1 underline-offset-4' :  '' ?>">Kelola Menu</a></li>
-      <li><a href="/campuseats/pages/penjual/kelola_kantin.php" class="<?= ($activePage == 'history') ? 'underline decoration-kuning decoration-1 underline-offset-4' :  '' ?>">Kelola Kantin</a></li>
-      <li><a href="/campuseats/pages/penjual/cart.php" class="<?= ($activePage == 'cart') ? 'underline decoration-kuning decoration-1 underline-offset-4' :  '' ?>">Cart</a></li>
-      <li><a href="">About Us</a></li>
+      <li><a href="../../pages/penjual/dashboard.php" class="<?= ($activePage == 'dashboard_seller') ? 'underline decoration-kuning decoration-1 underline-offset-4 ' :  '' ?>">Dashboard</a></li>
+      <li><a href="/campuseats/pages/penjual/kelola_menu.php" class="<?= ($activePage == 'manage_menu_seller') ? 'underline decoration-kuning decoration-1 underline-offset-4' :  '' ?>">Manage Menu</a></li>
+      <li><a href="/campuseats/pages/penjual/kelola_kantin.php" class="<?= ($activePage == 'manage_canteen_seller') ? 'underline decoration-kuning decoration-1 underline-offset-4' :  '' ?>">Manage Canteen</a></li>
+      <li><a href="/campuseats/pages/penjual/laporan_penjualan.php" class="<?= ($activePage == 'laporan_penjualan.php') ? 'underline decoration-kuning decoration-1 underline-offset-4' :  '' ?>">Sales Report</a></li>
+      <li><a href="/campuseats/pages/penjual/history_kantin.php" class="<?= ($activePage == 'manage_canteen_seller') ? 'underline decoration-kuning decoration-1 underline-offset-4' :  '' ?>">History(skip)</a></li>
     </ul>
   </div>
   <div class="navbar-end flex items-center gap-4 z-10">

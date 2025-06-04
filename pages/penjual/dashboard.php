@@ -20,23 +20,27 @@ require_role('penjual');
     <?php include '../../partials/navbar-penjual.php'; ?>
 
     <main class="w-[90%] mx-auto mt-6">
-      <h2 class="text-2xl font-bold mb-4">Dashboard Penjual</h2>
+      <h2 class="text-2xl font-bold mb-4">Seller Dashboard</h2>
 
       <!-- Statistik -->
       <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
         <div class="bg-white border border-black rounded-lg p-4 text-center">
-          <h3 class="text-lg font-semibold">Pendapatan Hari Ini</h3>
-          <p class="text-xl font-bold text-green-600">Rp 125.000</p>
+          <h3 class="text-lg font-semibold">Kantin Pak Jangkung</h3>
+          <p class="text-xl font-bold text-kuning">Fakultas Teknik</p>
         </div>
         <div class="bg-white border border-black rounded-lg p-4 text-center">
-          <h3 class="text-lg font-semibold">Pesanan Hari Ini</h3>
-          <p class="text-xl font-bold text-blue-600">8 Pesanan</p>
+          <h3 class="text-lg font-semibold">Today's income</h3>
+          <p class="text-xl font-bold text-kuning">Rp 125.000</p>
+        </div>
+        <div class="bg-white border border-black rounded-lg p-4 text-center">
+          <h3 class="text-lg font-semibold">Today's orders</h3>
+          <p class="text-xl font-bold text-kuning">8 Orders</p>
         </div>
       </div>
 
       <!-- List Pesanan Masuk -->
       <div class="mb-8">
-        <h3 class="text-xl font-semibold mb-2">Pesanan Masuk</h3>
+        <h3 class="text-xl font-semibold mb-2">Incoming orders</h3>
         <div class="space-y-4">
           <?php
           $pesanan = [
@@ -48,17 +52,21 @@ require_role('penjual');
             <div class="bg-white border border-black rounded-lg p-4 flex justify-between items-center">
               <div>
                 <p class="font-bold text-xl mb-1">'.$p["nama"].'</p>
+<<<<<<< HEAD
                 <p class="text-sm text-gray-500">Jumlah: '.$p["jumlah"].'</p>
+=======
+                <p class="text-sm text-gray-500">Quantity: '.$p["jumlah"].'</p>
+>>>>>>> 77e72642b738b219083e3c50caed0f0f5c4f1756
                 <p class="text-sm text-gray-500">Total: Rp '.number_format($p["total"]).'</p>
               </div>
               <form method="post" action="update_status.php">
                 <input type="hidden" name="id" value="'.$p["id"].'">
-                <fieldset class="fieldset w-64">
-                    <legend class="fieldset-legend">Status Pesanan</legend>
+                <fieldset class="fieldset w-36 md:w-64">
+                    <legend class="fieldset-legend">Order Status</legend>
                     <select name="status" class="select">
-                        <option disabled selected>Menunggu</option>
-                        <option>Dimasak</option>
-                        <option>Siap Diambil</option>
+                        <option disabled selected>Waiting</option>
+                        <option>Being Cooked</option>
+                        <option>Ready for Pickup</option>
                     </select>
                     <button type="submit" class="btn btn-sm bg-kuning w-full text-white rounded-lg">Update</button>
                 </fieldset>

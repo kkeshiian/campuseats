@@ -14,6 +14,7 @@ $activePage = 'index';
     />
   </head>
   <body class="min-h-screen flex flex-col">
+<<<<<<< HEAD
     <?php
     
     
@@ -21,6 +22,9 @@ $activePage = 'index';
     include 'partials/navbar-pembeli-belum-login.php'; 
     
     ?>
+=======
+    <?php include 'partials/navbar-pembeli.php'; ?>
+>>>>>>> 77e72642b738b219083e3c50caed0f0f5c4f1756
 
     <!-- main content -->
     <div class="flex-1 flex items-center justify-center -mt-16">

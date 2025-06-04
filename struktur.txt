@@ -21,40 +21,47 @@ campus-eats/
 │   ├── sidebar-penjual.php
 │
 ├── config/
-│   └── database.php
+│   ├── midtrans-config.php
+│   └── koneksi.php
 │
 ├── controllers/
-│   ├── auth.php
-│   └── user-role-check.php
+│   └── MenuController.php
+│
+├── models/
+│   └── MenuModels.php
 │
 ├── api/
-│   ├── get-midtrans-token.php
-│   └── order-save.php
+│   └── get-midtrans-token.php
 │
 ├── pages/
 │   ├── admin/
 │   │   ├── dashboard.php
-│   │   ├── users.php
-│   │   └── orders.php
 │   │
 │   ├── penjual/
 │   │   ├── dashboard.php
-│   │   ├── menu.php
-│   │   └── orders.php
+│   │   ├── edit_menu.php
+│   │   ├── history.php
+│   │   ├── kelola_kantin.php
+│   │   ├── kelola_menu.php
+│   │   ├── laporan_penjualan.php
+│   │   └── tambah_menu.php
 │   │
 │   ├── pembeli/
+│   │   ├── about_us.php
 │   │   ├── canteen.php
-│   │   ├── menu.php
-│   │   ├── cart.php
 │   │   ├── checkout.php
+│   │   ├── history.php
+│   │   ├── menu.php
 │   │   └── order-success.php
 │   │
 │   └── auth/
 │       ├── login.php
 │       └── register.php
-|
+│
 ├── partials/
-|   └── navbar.php
+│   ├── navbar-admin.php
+│   ├── navbar-pembeli.php
+│   └── navbar-penjual.php
 ├── src/
 │   └── input.css
 ├── tailwind.config.js

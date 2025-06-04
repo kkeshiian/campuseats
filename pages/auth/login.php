@@ -43,35 +43,17 @@ if (isset($_POST['submit'])) {
 <body class="min-h-screen flex flex-col">
   <?php 
     $activePage = 'login';
-    include '../../partials/navbar-pembeli-belum-login.php';
-
-    $success = '';
-    if (isset($_GET['success']) && $_GET['success'] == 1) {
-        $success = 'Anda berhasil registrasi, silakan login.';
-    }
+    include '../../partials/navbar-pembeli.php';
   ?>
 
   <div class="flex justify-center items-center flex-1">
-    <div class="bg-white shadow-md rounded-xl p-8 w-full max-w-md">
+    <div class="bg-white shadow-md rounded-xl p-8 w-full max-w-md m-4">
       <h2 class="text-2xl font-bold mb-6 text-center">Login</h2>
 
-
-      <?php if (!empty($success)): ?>
-        <div role="alert" class="alert alert-success mb-4">
-          <?= htmlspecialchars($success) ?>
-        </div>
-      <?php endif; ?>
-
-      <?php if (!empty($error)): ?>
-        <div role="alert" class="alert alert-error mb-4">
-          <?= htmlspecialchars($error) ?>
-        </div>
-      <?php endif; ?>
-
-      <form method="POST" class="space-y-4">
+      <form action="proses_login.php" method="POST" class="space-y-4">
         <div>
           <label class="label">Username</label>
-          <input type="text" name="username" class="input input-bordered w-full" required />
+          <input type="text" name="email" class="input input-bordered w-full" required />
         </div>
         <div>
           <label class="label">Password</label>
@@ -91,4 +73,3 @@ if (isset($_POST['submit'])) {
   </div>
 </body>
 </html>
-
