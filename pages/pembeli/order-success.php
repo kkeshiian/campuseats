@@ -1,17 +1,11 @@
 <?php
-<<<<<<< HEAD
+
 require_once '../../middleware/role_auth.php';
+$orderId = $_GET['order_id'] ?? null;
 
 require_role('pembeli');
 ?>
 
-<?php
-session_start();
-// if (!isset($_SESSION['order_id'])) {
-//   header("Location: ../../cart.php");
-//   exit;
-// }
-?>
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -21,12 +15,6 @@ session_start();
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body>  
-  <?php 
-  include '../../partials/navbar.php'; 
-  ?>
-=======
-$orderId = $_GET['order_id'] ?? null;
-?>
 <!DOCTYPE html>
 <html data-theme="light" class="bg-background">
 <head>
@@ -40,7 +28,6 @@ $orderId = $_GET['order_id'] ?? null;
   <?php 
   include '../../partials/navbar-pembeli.php';
   ; ?>
->>>>>>> 77e72642b738b219083e3c50caed0f0f5c4f1756
 
   <!-- Konten utama setelah navbar -->
   <div class="flex justify-center items-center pt-24 px-4">
@@ -53,14 +40,10 @@ $orderId = $_GET['order_id'] ?? null;
       <h1 class="text-2xl font-bold text-gray-800 mb-2">Pembayaran Berhasil!</h1>
       <p class="text-gray-600 mb-4">
         Terima kasih atas pembelian Anda.<br>
-<<<<<<< HEAD
-        Pembayaran untuk <strong>Order ID #<?= htmlspecialchars($_SESSION['order_id']) ?></strong> telah berhasil diproses.
-=======
         Pembayaran untuk <strong>Order ID #<?= htmlspecialchars($orderId) ?></strong> telah berhasil diproses.
->>>>>>> 77e72642b738b219083e3c50caed0f0f5c4f1756
       </p>
 
-      <a href="../../index.php" class="inline-block mt-4 bg-yellow-500 hover:bg-yellow-600 text-white font-semibold py-2 px-4 rounded transition duration-300">
+      <a href="history.php" class="inline-block mt-4 bg-yellow-500 hover:bg-yellow-600 text-white font-semibold py-2 px-4 rounded transition duration-300">
         Kembali ke Beranda
       </a>
 

@@ -31,7 +31,7 @@ require_role('pembeli');
     <!-- card -->
     <div
       id="card-container"
-      class="grid grid-cols-2 md:grid-cols-5 gap-4 w-[90%] mx-auto mt-4"
+      class="grid grid-cols-2 md:grid-cols-5 gap-4 w-[90%] mx-auto"
     ></div>
   </body>
 
