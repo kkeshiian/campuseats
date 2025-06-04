@@ -1,3 +1,9 @@
+<?php
+require_once '../../middleware/role_auth.php';
+
+require_role('pembeli');
+?>
+
 <!DOCTYPE html>
 <html data-theme="light" class="bg-background">
 <head>

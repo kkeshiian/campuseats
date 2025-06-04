@@ -1,4 +1,9 @@
 <?php
+require_once '../../middleware/role_auth.php';
+
+require_role('pembeli');
+?>
+<?php
 if (isset($_GET['id'])) {
     $id = (int) $_GET['id'];
 } else {

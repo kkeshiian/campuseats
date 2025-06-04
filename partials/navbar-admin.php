@@ -7,7 +7,6 @@
       <ul
         tabindex="0"
         class="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
-        <li><a href="../../index.php" class="<?= ($activePage == 'index') ? 'underline decoration-kuning decoration-1 underline-offset-4 ' :  '' ?>">Home</a></li>
         <li><a href="/campuseats/pages/pembeli/canteen.php" class="<?= ($activePage == 'canteen') ? 'underline decoration-kuning decoration-1 underline-offset-4' :  '' ?>">Canteen</a></li>
         <li><a href="/campuseats/pages/pembeli/history.php" class="<?= ($activePage == 'history') ? 'underline decoration-kuning decoration-1 underline-offset-4' :  '' ?>">History</a></li>
         <li><a href="/campuseats/pages/pembeli/cart.php" class="<?= ($activePage == 'cart') ? 'underline decoration-kuning decoration-1 underline-offset-4' :  '' ?>">Cart</a></li>
@@ -16,16 +15,10 @@
     </div>
   <a class="btn btn-ghost normal-case text-xl">CampusEats</a>
   </div>
-  <div class="navbar-center hidden lg:flex">
-    <ul class="menu menu-horizontal px-1">
-      <li><a href="../../index.php" class="<?= ($activePage == 'index') ? 'underline decoration-kuning decoration-1 underline-offset-4 ' :  '' ?>">Home</a></li>
-      <li><a href="/campuseats/pages/pembeli/canteen.php" class="<?= ($activePage == 'canteen') ? 'underline decoration-kuning decoration-1 underline-offset-4' :  '' ?>">Canteen</a></li>
-      <li><a href="/campuseats/pages/pembeli/history.php" class="<?= ($activePage == 'history') ? 'underline decoration-kuning decoration-1 underline-offset-4' :  '' ?>">History</a></li>
-      <li><a href="/campuseats/pages/pembeli/cart.php" class="<?= ($activePage == 'cart') ? 'underline decoration-kuning decoration-1 underline-offset-4' :  '' ?>">Cart</a></li>
-      <li><a href="">About Us</a></li>
-    </ul>
-  </div>
   <div class="navbar-end flex items-center gap-4 z-10">
+    <a href="/campuseats/pages/auth/login.php" class="bg-yellow-500 text-white p-2 px-4 rounded hover:bg-yellow-600 transition">
+      Logout
+    </a>
     <a href="/campuseats/pages/auth/login.php" class="bg-kuning text-white p-2 px-4 rounded hover:bg-yellow-600 transition">
       Login
     </a>

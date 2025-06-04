@@ -1,3 +1,10 @@
+<?php
+require_once '../../middleware/role_auth.php';
+
+require_role('penjual');
+?>
+
+
 <!-- Halaman 1: Dashboard Utama -->
 <!DOCTYPE html>
 <html data-theme="light" class="bg-background">
@@ -67,5 +74,3 @@
     </main>
   </body>
 </html>
-
-<!-- Halaman-halaman selanjutnya (manajemen menu, riwayat penjualan, dan profil kantin) akan ditambahkan berikutnya sesuai format yang sama dengan desain rapi menggunakan TailwindCSS & DaisyUI -->

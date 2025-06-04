@@ -1,3 +1,43 @@
+<?php
+session_start();
+include "../../database/koneksi.php";
+include "../../database/model.php";
+
+$error = '';
+$success = '';
+
+if (isset($_POST['submit'])) {
+    $username = $_POST['username'];
+    $password = $_POST['password'];
+
+    $user = login($koneksi, $username, $password);
+
+    if ($user) {
+        $_SESSION['id_user'] = $user['id_user'];
+        $_SESSION['username'] = $user['username'];
+        $_SESSION['Role'] = $user['Role'];
+        $_SESSION['nama'] = $user['nama'];
+
+        if ($_SESSION['Role']=='penjual') {
+          header("Location: /campuseats/pages/penjual/dashboard.php");
+          exit();
+        }elseif ($_SESSION['Role']=='pembeli') {
+          header("Location: /campuseats/pages/pembeli/canteen.php");
+          exit();
+        }
+
+
+    } else {
+        $error = "Username atau password salah.";
+    }
+}
+    if (isset($_GET['success']) && $_GET['success'] == 1) {
+        $success = 'Anda berhasil registrasi, silakan login.';
+  }
+?>
+
+
+
 <!DOCTYPE html>
 <html data-theme="light" class="bg-background">
 <head>
@@ -10,24 +50,24 @@
 <body class="min-h-screen flex flex-col">
   <?php 
     $activePage = 'login';
-    include '../../partials/navbar-pembeli.php';
+    include '../../partials/navbar-belum-login.php'; 
   ?>
-
+    
   <div class="flex justify-center items-center flex-1">
     <div class="bg-white shadow-md rounded-xl p-8 w-full max-w-md m-4">
       <h2 class="text-2xl font-bold mb-6 text-center">Login</h2>
 
-      <form action="proses_login.php" method="POST" class="space-y-4">
+      <form method="POST" class="space-y-4">
         <div>
           <label class="label">Username</label>
-          <input type="text" name="email" class="input input-bordered w-full" required />
+          <input type="text" name="username" class="input input-bordered w-full" required />
         </div>
         <div>
           <label class="label">Password</label>
           <input type="password" name="password" class="input input-bordered w-full" required />
         </div>
 
-        <button type="submit" class="btn bg-kuning text-black w-full hover:bg-yellow-600">
+        <button type="submit" name="submit" class="btn bg-kuning text-black w-full hover:bg-yellow-600">
           Login
         </button>
       </form>

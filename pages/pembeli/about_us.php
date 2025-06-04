@@ -1,3 +1,9 @@
+<?php
+require_once '../../middleware/role_auth.php';
+
+require_role('pembeli');
+?>
+
 <!DOCTYPE html>
 <html data-theme="light" class="bg-background min-h-screen">
 <head>
@@ -17,8 +23,8 @@
   <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
     <!-- UI/UX Designer -->
     <div class="bg-white rounded-lg shadow p-6 text-center">
-      <img src="https://i.pravatar.cc/150?img=5" alt="UI/UX Designer" class="mx-auto rounded-lg w-64 h-64 mb-4 object-cover" />
-      <h2 class="text-xl font-semibold mb-1">Ayu Santoso</h2>
+      <img src="../../assets/img/pengembang/randy.jpg" alt="UI/UX Designer" class="mx-auto rounded-lg w-64 h-64 mb-4 object-cover" />
+      <h2 class="text-xl font-semibold mb-1">Randy Febrian</h2>
       <p class="text-yellow-600 font-semibold mb-2">UI/UX Designer</p>
       <p class="text-gray-600 text-sm">
         Bertanggung jawab atas desain antarmuka yang menarik dan pengalaman pengguna yang optimal.
@@ -28,7 +34,7 @@
     <!-- Front-End Developer -->
     <div class="bg-white rounded-lg shadow p-6 text-center">
       <img src="https://i.pravatar.cc/150?img=12" alt="Front-End Developer" class="mx-auto rounded-lg w-64 h-64 mb-4 object-cover" />
-      <h2 class="text-xl font-semibold mb-1">Budi Pratama</h2>
+      <h2 class="text-xl font-semibold mb-1">Muhammad Rizky</h2>
       <p class="text-yellow-600 font-semibold mb-2">Front-End Developer</p>
       <p class="text-gray-600 text-sm">
         Mengembangkan tampilan website dan memastikan responsif serta interaktif.
@@ -37,11 +43,11 @@
 
     <!-- Back-End Developer -->
     <div class="bg-white rounded-lg shadow p-6 text-center">
-      <img src="https://i.pravatar.cc/150?img=18" alt="Back-End Developer" class="mx-auto rounded-lg w-64 h-64 mb-4 object-cover" />
-      <h2 class="text-xl font-semibold mb-1">Citra Dewi</h2>
+      <img src="../../assets/img/pengembang/ghani.JPG" alt="Back-End Developer" class="mx-auto rounded-lg w-64 h-64 mb-4 object-cover" />
+      <h2 class="text-xl font-semibold mb-1">Ghani Mudzakir</h2>
       <p class="text-yellow-600 font-semibold mb-2">Back-End Developer</p>
       <p class="text-gray-600 text-sm">
-        Mengelola server, database, dan logika aplikasi agar berjalan lancar dan aman.
+        Mengelola server, database, dan logika web agar berjalan lancar dan aman.
       </p>
     </div>
   </div>
