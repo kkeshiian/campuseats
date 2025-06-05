@@ -18,8 +18,7 @@ if (isset($_POST['submit'])) {
 
         $hasil = registrasi($koneksi, $nama_lengkap, $username, $password, $role);
         header("Location: login.php?success=1");
-        exit;
-
+        exit();
     }
 }  ?>
 

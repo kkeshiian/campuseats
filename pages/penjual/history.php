@@ -1,3 +1,5 @@
+
+
 <?php
 // history.php - halaman riwayat pesanan penjual
 
@@ -75,6 +77,7 @@ function statusBadge($status) {
             <th class="p-3">Total Price</th>
             <th class="p-3">Status</th>
             <th class="p-3">Date</th>
+            <th class="p-3">Change</th>
           </tr>
         </thead>
         <tbody>
@@ -93,6 +96,7 @@ function statusBadge($status) {
                 <td class="p-3">Rp <?= number_format($pesanan['total_harga'], 0, ',', '.') ?></td>
                 <td class="p-3"><?= statusBadge($pesanan['status']) ?></td>
                 <td class="p-3"><?= date('d M Y H:i', strtotime($pesanan['tanggal'])) ?></td>
+                <td class="p-3"><a><button>Update Status</button></a></td>
               </tr>
             <?php endforeach; ?>
           <?php endif; ?>

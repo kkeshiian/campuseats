@@ -1,3 +1,9 @@
+<?php
+require_once '../../middleware/role_auth.php';
+
+require_role('Admin');
+?>
+
 <!-- admin/dashboard.php -->
 <!DOCTYPE html>
 <html data-theme="light" class="bg-background">

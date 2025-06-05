@@ -1,3 +1,30 @@
+<?php
+if (isset($_GET['id_penjual'])) {
+    $id_per_penjual = (int) $_GET['id_penjual'];
+}
+
+if (isset($_GET['id_menu'])) {
+    $id_per_menu = (int) $_GET['id_menu'];
+}
+
+include "../../database/koneksi.php";
+include "../../database/model.php";
+
+require_once '../../middleware/role_auth.php';
+
+require_role('penjual');
+?>
+
+<?php
+
+$ambil_data = mysqli_query($koneksi,"
+SELECT nama_menu AS menu, harga FROM menu WHERE id_menu = '$id_per_menu'
+");
+
+$data = mysqli_fetch_assoc($ambil_data);
+
+?>
+
 <!DOCTYPE html>
 <html data-theme="light" class="bg-background">
 <head>
@@ -14,18 +41,19 @@
     <h2 class="text-2xl font-bold mb-4 text-center">Edit Menu</h2>
 
     <form action="proses_edit_menu.php" method="POST" enctype="multipart/form-data" class="space-y-4 bg-white p-6 rounded-lg shadow border">
-      <input type="hidden" name="id" value="<?= htmlspecialchars($menu['id']) ?>" />
+      <input type="hidden" name="id_menu" value="<?= $id_per_menu ?>" />
+      <input type="hidden" name="id_penjual" value="<?= $id_per_penjual ?>" />
 
       <!-- Nama Menu -->
       <div>
         <label class="block font-semibold mb-1">Menu Name</label>
-        <input type="text" name="nama" class="input input-bordered w-full" required value="<?= htmlspecialchars($menu['nama']) ?>" />
+        <input type="text" name="nama" class="input input-bordered w-full" required value="<?= htmlspecialchars($data['menu']) ?>" />
       </div>
 
       <!-- Harga -->
       <div>
         <label class="block font-semibold mb-1">Price (Rp)</label>
-        <input type="number" name="harga" class="input input-bordered w-full" required min="0" value="<?= htmlspecialchars($menu['harga']) ?>" />
+        <input type="number" name="harga" class="input input-bordered w-full" required min="0" value="<?= htmlspecialchars($data['harga']) ?>" />
       </div>
 
       <!-- Gambar Lama & Upload Gambar Baru -->
