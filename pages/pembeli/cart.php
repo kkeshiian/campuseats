@@ -2,6 +2,11 @@
 require_once '../../middleware/role_auth.php';
 
 require_role('pembeli');
+
+if (isset($_GET['id_pembeli'])) {
+  $id_per_pembeli = $_GET['id_pembeli'];
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -53,6 +58,7 @@ function loadCart() {
 
   cart.forEach((item, index) => {
     const subtotal = Math.round(item.harga * item.quantity);
+    const kantin = item.kantin;
     total += subtotal;
 
     const card = document.createElement('div');
@@ -62,6 +68,7 @@ function loadCart() {
       <div class="flex flex-col md:flex-row justify-between w-full">
         <div class="flex-1 w-full">
           <h2 class="text-xl font-bold text-gray-800 mb-1">${item.nama}</h2>
+          <h2 class="text-xl font-bold text-gray-800 mb-1">${kantin}</h2>
           <p class="text-sm text-gray-700 mb-2">Rp ${item.harga.toLocaleString('id-ID')}</p>
           <input type="text" placeholder="Catatan untuk penjual..." value="${item.notes || ''}" 
             class="border border-gray-300 rounded-lg px-3 py-2 w-full text-sm focus:outline-none focus:ring-1 focus:ring-black note-input mb-3" data-index="${index}" />
@@ -133,6 +140,7 @@ checkoutButton.addEventListener('click', function () {
   total = Math.round(total);
 
   const order_id = "ORD" + Date.now() + Math.floor(Math.random() * 1000);
+  const idPembeli = <?= json_encode($id_per_pembeli) ?>;
 
   checkoutButton.disabled = true; // disable button supaya gak klik berkali-kali
 
@@ -142,7 +150,8 @@ checkoutButton.addEventListener('click', function () {
     body: JSON.stringify({
       order_id: order_id,
       gross_amount: total,
-      items: cart
+      items: cart,
+      id_pembeli: idPembeli
     })
   })
   .then(res => res.json())
@@ -151,6 +160,16 @@ checkoutButton.addEventListener('click', function () {
       snap.pay(data.token, {
         onSuccess: function(result) {
           console.log('Payment success:', result);
+            fetch('save_order.php', {
+              method: 'POST',
+              headers: {'Content-Type': 'application/json'},
+              body: JSON.stringify({
+                order_id: order_id,
+                id_pembeli: idPembeli,
+                cart: cart
+              })
+            })
+            .then(res => res.json())
           localStorage.removeItem('cart');
           window.location.href = "order-success.php?order_id=" + order_id;
         },

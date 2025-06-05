@@ -19,22 +19,36 @@ if (isset($_POST['submit'])) {
         $_SESSION['nama'] = $user['nama'];
 
         if ($_SESSION['Role']=='penjual') {
-          header("Location: /campuseats/pages/penjual/dashboard.php");
-          exit();
+          $id_user = $_SESSION['id_user'];
+          $id_penjual_query = mysqli_query($koneksi, "SELECT id_penjual FROM penjual WHERE id_user ='$id_user'");
+
+          if ($row = mysqli_fetch_assoc($id_penjual_query)) {
+              $id_penjual = $row['id_penjual'];
+              $_SESSION['id_penjual'] = $id_penjual;
+              header("Location: /campuseats/pages/penjual/dashboard.php?id_penjual=" . $id_penjual);
+              exit();
+          }
+
         }elseif ($_SESSION['Role']=='pembeli') {
-          header("Location: /campuseats/pages/pembeli/canteen.php");
-          exit();
+          $id_user = $_SESSION['id_user'];
+          $id_pembeli_query = mysqli_query($koneksi, "SELECT id_pembeli FROM pembeli WHERE id_user ='$id_user'");
+
+          if ($row = mysqli_fetch_assoc($id_pembeli_query)) {
+              $id_pembeli = $row['id_pembeli'];
+              $_SESSION['id_pembeli'] = $id_pembeli;
+              header("Location: /campuseats/pages/pembeli/canteen.php?id_pembeli=" . $id_pembeli);
+              exit();
+          }
         }
-
-
     } else {
         $error = "Username atau password salah.";
     }
-}
     if (isset($_GET['success']) && $_GET['success'] == 1) {
         $success = 'Anda berhasil registrasi, silakan login.';
   }
+}
 ?>
+
 
 
 

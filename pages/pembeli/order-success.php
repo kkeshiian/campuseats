@@ -1,8 +1,6 @@
 <?php
-
 require_once '../../middleware/role_auth.php';
-$orderId = $_GET['order_id'] ?? null;
-
+$orderId = $_GET['order_id'] ?? 'UNKNOWN';
 require_role('pembeli');
 ?>
 
@@ -12,22 +10,12 @@ require_role('pembeli');
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Pembayaran Sukses</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body>  
-<!DOCTYPE html>
-<html data-theme="light" class="bg-background">
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link href="/campuseats/dist/output.css" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;400;600&display=swap" rel="stylesheet" />
-    <title>Menu Kantin</title>
+  <link href="/campuseats/dist/output.css" rel="stylesheet" />
 </head>
 <body>  
   <?php 
-  include '../../partials/navbar-pembeli.php';
-  ; ?>
+  include '../../partials/navbar-pembeli.php'; 
+  ?>
 
   <!-- Konten utama setelah navbar -->
   <div class="flex justify-center items-center pt-24 px-4">
@@ -43,7 +31,7 @@ require_role('pembeli');
         Pembayaran untuk <strong>Order ID #<?= htmlspecialchars($orderId) ?></strong> telah berhasil diproses.
       </p>
 
-      <a href="history.php" class="inline-block mt-4 bg-yellow-500 hover:bg-yellow-600 text-white font-semibold py-2 px-4 rounded transition duration-300">
+      <a href="/campuseats/pages/pembeli/canteen.php" class="inline-block mt-4 bg-yellow-500 hover:bg-yellow-600 text-white font-semibold py-2 px-4 rounded transition duration-300">
         Kembali ke Beranda
       </a>
 

@@ -1,3 +1,12 @@
+<?php
+if (isset($_GET['id_penjual'])) {
+    $id_per_penjual = (int) $_GET['id_penjual'];
+}
+require_once '../../middleware/role_auth.php';
+
+require_role('penjual');
+?>
+
 <!DOCTYPE html>
 <html data-theme="light" class="bg-background">
   <head>
@@ -14,7 +23,8 @@
       <h2 class="text-2xl font-bold mb-4 text-center">Add New Menu</h2>
 
       <form action="proses_tambah_menu.php" method="POST" enctype="multipart/form-data" class="space-y-4 bg-white p-6 rounded-lg shadow border">
-        <!-- Nama Menu -->
+        <input type="hidden" name="id_penjual" value="<?= $id_per_penjual ?>" />
+      <!-- Nama Menu -->
         <div>
           <label class="block font-semibold mb-1">Menu Name</label>
           <input type="text" name="nama" class="input input-bordered w-full" required />
@@ -34,7 +44,7 @@
 
         <!-- Tombol Simpan -->
         <div class="flex justify-end">
-          <button type="submit" class="btn bg-kuning text-white hover:bg-yellow-600">Add Menu</button>
+          <button type="submit" name="submit" class="btn bg-kuning text-white hover:bg-yellow-600">Add Menu</button>
         </div>
       </form>
     </main>

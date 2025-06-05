@@ -1,6 +1,13 @@
 <?php
+include "../../database/koneksi.php";
+include "../../database/model.php";
+
 require_once '../../middleware/role_auth.php';
 require_role('pembeli');
+
+if (isset($_GET['id_pembeli'])) {
+  $id_per_pembeli = $_GET['id_pembeli'];
+}
 ?>
 
 <!DOCTYPE html>
@@ -22,83 +29,35 @@ require_role('pembeli');
   <h2 class="text-2xl font-bold mx-auto m-4">Riwayat Pembelian</h2>
 
   <div class="w-[90%] mx-auto mb-10">
-    <?php
-    // Data dummy gabungan
-    $riwayat = [
-      [
-        "kantin" => "Kantin Bu Rina",
-        "menus" => [
-          ["nama" => "Nasi Goreng Spesial", "jumlah" => 1],
-          ["nama" => "Es Teh", "jumlah" => 2],
-        ],
-        "total" => 21000,
-        "status" => "Sedang Dimasak"
-      ],
-      [
-        "kantin" => "Kantin Pak Darto",
-        "menus" => [
-          ["nama" => "Ayam Bakar", "jumlah" => 2],
-          ["nama" => "Jus Alpukat", "jumlah" => 1],
-        ],
-        "total" => 45000,
-        "status" => "Menunggu Konfirmasi"
-      ],
-      [
-        "kantin" => "Kantin Bu Rina",
-        "menus" => [
-          ["nama" => "Mie Ayam", "jumlah" => 1],
-          ["nama" => "Es Jeruk", "jumlah" => 1],
-        ],
-        "total" => 17000,
-        "status" => "Selesai"
-      ],
-      [
-        "kantin" => "Kantin Pak Darto",
-        "menus" => [
-          ["nama" => "Sate Ayam", "jumlah" => 2],
-        ],
-        "total" => 30000,
-        "status" => "Selesai"
-      ]
-    ];
-    ?>
 
     <div class="overflow-x-auto bg-white">
-      <table class="table w-full">
-        <thead class="bg-kuning text-white">
-          <tr>
-            <th>No</th>
-            <th>Kantin</th>
-            <th>Menu</th>
-            <th>Total</th>
-            <th>Status</th>
-          </tr>
-        </thead>
-        <tbody>
-          <?php
-          $no = 1;
-          foreach ($riwayat as $order) {
-            $badgeClass = match ($order["status"]) {
-              'Selesai' => 'badge-success',
-              'Sedang Dimasak' => 'badge-warning',
-              'Menunggu Konfirmasi' => 'badge-info',
-              default => 'badge-ghost',
-            };
-            echo '<tr>';
-            echo '<td>' . $no++ . '</td>';
-            echo '<td>' . htmlspecialchars($order["kantin"]) . '</td>';
-            echo '<td>';
-            foreach ($order["menus"] as $menu) {
-              echo '• ' . $menu["nama"] . ' (x' . $menu["jumlah"] . ')<br>';
-            }
-            echo '</td>';
-            echo '<td>Rp ' . number_format($order["total"], 0, ',', '.') . '</td>';
-            echo '<td><span class="badge ' . $badgeClass . ' text-white">' . $order["status"] . '</span></td>';
-            echo '</tr>';
-          }
-          ?>
-        </tbody>
-      </table>
+      <?php
+      $ambil_data = mysqli_query($koneksi, "SELECT * FROM riwayat_pembelian WHERE id_pembeli='$id_pembeli' ORDER BY order_id, nama_kantin, tanggal");
+      
+      if (mysqli_num_rows($ambil_data) == 0) {
+        echo "<p class='text-xl mx-auto m-4 text-center'>Ayo! Jangan lupa order di Campuseats ya</p>";
+        return;
+      }else{
+          echo "
+            <table class='table w-full'>
+              <thead class='bg-kuning text-white'>
+                <tr>
+                  <th>No</th>
+                  <th>Order ID</th>
+                  <th>Kantin</th>
+                  <th>Menu</th>
+                  <th>Jumlah Pesanan</th>
+                  <th>Harga</th>
+                  <th>Total</th>
+                  <th>Status</th>
+                  <th>Tanggal dan Waktu</th>
+                </tr>
+              </thead>
+              <tbody>";
+                  history_pembeli($koneksi, $id_per_pembeli);
+          echo "</tbody></table>";
+      }
+      ?>
     </div>
   </div>
 </body>

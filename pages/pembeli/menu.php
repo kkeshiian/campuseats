@@ -1,16 +1,35 @@
 <?php
-require_once '../../middleware/role_auth.php';
-
-require_role('pembeli');
-?>
-<?php
 if (isset($_GET['id'])) {
     $id = (int) $_GET['id'];
 } else {
     echo "ID kantin tidak ditemukan.";
     exit;
 }
+
+$conn = new mysqli("localhost", "root", "", "e-canteen");
+if ($conn->connect_error) {
+    die("Koneksi gagal: " . $conn->connect_error);
+}
+
+$stmt = $conn->prepare("SELECT 
+    menu.id_menu AS id, 
+    menu.id_penjual AS kantin_id, 
+    menu.nama_menu AS nama, 
+    menu.harga, 
+    menu.gambar, 
+    penjual.nama_kantin AS kantin 
+    
+    FROM menu JOIN penjual ON menu.id_penjual = penjual.id_penjual WHERE menu.id_penjual = ?");
+
+$stmt->bind_param("i", $id);
+$stmt->execute();
+$result = $stmt->get_result();
+
+require_once '../../middleware/role_auth.php';
+require_role('pembeli');
 ?>
+
+
 
 <!DOCTYPE html>
 <html data-theme="light" class="bg-background">
@@ -31,92 +50,98 @@ include '../../partials/navbar-pembeli.php';
 <h2 class="mx-auto text-2xl font-bold m-4">Where do You want to eat today?</h2>
 
 <!-- Tempat menampilkan menu -->
-<div id="card-container" class="grid grid-cols-2 md:grid-cols-5 gap-4 w-[90%] mx-auto mt-4"></div>
-<script>
-const kantinId = <?php echo json_encode($id); ?>;
+<div id="card-container" class="grid grid-cols-2 md:grid-cols-5 gap-4 w-[90%] mx-auto mt-4">
 
-// Fungsi untuk update tampilan keranjang dari localStorage
-function updateCartUI() {
-    const cartItemsDiv = document.getElementById('cartItems');
-    const cart = JSON.parse(localStorage.getItem('cart')) || [];
-
-    if (cart.length === 0) {
-        cartItemsDiv.innerHTML = '<p class="text-center text-gray-500">Keranjang masih kosong.</p>';
-        return;
-    }
-
-    cartItemsDiv.innerHTML = '';
-    cart.forEach(item => {
-        cartItemsDiv.innerHTML += `
-            <div class="flex justify-between border-b pb-1">
-                <span>${item.nama} x${item.quantity}</span>
-                <span>Rp ${(item.harga * item.quantity).toLocaleString('id-ID')}</span>
+<?php
+    if ($result->num_rows > 0) {
+        while ($menu = $result->fetch_assoc()) {
+            $nama = htmlspecialchars($menu['nama']);
+            $harga = (int)$menu['harga'];
+            $gambar = htmlspecialchars($menu['gambar']);
+            $kantin = htmlspecialchars($menu['kantin'])
+?>
+    <div class="flex flex-col justify-between bg-white rounded-lg shadow-lg border border-black p-4">
+        <div>
+            <img src="/campuseats/<?= $gambar ?>" alt="<?= $nama ?>" class="rounded-t-lg w-full h-36 object-cover" />
+            <div class="pt-4 pb-4">
+                <h2 class="text-xl font-semibold"><?= $nama ?></h2><br>
+                <p class="text-gray-600">Rp <?= number_format($harga, 0, ',', '.') ?></p>
             </div>
-        `;
+        </div>
+        <div>
+            <button
+                class="btn bg-kuning text-sm text-black rounded-lg px-4 py-2 hover:bg-yellow-600 w-full text-center add-to-cart"
+                data-nama="<?= $nama ?>"
+                data-harga="<?= $harga ?>"
+                data-gambar="<?= $gambar ?>"
+                data-kantin="<?= $kantin ?>"
+            >Add to Cart</button>
+        </div>
+    </div>
+<?php
+        }
+    } else {
+        echo '<p class="text-center col-span-full text-gray-500">Tidak ada menu tersedia untuk kantin ini.</p>';
+    }
+?>
+
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    setupCartButtons();
+    updateCartUI();
+});
+
+function setupCartButtons() {
+    document.querySelectorAll('.add-to-cart').forEach(button => {
+        button.addEventListener('click', () => {
+            const nama = button.dataset.nama;
+            const harga = parseInt(button.dataset.harga);
+            const gambar = button.dataset.gambar;
+            const kantin = button.dataset.kantin;
+
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+            if (cart.length > 0) {
+                const existingKantin = cart[0].kantin;
+                if (kantin !== existingKantin) {
+                    alert("Tidak bisa menambahkan menu dari kantin berbeda. Silakan selesaikan pesanan kantin sebelumnya terlebih dahulu.");
+                    return;
+                }
+            }
+
+
+            const existingIndex = cart.findIndex(item => item.nama === nama);
+            if (existingIndex !== -1) {
+                cart[existingIndex].quantity += 1;
+            } else {
+                cart.push({
+                    nama: nama,
+                    harga: harga,
+                    gambar: gambar,
+                    kantin: kantin,
+                    quantity: 1,
+                    notes: ''
+                });
+            }
+
+            localStorage.setItem('cart', JSON.stringify(cart));
+            updateCartUI(); // <- aman dipanggil di sini
+        });
     });
 }
 
-fetch("/campuseats/json/menudata.json")
-    .then(response => {
-        if (!response.ok) throw new Error("Gagal ambil data menu");
-        return response.json();
-    })
-    .then(data => {
-        const container = document.getElementById("card-container");
-        const filteredMenu = data.filter(item => item.kantin_id == kantinId);
+function updateCartUI() {
+    // Misalnya kamu ingin update total jumlah item di pojok atas
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+    const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
+    const cartCountElement = document.getElementById('cart-count');
+    if (cartCountElement) {
+        cartCountElement.textContent = totalItems;
+    }
+}
 
-        if (filteredMenu.length === 0) {
-            container.innerHTML = '<p class="text-center col-span-full text-gray-500">Tidak ada menu tersedia untuk kantin ini.</p>';
-        }
-
-        filteredMenu.forEach(menu => {
-            const card = document.createElement('div');
-            card.className = "flex flex-col justify-between bg-white rounded-lg shadow-lg border border-black p-4";
-
-            card.innerHTML = `
-                <div>
-                    <img src="${menu.gambar}" alt="${menu.nama}" class="rounded-t-lg w-full h-36 object-cover" />
-                    <div class="pt-4 pb-4">
-                        <h2 class="text-xl font-semibold">${menu.nama}</h2>
-                        <p class="text-gray-600">Rp ${menu.harga.toLocaleString('id-ID')}</p>
-                    </div>
-                </div>
-                <div>
-                    <button class="btn bg-kuning text-sm text-black rounded-lg px-4 py-2 hover:bg-yellow-600 w-full text-center">Add to Cart</button>
-                </div>
-            `;
-
-            const btn = card.querySelector('button');
-            btn.addEventListener('click', () => {
-                let cart = JSON.parse(localStorage.getItem('cart')) || [];
-
-                const existingIndex = cart.findIndex(item => item.nama === menu.nama);
-                if (existingIndex !== -1) {
-                    cart[existingIndex].quantity += 1;
-                } else {
-                    cart.push({
-                        nama: menu.nama,
-                        harga: menu.harga,
-                        gambar: menu.gambar,
-                        quantity: 1,
-                        notes: ''
-                    });
-                }
-
-                localStorage.setItem('cart', JSON.stringify(cart));
-                updateCartUI();
-                alert(`"${menu.nama}" ditambahkan ke keranjang!`);
-            });
-
-            container.appendChild(card);
-        });
-    })
-    .catch(error => {
-        console.error("Error fetching JSON:", error);
-    });
-
-// Tampilkan isi keranjang saat pertama kali
-updateCartUI();
 </script>
+
 </body>
 </html>
