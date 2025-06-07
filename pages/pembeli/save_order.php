@@ -23,6 +23,6 @@ if (empty($order_id) || empty($id_pembeli) || !is_array($cart) || count($cart) =
 
 $created_at = $data['created_at'] ?? null;
 
-$result = saveOrderSimple($koneksi, $order_id, $id_pembeli, $cart, $created_at);
+$result = saveOrderSimple($koneksi, $order_id, $id_pembeli, $cart);
 
 echo json_encode($result);

@@ -20,7 +20,8 @@ if (isset($_POST['submit'])) {
         header("Location: login.php?success=1");
         exit();
     }
-}  ?>
+  }  
+?>
 
 <!DOCTYPE html>
 <html data-theme="light" class="bg-background">

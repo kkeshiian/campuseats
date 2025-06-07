@@ -30,7 +30,7 @@ include "../../database/model.php";
     <!-- Summary -->
     <!-- Kode PHP -->
     <?php
-    $tanggal_akhir = date('d M Y');
+    $tanggal_akhir = (new DateTime('now', new DateTimeZone('Asia/Jakarta')))->format('d M Y');
     $tanggal_awal = date('d M Y', strtotime('-6 days'));
 
     $sql = "SELECT nama_kantin FROM penjual WHERE id_penjual = $id_per_penjual";
