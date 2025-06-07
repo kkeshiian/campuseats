@@ -47,31 +47,39 @@ include "../../database/model.php";
         $role = strtolower($row['Role']); // antisipasi huruf kapital
         $role_counts[$role] = $row['jumlah'];
     }
-
-
     ?>
     <!-- profile admin -->
-    <div class="grid grid-cols-2 md:grid-cols-2 gap-2 mb-10">
-      <div class="bg-white border border-black rounded-lg p-4 text-center shadow">
-        <h2 class="mt-3 mb-5">Nama admin: <?= $row_admin['nama'] ?> </h2>
-        <h2 class="mt-3 mb-10">Jabatan: <?= $row_admin['jabatan'] ?> </h2>
-        <a href='profile_admin.php?id_admin=<?=$id_admin?>'>
-          <button class="bg-yellow-500 text-white p-2 px-4 rounded hover:bg-yellow-600 transition">
-            Edit Profile
-          </button>
-        </a>
+    <div class="max-w-md mx-auto mb-10">
+      <div class="w-full mb-10 px-4">
+        <div class="bg-white border border-black rounded-xl p-6 shadow-lg text-center w-full">
+          <p class="text-lg mb-2">
+            Admin Name: <span class="font-medium"><?= htmlspecialchars($row_admin['nama']) ?></span>
+          </p>
+          <p class="text-lg mb-6">
+            Role: <span class="font-medium"><?= htmlspecialchars($row_admin['jabatan']) ?></span>
+          </p>
+          <a href="profile_admin.php?id_admin=<?= urlencode($id_admin) ?>">
+            <button
+              class="btn bg-kuning hover:bg-yellow-600 text-white font-semibold px-6 py-2 rounded-lg shadow-md transition duration-300 ease-in-out w-full"
+              type="button"
+            >
+              Edit Profile
+            </button>
+          </a>
+        </div>
       </div>
     </div>
+
 
     <!-- Statistik -->
     <div class="grid grid-cols-2 md:grid-cols-2 gap-2 mb-2">
       <div class="bg-white border border-black rounded-lg p-4 text-center shadow">
-        <h3 class="text-lg font-semibold">Total Pengguna Aktif</h3>
-        <p class="text-2xl font-bold text-blue-600"><?= $role_counts['pembeli'] ?></p>
+        <h3 class="text-lg font-semibold">Total Active Users</h3>
+        <p class="text-2xl font-bold text-kuning"><?= $role_counts['pembeli'] ?></p>
       </div>
       <div class="bg-white border border-black rounded-lg p-4 text-center shadow">
-        <h3 class="text-lg font-semibold">Total Penjual Aktif</h3>
-        <p class="text-2xl font-bold text-green-600"><?= $role_counts['penjual'] ?></p>
+        <h3 class="text-lg font-semibold">Total Active Sellers</h3>
+        <p class="text-2xl font-bold text-kuning"><?= $role_counts['penjual'] ?></p>
       </div>
     </div>
 

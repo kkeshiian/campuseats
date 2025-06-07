@@ -16,7 +16,7 @@
   <a class="btn btn-ghost normal-case text-xl">CampusEats</a>
   </div>
   <div class="navbar-end flex items-center gap-4 z-10">
-    <a href="/campuseats/pages/auth/logout.php" class="bg-yellow-500 text-white p-2 px-4 rounded hover:bg-yellow-600 transition">
+    <a href="/campuseats/pages/auth/logout.php" class="bg-kuning text-white p-2 px-4 rounded hover:bg-yellow-600 transition">
       Logout
     </a>
   </div>

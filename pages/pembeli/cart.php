@@ -20,6 +20,8 @@ if (isset($_GET['id_pembeli'])) {
 
   <!-- Midtrans Snap.js -->
   <script src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="SB-Mid-client-eQfKe1LFpAFOWEcr"></script>
+  <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
 </head>
 <body class="min-h-screen flex flex-col">
 
@@ -28,7 +30,7 @@ $activePage = 'cart';
 include '../../partials/navbar-pembeli.php'; 
 ?>
 
-<div class="w-full max-w-4xl mx-auto m-4">
+<div class="w-full max-w-4xl mx-auto m-4" data-aos="fade-up" data-aos-duration="1000">
   <h1 class="text-2xl font-bold mb-4 text-center">Your Cart</h1>
 
   <div id="cartContainer" class="space-y-4 p-4 shadow-md border border-1 border-black rounded-lg mx-4"></div>
@@ -195,6 +197,10 @@ checkoutButton.addEventListener('click', function () {
     checkoutButton.disabled = false;
   });
 });
+</script>
+<script>
+  AOS.init({
+  });
 </script>
 </body>
 </html>

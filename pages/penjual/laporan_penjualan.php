@@ -19,13 +19,16 @@ include "../../database/model.php";
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;400;600&display=swap" rel="stylesheet" />
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <title>Weekly Sales Report</title>
+  <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+
 </head>
 <body class="min-h-screen flex flex-col">
 
   <?php include '../../partials/navbar-penjual.php'; ?>
 
   <main class="w-[90%] mx-auto mt-6 flex-grow max-w-6xl">
-    <h2 class="text-2xl font-bold mb-4">Weekly Sales Report</h2>
+    <h2 class="text-2xl font-bold mb-4" data-aos="fade-right" data-aos-duration="1000">Weekly Sales Report</h2>
 
     <!-- Summary -->
     <!-- Kode PHP -->
@@ -92,7 +95,8 @@ include "../../database/model.php";
 
     ?>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-2 mb-6">
+    <div data-aos="fade-up" data-aos-duration="1000">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-2 mb-6">
       <div class="bg-white shadow rounded p-4 border">
         <h3 class="text-sm text-black font-medium">Total Orders This Week</h3>
         <p class="text-xl font-bold text-kuning"><?= $data['qty'] ?? 0 ?></p>
@@ -116,6 +120,7 @@ include "../../database/model.php";
     <div class="bg-white p-4 rounded shadow border mb-6">
       <h3 class="text-lg font-semibold mb-4">Sales in the Last 7 Days</h3>
       <canvas id="weeklyChart" height="80"></canvas>
+    </div>
     </div>
 
 </div>
@@ -163,6 +168,9 @@ include "../../database/model.php";
       });
     </script>
 
-
+    <script>
+  AOS.init({
+  });
+</script>
 </body>
 </html>

@@ -20,11 +20,14 @@ require_role('penjual');
     <link href="/campuseats/dist/output.css" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;400;600&display=swap" rel="stylesheet" />
     <title>Manage Canteen</title>
+    <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+
   </head>
   <body class="min-h-screen flex flex-col">
     <?php include '../../partials/navbar-penjual.php'; ?>
 
-    <main class="w-[90%] mx-auto mt-6 max-w-2xl">
+    <main class="w-[90%] mx-auto mt-6 max-w-2xl" data-aos="fade-up" data-aos-duration="1000">
       <h2 class="text-2xl font-bold mb-4">Manage Canteen</h2>
 
       <form action="proses_kelola_kantin.php" method="POST" enctype="multipart/form-data" class="space-y-4 bg-white p-6 rounded-lg shadow border">
@@ -80,5 +83,9 @@ require_role('penjual');
         </div>
       </form>
     </main>
+    <script>
+  AOS.init({
+  });
+</script>
   </body>
 </html>
