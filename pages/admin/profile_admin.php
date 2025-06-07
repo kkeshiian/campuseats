@@ -1,28 +1,40 @@
 <?php
-if (isset($_GET['id_admin'])) {
-    $id_admin = (int) $_GET['id_admin'];
+if (!isset($_GET['id_admin'])) {
+    // Redirect jika id_admin tidak ada
+    header("Location: dashboard.php");
+    exit;
 }
-require_once '../../middleware/role_auth.php';
 
+$id_admin = (int) $_GET['id_admin'];
+
+require_once '../../middleware/role_auth.php';
 require_role('Admin');
 
 include "../../database/koneksi.php";
 include "../../database/model.php";
 
 if (isset($_POST['submit'])) {
-    $id_admin = $_POST['id_admin'];
-    $nama= $_POST['nama'];
-    $jabatan=$_POST['jabatan'];
+    // Sanitasi input sebelum update
+    $id_admin = (int) $_POST['id_admin'];
+    $nama = trim($_POST['nama']);
+    $jabatan = trim($_POST['jabatan']);
 
-    $hasil = updateInfoAdmin($koneksi, $id_admin, $nama, $jabatan);
-    header("Location: profile_admin.php?id_admin=$id_admin");
-    exit;
+    // Validasi minimal sederhana (boleh kamu tambah validasi lain)
+    if ($nama !== '' && $jabatan !== '') {
+        $hasil = updateInfoAdmin($koneksi, $id_admin, $nama, $jabatan);
+          header("Location: dashboard.php?id_admin=$id_admin");
+        exit;
+    } else {
+        $error = "Nama dan Jabatan harus diisi.";
+    }
 }
 
+// Ambil data admin untuk ditampilkan di form
+$ambil_data_admin = mysqli_query($koneksi, "SELECT * FROM admin WHERE id_admin='$id_admin'");
+$row_admin = mysqli_fetch_assoc($ambil_data_admin);
 
 ?>
 
-<!-- admin/dashboard.php -->
 <!DOCTYPE html>
 <html data-theme="light" class="bg-background">
 <head>
@@ -31,47 +43,66 @@ if (isset($_POST['submit'])) {
   <link href="/campuseats/dist/output.css" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;400;600&display=swap" rel="stylesheet" />
   <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
-  <title>Dashboard Admin</title>
+  <title>Profile Admin</title>
 </head>
 <body class="min-h-screen flex flex-col">
   <?php include '../../partials/navbar-admin.php'; ?>
 
-  <main class="w-[90%] mx-auto mt-6">
-    <h2 class="text-2xl font-bold mb-6">Profile Admin</h2>
-    <?php
-    $ambil_data_admin = mysqli_query($koneksi, 
-    "SELECT * FROM admin WHERE id_admin='$id_admin'");
-    $row_admin = mysqli_fetch_assoc($ambil_data_admin);
-    ?>
+  <main class="w-full max-w-3xl mx-auto mt-8 px-4">
+    <h2 class="text-2xl font-bold mb-6">Edit Admin Profile</h2>
 
-    <!-- profile admin -->
-    <form method="POST" enctype="multipart/form-data" class="space-y-4 bg-white p-6 rounded-lg shadow border">
-        <input type="hidden" name="id_admin" value="<?= $id_admin ?>" />  
+    <?php if (!empty($error)) : ?>
+      <div class="mb-4 p-4 bg-red-100 text-red-700 rounded border border-red-400">
+        <?= htmlspecialchars($error) ?>
+      </div>
+    <?php endif; ?>
+
+    <?php if (isset($_GET['success']) && $_GET['success'] == 1) : ?>
+      <div class="mb-4 p-4 bg-green-100 text-green-700 rounded border border-green-400">
+        Profil berhasil diperbarui.
+      </div>
+    <?php endif; ?>
+
+    <form method="POST" class=" bg-white p-6 rounded-xl shadow-md border border-black">
+        <input type="hidden" name="id_admin" value="<?= $id_admin ?>" />
+
         <!-- Admin Name -->
-        <div>
-          <label class="block font-semibold mb-1">Admin Name</label>
-          <input type="text" name="nama" value="<?= htmlspecialchars($row_admin['nama']) ?>" class="input input-bordered w-full" required />
+        <div class="mb-4">
+          <label for="nama" class="block font-semibold mb-2 text-gray-700">Nama Admin</label>
+          <input
+            type="text"
+            id="nama"
+            name="nama"
+            value="<?= htmlspecialchars($row_admin['nama']) ?>"
+            class="input input-bordered w-full border-gray-300 rounded-md focus:ring-yellow-400 focus:border-yellow-400"
+            required
+          />
         </div>
 
         <!-- Jabatan -->
-        <div>
-          <label class="block font-semibold mb-1">Admin Role</label>
-          <input type="text" name="jabatan" value="<?= htmlspecialchars($row_admin['jabatan']) ?>" class="input input-bordered w-full" required />
+        <div class="mb-4">
+          <label for="jabatan" class="block font-semibold mb-2 text-gray-700">Jabatan</label>
+          <input
+            type="text"
+            id="jabatan"
+            name="jabatan"
+            value="<?= htmlspecialchars($row_admin['jabatan']) ?>"
+            class="input input-bordered w-full border-gray-300 rounded-md focus:ring-yellow-400 focus:border-yellow-400"
+            required
+          />
         </div>
 
-        <!-- Button -->
-         <div class="flex ">
-            <!-- back button -->
-            <div class="flex justify-end">
-                <button type="button" onclick="window.location.href='dashboard.php?id_admin=<?= $id_admin ?>'" class="btn bg-kuning text-white hover:bg-yellow-600"><-- Back</button>
-            </div>
-
-            <!-- update button -->
-            <div class="flex justify-end">
-                <button type="submit" name="submit" class="btn bg-kuning text-white hover:bg-yellow-600">Save Changes</button>
-            </div>
-         </div>
-
-      </form>
+        <!-- Buttons -->
+        <div class="flex justify-end">
+          <button
+            type="submit"
+            name="submit"
+            class="btn bg-yellow-500 hover:bg-yellow-600 text-white font-semibold px-6 py-2 rounded-lg transition"
+          >
+            Save Changes
+          </button>
+        </div>
+    </form>
+  </main>
 </body>
 </html>

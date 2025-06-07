@@ -18,15 +18,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['submit'])) {
         header("Location: dashboard.php?id_penjual=" . $id_per_penjual);
         exit();
     }
-}
-
-  
+} 
 ?>
 
-
-
-
-<!-- Halaman 1: Dashboard Utama -->
 <!DOCTYPE html>
 <html data-theme="light" class="bg-background">
   <head>
@@ -34,15 +28,18 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['submit'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="/campuseats/dist/output.css" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;400;600&display=swap" rel="stylesheet" />
-    <title>Dashboard Penjual</title>
+    <title>Seller Dashboard</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
 
   </head>
   <body class="min-h-screen flex flex-col">
     <?php include '../../partials/navbar-penjual.php'; ?>
 
     <main class="w-[90%] mx-auto mt-6">
-      <h2 class="text-2xl font-bold mb-4">Seller Dashboard</h2>
-      Date: <h4 id="tanggalHariIni" class="text-2xl font-bold mb-4"></h4>
+      <h2 class="text-2xl font-bold mb-4" data-aos="fade-right" data-aos-duration="1000">Seller Dashboard</h2>
+      
 
       <!-- Statistik -->
       <?php
@@ -74,7 +71,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['submit'])) {
 
       }
       ?>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+      <div data-aos="fade-up" data-aos-duration="1000">
+        Date: <h4 id="tanggalHariIni" class="text-2xl font-bold mb-4"></h4>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
         <div class="bg-white border border-black rounded-lg p-4 text-center">
           <h3 class="text-lg font-semibold"><?=$nama_kantin?></h3>
           <p class="text-xl font-bold text-kuning"><?=$nama_fakultas?></p>
@@ -100,6 +99,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['submit'])) {
               <p class="text-l mt-1 mb-1">Order ID: <?= $pesanan["order_id"] ?></p>
               <p class="text-sm text-gray-500">Quantity: <?= $pesanan["qty"] ?></p>
               <p class="text-sm text-gray-500">Total: Rp <?= number_format($pesanan["total"]) ?></p>
+              <p class="text-sm text-gray-500 mt-1">Note: <?= htmlspecialchars($pesanan["notes"] ?? '-') ?></p>
             </div>
             <form method="post">
               <input type="hidden" name="id" value="<?= $pesanan["order_id"] ?>">
@@ -109,9 +109,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['submit'])) {
                 <legend class="fieldset-legend">Order Status</legend>
                 <select name="status" id="status" required
                   class="select select-bordered w-full">
-                  <option value="">-- Pilih Status Pesanan --</option>
+                  <option value="">-- Select Order Status --</option>
                   <?php
-                  $statuses = ["menunggu" => "Menunggu", "diproses" => "Diproses", "siap" => "Siap diambil", "selesai" => "Selesai"];
+                  $statuses = ["Waiting to Confirm" => "Waiting to Confirm", "Being Cooked" => "Being Cooked", "Ready to Pickup" => "Ready to Pickup", "Done" => "Done"];
                   foreach ($statuses as $value => $label) {
                       $selected = ($pesanan["status"] == $value) ? "selected" : "";
                       echo "<option value='$value' $selected>$label</option>";
@@ -126,6 +126,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['submit'])) {
 
         </div>
       </div>
+      </div>
     </main>
   </body>
   <script>
@@ -135,4 +136,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['submit'])) {
 
     document.getElementById("tanggalHariIni").textContent = tanggalFormatted;
   </script>
+
+  <script>
+  AOS.init({
+  });
+</script>
 </html>

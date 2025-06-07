@@ -19,6 +19,9 @@ if (isset($_GET['id_pembeli'])) {
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;400;600&display=swap" rel="stylesheet" />
   <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
   <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+
 </head>
 <body class="min-h-screen flex flex-col">
   <?php 
@@ -26,9 +29,9 @@ if (isset($_GET['id_pembeli'])) {
   include '../../partials/navbar-pembeli.php'; 
   ?>
 
-  <h2 class="text-2xl font-bold mx-auto m-4">Riwayat Pembelian</h2>
+  <h2 class="text-2xl font-bold mx-auto m-4" data-aos="fade-up" data-aos-duration="1000">Riwayat Pembelian</h2>
 
-  <div class="w-[90%] mx-auto mb-10">
+  <div class="w-[90%] mx-auto mb-10" data-aos="fade-up" data-aos-duration="1000">
 
     <div class="overflow-x-auto bg-white">
       <?php
@@ -61,4 +64,9 @@ if (isset($_GET['id_pembeli'])) {
     </div>
   </div>
 </body>
+
+<script>
+  AOS.init({
+  });
+</script>
 </html>
