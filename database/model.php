@@ -36,6 +36,7 @@ function registrasi($koneksi, $nama, $username, $password, $role) {
             tambah_pembeli($koneksi, $id_user_baru);
         }
         
+        return true;
 }
 
 function registrasiPenjual($koneksi, $username, $nama_penjual, $nama_kantin, $id_fakultas, $password, $link) {
