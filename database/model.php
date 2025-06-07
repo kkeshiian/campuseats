@@ -10,15 +10,7 @@ function tambah_pembeli($koneksi, $id_user){
     mysqli_query($koneksi, "INSERT INTO pembeli SET id_user='$id_user', nama='$nama'");
 }
 
-function tambah_penjual($koneksi, $id_user, $nama, $id_fakultas, $nama_kantin, $gambar = null, $link){
-    $ambil_data = mysqli_query($koneksi, "SELECT nama FROM user WHERE id_user='$id_user'");
-    $user = mysqli_fetch_assoc($ambil_data);
-    $nama = $user['nama'];
 
-    mysqli_query($koneksi, "INSERT INTO penjual SET id_user='$id_user', nama_kantin='$nama_kantin'
-    , nama = '$nama', gambar = '$gambar', link = '$link', id_fakultas = '$id_fakultas'
-    ");
-}
 
 function registrasi($koneksi, $nama, $username, $password, $role) {
         mysqli_query($koneksi, "
@@ -40,26 +32,37 @@ function registrasi($koneksi, $nama, $username, $password, $role) {
 }
 
 function registrasiPenjual($koneksi, $username, $nama_penjual, $nama_kantin, $id_fakultas, $password, $link) {
-        $cek_username = mysqli_query($koneksi, "SELECT * FROM user WHERE username = '$username'");
-        if (mysqli_num_rows($cek_username) > 0) {
-            $error = 'Username sudah digunakan. Silakan pilih username lain.';
-        }
-        $password_hash = password_hash($password, PASSWORD_DEFAULT);
+        $username = mysqli_real_escape_string($koneksi, $username);
         mysqli_query($koneksi, "
             INSERT INTO user SET
             nama = '$nama_penjual',
             username = '$username',
-            password = '$password_hash',
+            password = '$password',
             Role = 'penjual'       
         ");
         $id_user_baru = mysqli_insert_id($koneksi);
 
         tambah_penjual($koneksi, $id_user_baru, $nama_penjual, $id_fakultas, $nama_kantin,
-    '', $link    
+     $link    
     );
 
 }
 
+function tambah_penjual($koneksi, $id_user, $nama, $id_fakultas, $nama_kantin, $link){
+    $ambil_data = mysqli_query($koneksi, "SELECT nama FROM user WHERE id_user='$id_user'");
+    $user = mysqli_fetch_assoc($ambil_data);
+    $nama = $user['nama'];
+    $gambar = "/assets/img/default-canteen.jpg";
+
+    mysqli_query($koneksi, "INSERT INTO penjual SET 
+            id_user='$id_user', 
+            nama_kantin='$nama_kantin',
+            nama = '$nama', 
+            gambar = '$gambar', 
+            link = '$link', 
+            id_fakultas = '$id_fakultas'
+        ");
+}
 
 function login($koneksi, $username, $password) {
     $username = mysqli_real_escape_string($koneksi, $username);
@@ -87,12 +90,13 @@ function saveOrderSimple($koneksi, $order_id, $id_pembeli, $cart, $created_at = 
         $harga = $item['harga'] ?? 0;
         $total = $item['total'] ?? ($harga * $quantity);
         $status = $item['status'] ?? 'menunggu';
+        $note = mysqli_real_escape_string($koneksi, $item['notes'] ?? '');
         $tanggal = $created_at;
         
         $query = "INSERT INTO riwayat_pembelian 
-                  (order_id, id_pembeli, nama_kantin, menu, quantity, harga, total, status) 
+                  (order_id, id_pembeli, nama_kantin, menu, quantity, harga, total, status, notes) 
                   VALUES 
-                  ('$order_id', '$id_pembeli','$nama_kantin', '$menu', $quantity, $harga, $total, '$status')";
+                  ('$order_id', '$id_pembeli','$nama_kantin', '$menu', $quantity, $harga, $total, '$status', '$note')";
         
         $result = mysqli_query($koneksi, $query);
         
@@ -199,6 +203,7 @@ function tambahMenu($koneksi, $id_penjual, $nama_menu, $harga, $gambar) {
     return mysqli_query($koneksi, $query);
 }
 function updateInfoKantin($koneksi, $id_penjual, $nama_kantin, $link, $id_fakultas, $foto_baru = null) {
+    $path_gambar = "assets/" . $foto_baru;
     if ($foto_baru) {
         $sql = "UPDATE penjual SET 
                     nama_kantin = ?, 
@@ -207,7 +212,7 @@ function updateInfoKantin($koneksi, $id_penjual, $nama_kantin, $link, $id_fakult
                     gambar = ? 
                 WHERE id_penjual = ?";
         $stmt = mysqli_prepare($koneksi, $sql);
-        mysqli_stmt_bind_param($stmt, "ssssi", $nama_kantin, $link, $id_fakultas, $foto_baru, $id_penjual);
+        mysqli_stmt_bind_param($stmt, "ssssi", $nama_kantin, $link, $id_fakultas, $path_gambar, $id_penjual);
     } else {
         $sql = "UPDATE penjual SET 
                     nama_kantin = ?, 

@@ -4,6 +4,9 @@ include "../../database/model.php";
 
 if (isset($_GET['id_penjual'])) {
     $id_per_penjual = (int) $_GET['id_penjual'];
+}else{
+  header("Location: /campuseats/pages/auth/logout.php");
+  exit();
 }
 require_once '../../middleware/role_auth.php';
 
@@ -45,7 +48,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['submit'])) {
       <?php
       date_default_timezone_set('Asia/Jakarta');
       $tanggal_hari_ini = date('Y-m-d');
-      $ambil_data = mysqli_query($koneksi, "SELECT id_fakultas, nama_kantin FROM penjual WHERE id_penjual = '$id_per_penjual'");
+      $ambil_data = mysqli_query($koneksi, "SELECT id_fakultas, nama_kantin, gambar FROM penjual WHERE id_penjual = '$id_per_penjual'");
       $ambil_data_nama_fakultas  = mysqli_query($koneksi, "SELECT nama_fakultas FROM fakultas JOIN penjual ON penjual.id_fakultas = fakultas.id_fakultas WHERE penjual.id_penjual = '$id_per_penjual'");
       $data = mysqli_fetch_assoc($ambil_data);
       $nama_kantin = $data['nama_kantin'];
@@ -54,7 +57,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['submit'])) {
       $nama_fakultas = $data_fakultas['nama_fakultas'];
 
       $ambil_data_riwayat_pembelian = mysqli_query($koneksi,
-    "SELECT quantity AS qty, total, status, menu, order_id, tanggal FROM riwayat_pembelian WHERE nama_kantin = '$nama_kantin'");
+    "SELECT quantity AS qty, total, status, menu, order_id, tanggal, notes FROM riwayat_pembelian WHERE nama_kantin = '$nama_kantin' ORDER BY tanggal DESC");
       $total_keseluruhan = 0;
       $total_orderan = 0;
       $daftar_pesanan_hari_ini = []; 
@@ -75,6 +78,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['submit'])) {
         Date: <h4 id="tanggalHariIni" class="text-2xl font-bold mb-4"></h4>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
         <div class="bg-white border border-black rounded-lg p-4 text-center">
+          <img src="/campuseats/<?= $data['gambar'] ?>" alt="Gambar Kantin" class="w-32 h-32 object-cover rounded" />
           <h3 class="text-lg font-semibold"><?=$nama_kantin?></h3>
           <p class="text-xl font-bold text-kuning"><?=$nama_fakultas?></p>
         </div>
@@ -97,9 +101,16 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['submit'])) {
             <div>
               <p class="font-bold text-xl mb-1"><?= $pesanan["menu"] ?></p>
               <p class="text-l mt-1 mb-1">Order ID: <?= $pesanan["order_id"] ?></p>
+              <p class="text-l mt-1 mb-1">Date: <?= $pesanan["tanggal"] ?></p>
               <p class="text-sm text-gray-500">Quantity: <?= $pesanan["qty"] ?></p>
               <p class="text-sm text-gray-500">Total: Rp <?= number_format($pesanan["total"]) ?></p>
-              <p class="text-sm text-gray-500 mt-1">Note: <?= htmlspecialchars($pesanan["notes"] ?? '-') ?></p>
+              <p class="text-sm text-gray-500 mt-1">Note: <?php
+              if ($pesanan["notes"]=='' or $pesanan["notes"]==null) {
+                echo "-";
+              }else{
+                echo"$pesanan[notes]";
+              }
+              ?></p>
             </div>
             <form method="post">
               <input type="hidden" name="id" value="<?= $pesanan["order_id"] ?>">
@@ -138,7 +149,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['submit'])) {
   </script>
 
   <script>
-  AOS.init({
-  });
-</script>
+    AOS.init({
+    });
+  </script>
 </html>

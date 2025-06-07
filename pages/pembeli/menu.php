@@ -1,40 +1,50 @@
 <?php
 if (isset($_GET['id'])) {
     $id = (int) $_GET['id'];
-} else {
-    echo "ID kantin tidak ditemukan.";
-    exit;
+}else{
+  header("Location: /campuseats/pages/auth/logout.php");
+  exit();
 }
 
-$conn = new mysqli("localhost", "root", "", "e-canteen");
-if ($conn->connect_error) {
-    die("Koneksi gagal: " . $conn->connect_error);
-}
+include "../../database/koneksi.php";
+include "../../database/model.php";
 
-$stmt = $conn->prepare("SELECT 
-    menu.id_menu AS id, 
-    menu.id_penjual AS kantin_id, 
-    menu.nama_menu AS nama, 
-    menu.harga, 
-    menu.gambar, 
-    penjual.nama_kantin AS kantin,
-    penjual.link AS link,
-    penjual.gambar AS gambar_kantin
-    FROM menu JOIN penjual ON menu.id_penjual = penjual.id_penjual WHERE menu.id_penjual = ?");
-$stmt->bind_param("i", $id);
-$stmt->execute();
-$result = $stmt->get_result();
 
-// Ambil info nama kantin & link dulu
-$kantin = '';
-$lokasiMaps = '';
+$query_penjual = mysqli_query($koneksi, "SELECT id_penjual, id_fakultas, nama_kantin, gambar, link FROM penjual WHERE id_penjual = '$id'"); 
+$row_penjual = mysqli_fetch_assoc($query_penjual);
 
-if ($result->num_rows > 0) {
-    $row = $result->fetch_assoc();
-    $kantin = htmlspecialchars($row['kantin']);
-    $lokasiMaps = htmlspecialchars($row['link']);
-    $result->data_seek(0); // reset pointer agar bisa di-loop lagi
-}
+$query_menu = mysqli_query($koneksi, "SELECT * FROM menu WHERE id_penjual = '$id'"); 
+$kantin = $row_penjual['nama_kantin'];
+
+
+// $stmt = $conn->prepare("SELECT 
+//     menu.id_menu AS id, 
+//     menu.id_penjual AS kantin_id, 
+//     menu.nama_menu AS nama, 
+//     menu.harga, 
+//     menu.gambar, 
+//     penjual.nama_kantin AS kantin,
+//     penjual.link AS link,
+//     penjual.gambar AS gambar_kantin
+//     FROM penjual LEFT JOIN menu ON menu.id_penjual = penjual.id_penjual WHERE penjual.id_penjual = ?");
+
+    
+// $stmt->bind_param("i", $id);
+// $stmt->execute();
+// $result = $stmt->get_result();
+
+// // Ambil info nama kantin & link dulu
+// $kantin = '';
+// $lokasiMaps = '';
+// $gambar_kantin = '';
+
+// if ($result->num_rows > 0) {
+//     $row = $result->fetch_assoc();
+//     $kantin = $row['kantin'];
+//     $lokasiMaps = $row['link'];
+//     $gambar_kantin = $row['gambar_kantin'];
+//     $result->data_seek(0); // reset pointer agar bisa di-loop lagi
+// }
 
 require_once '../../middleware/role_auth.php';
 require_role('pembeli');
@@ -60,16 +70,21 @@ include '../../partials/navbar-pembeli.php';
 <div class="flex w-[90%] mx-auto mt-4 mb-4 p-2 border border-black rounded-xl shadow-sm bg-white" data-aos="fade-down" data-aos-duration="1000">
    <div class="mx-auto flex items-center gap-6">
      <!-- Bagian kiri: gambar -->
+    <?php
+    if ($row_penjual['gambar']== null || $row_penjual['gambar']== '') {
+        $row_penjual['gambar']= "assets/img/default-canteen.jpg";
+    }
+    ?>
     <div class="w-1/3">
-        <img src="/campuseats/<?= htmlspecialchars($gambar_kantin) ?>" alt="Gambar Kantin <?= htmlspecialchars($kantin) ?>" class="rounded-lg object-cover w-full h-32 md:h-40" />
+      <img src="/campuseats/<?= $row_penjual['gambar'] ?>" alt="Gambar Kantin <?= htmlspecialchars($row_penjual['nama_kantin']) ?>" class="rounded-lg object-cover w-full h-32 md:h-40" />
     </div>
 
     <!-- Bagian kanan: nama kantin dan tombol -->
     <div class="w-2/3 flex flex-col justify-center">
-        <div class="text-black text-2xl font-bold mb-2"><?= htmlspecialchars($kantin) ?></div>
+        <div class="text-black text-2xl font-bold mb-2"><?= $row_penjual['nama_kantin'] ?></div>
 
-        <?php if (!empty($lokasiMaps)): ?>
-        <a href="<?= $lokasiMaps ?>" target="_blank"
+        <?php if (!empty($row_penjual['link'])): ?>
+        <a href="<?= $row_penjual['link'] ?>" target="_blank"
            class="inline-block bg-kuning text-white px-4 py-2 rounded-md hover:bg-blue-700 transition duration-200 w-max">
            Direction to Canteen
         </a>
@@ -81,14 +96,14 @@ include '../../partials/navbar-pembeli.php';
 
 <!-- Tempat menampilkan menu -->
 <div id="card-container" class="grid grid-cols-2 md:grid-cols-5 gap-4 w-[90%] mx-auto mt-4" data-aos="fade-up" data-aos-duration="1000">
-<?php
-    if ($result->num_rows > 0) {
-        while ($menu = $result->fetch_assoc()) {
-            $nama = htmlspecialchars($menu['nama']);
-            $harga = (int)$menu['harga'];
-            $gambar = htmlspecialchars($menu['gambar']);
-            // $kantin sudah didefinisikan sebelumnya
-?>
+    <?php
+    
+        if (mysqli_num_rows($query_menu) > 0) {
+            while ($row_menu = mysqli_fetch_assoc($query_menu)) {
+                $nama = htmlspecialchars($row_menu['nama_menu']);
+                $harga = (int)$row_menu['harga'];
+                $gambar = htmlspecialchars($row_menu['gambar']);
+    ?>
     <div class="flex flex-col justify-between bg-white rounded-lg shadow-lg border border-black p-4">
         <div>
             <img src="/campuseats/<?= $gambar ?>" alt="<?= $nama ?>" class="rounded-t-lg w-full h-36 object-cover" />
@@ -103,16 +118,16 @@ include '../../partials/navbar-pembeli.php';
                 data-nama="<?= $nama ?>"
                 data-harga="<?= $harga ?>"
                 data-gambar="<?= $gambar ?>"
-                data-kantin="<?= $kantin ?>"
+                data-kantin="<?= $kantin?>"
             >Add to Cart</button>
         </div>
     </div>
-<?php
+    <?php
+            }
+        } else {
+            echo '<p class="text-center col-span-full text-gray-500">Tidak ada menu tersedia untuk kantin ini.</p>';
         }
-    } else {
-        echo '<p class="text-center col-span-full text-gray-500">Tidak ada menu tersedia untuk kantin ini.</p>';
-    }
-?>
+    ?>
 </div>
 
 <script>
