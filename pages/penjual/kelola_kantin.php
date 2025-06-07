@@ -49,7 +49,7 @@ require_role('penjual');
         <!-- Location -->
         <div>
           <label class="block font-semibold mb-1">Location (Fakultas)</label>
-            <select name="id_fakultas" class="input input-bordered w-full" required>
+            <select name="id_fakultas" class="select select-bordered w-full" required>
               <option value="">-- Pilih Fakultas --</option>
               <?php
               while ($fakultas = mysqli_fetch_assoc($queryFakultas)) {

@@ -108,10 +108,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['submit'])) {
               <fieldset class="fieldset w-36 md:w-64">
                 <legend class="fieldset-legend">Order Status</legend>
                 <select name="status" id="status" required
-                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg p-2 
-                        focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5
-                        dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 
-                        dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                  class="select select-bordered w-full">
                   <option value="">-- Pilih Status Pesanan --</option>
                   <?php
                   $statuses = ["menunggu" => "Menunggu", "diproses" => "Diproses", "siap" => "Siap diambil", "selesai" => "Selesai"];

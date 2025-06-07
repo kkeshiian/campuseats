@@ -10,12 +10,14 @@ function tambah_pembeli($koneksi, $id_user){
     mysqli_query($koneksi, "INSERT INTO pembeli SET id_user='$id_user', nama='$nama'");
 }
 
-function tambah_penjual($koneksi, $id_user){
+function tambah_penjual($koneksi, $id_user, $nama, $id_fakultas, $nama_kantin, $gambar = null, $link){
     $ambil_data = mysqli_query($koneksi, "SELECT nama FROM user WHERE id_user='$id_user'");
     $user = mysqli_fetch_assoc($ambil_data);
     $nama = $user['nama'];
 
-    mysqli_query($koneksi, "INSERT INTO penjual SET id_user='$id_user', nama='$nama'");
+    mysqli_query($koneksi, "INSERT INTO penjual SET id_user='$id_user', nama_kantin='$nama_kantin'
+    , nama = '$nama', gambar = '$gambar', link = '$link', id_fakultas = '$id_fakultas'
+    ");
 }
 
 function registrasi($koneksi, $nama, $username, $password, $role) {
@@ -27,16 +29,36 @@ function registrasi($koneksi, $nama, $username, $password, $role) {
             Role = '$role'       
         ");
         $cek_role = $role;
+
         if ($cek_role=='pembeli') {
             $id_user_baru = mysqli_insert_id($koneksi);
 
             tambah_pembeli($koneksi, $id_user_baru);
-        }elseif ($cek_role=='penjual') {
-            $id_user_baru = mysqli_insert_id($koneksi);
-
-            tambah_penjual($koneksi, $id_user_baru);
         }
+        
 }
+
+function registrasiPenjual($koneksi, $username, $nama_penjual, $nama_kantin, $id_fakultas, $password, $link) {
+        $cek_username = mysqli_query($koneksi, "SELECT * FROM user WHERE username = '$username'");
+        if (mysqli_num_rows($cek_username) > 0) {
+            $error = 'Username sudah digunakan. Silakan pilih username lain.';
+        }
+        $password_hash = password_hash($password, PASSWORD_DEFAULT);
+        mysqli_query($koneksi, "
+            INSERT INTO user SET
+            nama = '$nama_penjual',
+            username = '$username',
+            password = '$password_hash',
+            Role = 'penjual'       
+        ");
+        $id_user_baru = mysqli_insert_id($koneksi);
+
+        tambah_penjual($koneksi, $id_user_baru, $nama_penjual, $id_fakultas, $nama_kantin,
+    '', $link    
+    );
+
+}
+
 
 function login($koneksi, $username, $password) {
     $username = mysqli_real_escape_string($koneksi, $username);
@@ -67,9 +89,9 @@ function saveOrderSimple($koneksi, $order_id, $id_pembeli, $cart, $created_at = 
         $tanggal = $created_at;
         
         $query = "INSERT INTO riwayat_pembelian 
-                  (order_id, id_pembeli, nama_kantin, menu, quantity, harga, total, status, tanggal) 
+                  (order_id, id_pembeli, nama_kantin, menu, quantity, harga, total, status) 
                   VALUES 
-                  ('$order_id', '$id_pembeli','$nama_kantin', '$menu', $quantity, $harga, $total, '$status', '$tanggal')";
+                  ('$order_id', '$id_pembeli','$nama_kantin', '$menu', $quantity, $harga, $total, '$status')";
         
         $result = mysqli_query($koneksi, $query);
         
@@ -202,6 +224,43 @@ function updateInfoKantin($koneksi, $id_penjual, $nama_kantin, $link, $id_fakult
     }
 }
 
+function updateInfoAdmin($koneksi, $id_admin, $nama, $jabatan){
+    $id_admin = mysqli_real_escape_string($koneksi, $id_admin);
+    $nama = mysqli_real_escape_string($koneksi, $nama);
+    $jabatan = mysqli_real_escape_string($koneksi, $jabatan);
+    
+    $query = "UPDATE admin SET nama = '$nama', jabatan = '$jabatan' WHERE id_admin = '$id_admin'";
+
+    return mysqli_query($koneksi, $query);
+}
+
+function hapusPembeli($koneksi, $id_pembeli, $id_admin){
+    mysqli_query($koneksi,
+
+    "DELETE FROM user WHERE id_user='$id_pembeli'"
+    );
+    header("Location: /campuseats/pages/admin/kelola_pengguna.php?id_admin=".$id_admin);
+    exit();
+}
+
+function hapusPenjual($koneksi, $id_penjual, $id_admin){
+    mysqli_query($koneksi,
+
+    "DELETE FROM user WHERE id_user='$id_penjual'"
+    );
+    header("Location: /campuseats/pages/admin/kelola_kantin.php?id_admin=".$id_admin);
+    exit();
+}
+
+function updatePasswordPengguna($koneksi, $id_user, $username, $new_password) {
+    $password_hash = password_hash($new_password, PASSWORD_DEFAULT);
+    $username = mysqli_real_escape_string($koneksi, $username);
+
+    $query = "UPDATE user SET username='$username', password='$password_hash' WHERE id_user='$id_user'";
+    $result = mysqli_query($koneksi, $query);
+
+    return $result;
+}
 
 
 

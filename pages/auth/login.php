@@ -39,11 +39,21 @@ if (isset($_POST['submit'])) {
               header("Location: /campuseats/pages/pembeli/canteen.php?id_pembeli=" . $id_pembeli);
               exit();
           }
+        }elseif ($_SESSION['Role']=='Admin') {
+          $id_user = $_SESSION['id_user'];
+          $id_admin_query = mysqli_query($koneksi, "SELECT id_admin FROM admin WHERE id_user ='$id_user'");
+
+          if ($row = mysqli_fetch_assoc($id_admin_query)) {
+              $id_admin = $row['id_admin'];
+              $_SESSION['id_admin'] = $id_admin;
+              header("Location: /campuseats/pages/admin/dashboard.php?id_admin=" . $id_admin);
+              exit();
+          }
         }
-    } else {
-        $error = "Username atau password salah.";
     }
-    if (isset($_GET['success']) && $_GET['success'] == 1) {
+    
+    
+      if (isset($_GET['success']) && $_GET['success'] == 1) {
         $success = 'Anda berhasil registrasi, silakan login.';
   }
 }
