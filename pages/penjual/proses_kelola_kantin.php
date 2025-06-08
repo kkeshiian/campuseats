@@ -34,7 +34,7 @@ if (isset($_FILES['foto_kantin']) && $_FILES['foto_kantin']['error'] === UPLOAD_
 $berhasil = updateInfoKantin($koneksi, $id_penjual, $nama_kantin, $link, $id_fakultas, $foto_baru);
 
 if ($berhasil) {
-    header("Location: kelola_kantin.php?id_penjual=" . $id_penjual);
+    header("Location: kelola_kantin.php?id_penjual=" . $id_penjual . "&success=true");
     exit;
 } else {
     echo "Gagal update data kantin.";
