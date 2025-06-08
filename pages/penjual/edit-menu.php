@@ -1,35 +1,27 @@
 <?php
 if (isset($_GET['id_penjual'])) {
     $id_per_penjual = (int) $_GET['id_penjual'];
-}else{
-  header("Location: /campuseats/pages/auth/logout.php");
-  exit();
+} else {
+    header("Location: /campuseats/pages/auth/logout.php");
+    exit();
 }
 
 if (isset($_GET['id_menu'])) {
     $id_per_menu = (int) $_GET['id_menu'];
-}else{
-  header("Location: /campuseats/pages/auth/logout.php");
-  exit();
+} else {
+    header("Location: /campuseats/pages/auth/logout.php");
+    exit();
 }
 
 include "../../database/koneksi.php";
 include "../../database/model.php";
-
 require_once '../../middleware/role_auth.php';
-
 require_role('penjual');
-?>
 
-<?php
-
-$ambil_data = mysqli_query($koneksi,"
-SELECT nama_menu AS menu, harga, gambar FROM menu WHERE id_menu = '$id_per_menu'
+$ambil_data = mysqli_query($koneksi, "
+    SELECT nama_menu AS menu, harga, gambar FROM menu WHERE id_menu = '$id_per_menu'
 ");
-
 $data = mysqli_fetch_assoc($ambil_data);
-
-
 ?>
 
 <!DOCTYPE html>
@@ -39,6 +31,11 @@ $data = mysqli_fetch_assoc($ambil_data);
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link href="/campuseats/dist/output.css" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;400;600&display=swap" rel="stylesheet" />
+  
+  <!-- Notyf -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf/notyf.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/notyf/notyf.min.js"></script>
+
   <title>Edit Menu - CampusEats!</title>
 </head>
 <body class="min-h-screen flex flex-col">
@@ -55,18 +52,17 @@ $data = mysqli_fetch_assoc($ambil_data);
         <!-- gambar menu -->
         <img src="/campuseats/<?= htmlspecialchars($data['gambar']) ?>" alt="Gambar Kantin" class="w-64 h-64 object-cover rounded border border-black" />
 
-
         <div>
           <!-- Nama Menu -->
           <div class="mb-4">
             <label class="block font-semibold mb-1">Menu Name</label>
-            <input type="text" name="nama" class="input input-bordered w-full" required value="<?= htmlspecialchars($data['menu']) ?>" />
+            <input type="text" name="nama" class="input input-bordered w-full" value="<?= htmlspecialchars($data['menu']) ?>" />
           </div>
 
           <!-- Harga -->
           <div class="mb-4">
             <label class="block font-semibold mb-1">Price (Rp)</label>
-            <input type="number" name="harga" class="input input-bordered w-full" required min="0" value="<?= htmlspecialchars($data['harga']) ?>" />
+            <input type="number" name="harga" class="input input-bordered w-full" min="0" value="<?= htmlspecialchars($data['harga']) ?>" />
           </div>
 
           <!-- Gambar Lama & Upload Gambar Baru -->
@@ -83,5 +79,44 @@ $data = mysqli_fetch_assoc($ambil_data);
       </div>
     </form>
   </main>
+
+  <script>
+  const notyf = new Notyf({
+    duration: 3000,
+    position: { x: 'right', y: 'top' },
+    types: [
+      {
+        type: 'success',
+        background: '#4BB543',
+        icon: { className: 'notyf__icon--success', tagName: 'i' }
+      },
+      {
+        type: 'error',
+        background: '#d63031',
+        icon: { className: 'notyf__icon--error', tagName: 'i' }
+      }
+    ]
+  });
+
+  // Form validation
+  const form = document.querySelector('form');
+  form.addEventListener('submit', function (e) {
+    const nama = form.querySelector('input[name="nama"]').value.trim();
+    const harga = form.querySelector('input[name="harga"]').value.trim();
+
+    if (!nama || !harga) {
+      e.preventDefault(); // cegah pengiriman form
+      notyf.error("Please fill in all required fields.");
+    }
+  });
+
+  // URL-based toast
+  const urlParams = new URLSearchParams(window.location.search);
+  if (urlParams.get('success') === 'true') {
+    notyf.success("Menu updated successfully!");
+  } else if (urlParams.get('error') === 'true') {
+    notyf.error("Failed to update menu.");
+  }
+</script>
 </body>
 </html>

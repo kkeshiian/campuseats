@@ -47,9 +47,9 @@ require_role('pembeli');
   </div>
 </main>
 
-<footer class="bg-gray-100 text-center py-4 text-gray-700 text-sm">
-  &copy; <?= date('Y') ?> Campuseats. All rights reserved.
-</footer>
+ <?php
+  include '../../partials/footer.php';
+  ?>
 
 <script>
   AOS.init({

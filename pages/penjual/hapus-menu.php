@@ -22,4 +22,13 @@ require_role('penjual');
 
 $result = hapusMenu($koneksi, $id_per_menu, $id_per_penjual);
 
+if ($result) {
+    // Hapus berhasil, redirect dengan success=true
+    header("Location: kelola_menu.php?id_penjual=$id_per_penjual&success=hapus");
+    exit();
+} else {
+    // Hapus gagal, redirect dengan error=true
+    header("Location: kelola_menu.php?id_penjual=$id_per_penjual&error=hapus");
+    exit();
+}
 ?>

@@ -30,6 +30,9 @@ if (isset($_POST['submit'])) {
   <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <title>Dashboard Admin - Manage Canteen</title>
+  <!-- Notyf CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf/notyf.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/notyf/notyf.min.js"></script>
 </head>
 <body class="min-h-screen flex flex-col">
   <?php include '../../partials/navbar-admin.php'; ?>
@@ -38,9 +41,9 @@ if (isset($_POST['submit'])) {
     <div class="flex items-center justify-between mb-4">
       <h2 class="text-3xl font-bold text-gray-800">Manage Canteen</h2>
       <div class="space-x-2">
-        <label for="modal_register" class="btn bg-kuning text-white rounded-lg hover:bg-yellow-600 cursor-pointer">
+        <a href="tambah_kantin.php" class="btn bg-kuning text-white rounded-lg hover:bg-yellow-600 cursor-pointer">
           + Add Canteen
-        </label>
+        </a>
       </div>
     </div>
 
@@ -143,6 +146,27 @@ if (isset($_POST['submit'])) {
           window.location.href = `edit-data-penjual.php?id_penjual=${id_penjual}&id_admin=${id_admin}`;
         }
       });
+    }
+  </script>
+
+  <script>
+    const notyf = new Notyf({
+      duration: 3000,
+      position: { x: 'right', y: 'top' },
+      types: [
+        {
+          type: 'success',
+          background: '#28a745',
+          icon: { className: 'notyf__icon--success', tagName: 'i' }
+        }
+      ]
+    });
+
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('success') === 'true') {
+      notyf.success('User password updated successfully!');
+      // opsional: kamu bisa bersihkan URL supaya param success hilang setelah toast muncul
+      history.replaceState(null, '', window.location.pathname);
     }
   </script>
 </body>

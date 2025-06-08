@@ -176,7 +176,7 @@ checkoutButton.addEventListener('click', function () {
             })
             .then(res => res.json())
           localStorage.removeItem('cart');
-          window.location.href = "order-success.php?order_id=" + order_id;
+          window.location.href = "order-success.php?order_id=" + order_id + "&id_pembeli=" + idPembeli;
         },
         onPending: function(result) {
           console.log('Payment pending:', result);

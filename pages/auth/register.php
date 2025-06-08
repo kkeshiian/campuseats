@@ -25,18 +25,21 @@ function validate_password($password) {
 }
 
 if (isset($_POST['submit'])) {
-    $password = $_POST['password'];
-    $konfirmasi_password = $_POST['konfirmasi_password'];
+    // Trim all fields to check empty
+    $nama_lengkap = trim($_POST['nama'] ?? '');
+    $username = trim($_POST['username'] ?? '');
+    $password = $_POST['password'] ?? '';
+    $konfirmasi_password = $_POST['konfirmasi_password'] ?? '';
 
-    if ($password !== $konfirmasi_password) {
+    if ($nama_lengkap === '' || $username === '' || $password === '' || $konfirmasi_password === '') {
+        $error = 'Please fill in all fields.';
+    } else if ($password !== $konfirmasi_password) {
         $error = 'Password and confirmation do not match.';
     } else {
         $valid_pass = validate_password($password);
         if ($valid_pass !== true) {
             $error = $valid_pass;
         } else {
-            $nama_lengkap = trim($_POST['nama']);
-            $username = trim($_POST['username']);
             $password_hash = password_hash($password, PASSWORD_DEFAULT);
             $role = $_POST['role'] ?? 'pembeli';
 
@@ -64,8 +67,11 @@ if (isset($_POST['submit'])) {
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;400;600&display=swap" rel="stylesheet" />
   <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
   <title>Register</title>
-  <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+  
+  <!-- Notyf CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf/notyf.min.css" />
 </head>
 
 <body class="min-h-screen flex flex-col relative">
@@ -81,15 +87,15 @@ if (isset($_POST['submit'])) {
       <form method="POST" class="space-y-4" novalidate>
         <div>
           <label class="label" for="nama">Full Name</label>
-          <input id="nama" type="text" name="nama" class="input input-bordered w-full" required value="<?= isset($_POST['nama']) ? htmlspecialchars($_POST['nama']) : '' ?>" />
+          <input id="nama" type="text" name="nama" class="input input-bordered w-full rounded-lg" value="<?= htmlspecialchars($nama_lengkap ?? '') ?>" />
         </div>
         <div>
           <label class="label" for="username">Username</label>
-          <input id="username" type="text" name="username" class="input input-bordered w-full" required value="<?= isset($_POST['username']) ? htmlspecialchars($_POST['username']) : '' ?>" />
+          <input id="username" type="text" name="username" class="input input-bordered w-full rounded-lg" value="<?= htmlspecialchars($username ?? '') ?>" />
         </div>
         <div>
           <label class="label" for="password">Password</label>
-          <input id="password" type="password" name="password" class="input input-bordered w-full" required />
+          <input id="password" type="password" name="password" class="input input-bordered w-full rounded-lg" />
           <p class="text-gray-500 mt-1 text-xs leading-snug">
             Password must be at least 8 characters, include uppercase, lowercase, a number,<br />
             and a special symbol (e.g., !@#$%^&*).
@@ -97,10 +103,10 @@ if (isset($_POST['submit'])) {
         </div>
         <div>
           <label class="label" for="konfirmasi_password">Confirm Password</label>
-          <input id="konfirmasi_password" type="password" name="konfirmasi_password" class="input input-bordered w-full" required />
+          <input id="konfirmasi_password" type="password" name="konfirmasi_password" class="input input-bordered w-full rounded-lg" />
         </div>
 
-        <button type="submit" name="submit" class="btn bg-kuning text-black w-full hover:bg-yellow-600">
+        <button type="submit" name="submit" class="btn bg-kuning text-black w-full hover:bg-yellow-600 rounded-lg">
           Register
         </button>
       </form>
@@ -112,44 +118,22 @@ if (isset($_POST['submit'])) {
     </div>
   </div>
 
-  <!-- Toast container, fixed top right -->
-  <div id="toast-container" class="fixed top-4 right-4 z-50 space-y-2" data-aos="fade-left" data-aos-duration="500"></div>
-
+  <!-- Notyf JS -->
+  <script src="https://cdn.jsdelivr.net/npm/notyf/notyf.min.js"></script>
   <script>
-    // Function to create and show toast
-    function showToast(message, type = 'error') {
-      const container = document.getElementById('toast-container');
-
-      const toast = document.createElement('div');
-      toast.className = `alert shadow-lg ${type === 'error' ? 'alert-error' : 'alert-success'}`;
-      toast.innerHTML = `
-        <div>
-          <span class="text-white">${message}</span>
-        </div>
-        <button class="btn btn-sm btn-ghost" aria-label="Close">&times;</button>
-      `;
-
-      container.appendChild(toast);
-
-      // Close button functionality
-      toast.querySelector('button').addEventListener('click', () => {
-        toast.remove();
-      });
-
-      // Auto-remove after 5 seconds
-      setTimeout(() => {
-        toast.remove();
-      }, 3000);
-    }
+    const notyf = new Notyf({
+      duration: 3000,
+      position: { x: 'right', y: 'top' },
+      dismissible: false  // no close button
+    });
 
     <?php if (!empty($error)): ?>
-      showToast(<?= json_encode($error) ?>, 'error');
+      notyf.error(<?= json_encode($error) ?>);
     <?php endif; ?>
   </script>
 
   <script>
-  AOS.init({
-  });
-</script>
+    AOS.init();
+  </script>
 </body>
 </html>

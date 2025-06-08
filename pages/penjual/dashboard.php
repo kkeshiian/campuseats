@@ -101,45 +101,48 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['submit'])) {
       <div class="mb-8">
         <h3 class="text-xl font-semibold mb-2">Incoming orders</h3>
         <div class="space-y-4">
-        <?php foreach ($daftar_pesanan_hari_ini as $pesanan): ?>
-          <div class="bg-white border border-black rounded-lg p-4 flex justify-between items-center">
-            <div>
-              <p class="font-bold text-xl mb-1"><?= $pesanan["menu"] ?></p>
-              <p class="text-l mt-1 mb-1">Order ID: <?= $pesanan["order_id"] ?></p>
-              <p class="text-l mt-1 mb-1">Date: <?= $pesanan["tanggal"] ?></p>
-              <p class="text-sm text-gray-500">Quantity: <?= $pesanan["qty"] ?></p>
-              <p class="text-sm text-gray-500">Total: Rp <?= number_format($pesanan["total"]) ?></p>
-              <p class="text-sm text-gray-500 mt-1">Note: <?php
-              if ($pesanan["notes"]=='' or $pesanan["notes"]==null) {
-                echo "-";
-              }else{
-                echo"$pesanan[notes]";
-              }
-              ?></p>
+        <?php if (count($daftar_pesanan_hari_ini) === 0): ?>
+        <p class="text-gray-500 text-base text-center">No orders yet</p>
+        <?php else: ?>
+          <?php foreach ($daftar_pesanan_hari_ini as $pesanan): ?>
+            <div class="bg-white border border-black rounded-lg p-4 flex justify-between items-center">
+              <div>
+                <p class="font-bold text-xl mb-1"><?= $pesanan["menu"] ?></p>
+                <p class="text-l mt-1 mb-1">Order ID: <?= $pesanan["order_id"] ?></p>
+                <p class="text-l mt-1 mb-1">Date: <?= $pesanan["tanggal"] ?></p>
+                <p class="text-sm text-gray-500">Quantity: <?= $pesanan["qty"] ?></p>
+                <p class="text-sm text-gray-500">Total: Rp <?= number_format($pesanan["total"]) ?></p>
+                <p class="text-sm text-gray-500 mt-1">Note: <?php
+                if ($pesanan["notes"]=='' or $pesanan["notes"]==null) {
+                  echo "-";
+                }else{
+                  echo"$pesanan[notes]";
+                }
+                ?></p>
+              </div>
+              <form method="post">
+                <input type="hidden" name="id" value="<?= $pesanan["order_id"] ?>">
+                <input type="hidden" name="menu" value="<?= $pesanan["menu"] ?>">
+
+                <fieldset class="fieldset w-36 md:w-64">
+                  <legend class="fieldset-legend">Order Status</legend>
+                  <select name="status" id="status" required
+                    class="select select-bordered w-full">
+                    <option value="">Waiting to Confirm</option>
+                    <?php
+                    $statuses = ["Being Cooked" => "Being Cooked", "Ready to Pickup" => "Ready to Pickup", "Done" => "Done"];
+                    foreach ($statuses as $value => $label) {
+                        $selected = ($pesanan["status"] == $value) ? "selected" : "";
+                        echo "<option value='$value' $selected>$label</option>";
+                    }
+                    ?>
+                  </select>
+                </fieldset>
+                <button type="submit" name="submit" class="btn btn-sm bg-kuning w-full text-white rounded-lg mt-2">Update</button>
+              </form>
             </div>
-            <form method="post">
-              <input type="hidden" name="id" value="<?= $pesanan["order_id"] ?>">
-              <input type="hidden" name="menu" value="<?= $pesanan["menu"] ?>">
-
-              <fieldset class="fieldset w-36 md:w-64">
-                <legend class="fieldset-legend">Order Status</legend>
-                <select name="status" id="status" required
-                  class="select select-bordered w-full">
-                  <option value="">-- Select Order Status --</option>
-                  <?php
-                  $statuses = ["Waiting to Confirm" => "Waiting to Confirm", "Being Cooked" => "Being Cooked", "Ready to Pickup" => "Ready to Pickup", "Done" => "Done"];
-                  foreach ($statuses as $value => $label) {
-                      $selected = ($pesanan["status"] == $value) ? "selected" : "";
-                      echo "<option value='$value' $selected>$label</option>";
-                  }
-                  ?>
-                </select>
-              </fieldset>
-              <button type="submit" name="submit" class="btn btn-sm bg-kuning w-full text-white rounded-lg mt-2">Update</button>
-            </form>
-          </div>
-        <?php endforeach; ?>
-
+          <?php endforeach; ?>
+        <?php endif; ?>
         </div>
       </div>
       </div>

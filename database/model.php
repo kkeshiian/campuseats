@@ -89,7 +89,7 @@ function saveOrderSimple($koneksi, $order_id, $id_pembeli, $cart, $created_at = 
         $quantity = $item['quantity'] ?? 0;
         $harga = $item['harga'] ?? 0;
         $total = $item['total'] ?? ($harga * $quantity);
-        $status = $item['status'] ?? 'menunggu';
+        $status = $item['status'] ?? 'Waiting to Confirm';
         $note = mysqli_real_escape_string($koneksi, $item['notes'] ?? '');
         $tanggal = $created_at;
         
