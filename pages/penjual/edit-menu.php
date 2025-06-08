@@ -1,10 +1,16 @@
 <?php
 if (isset($_GET['id_penjual'])) {
     $id_per_penjual = (int) $_GET['id_penjual'];
+}else{
+  header("Location: /campuseats/pages/auth/logout.php");
+  exit();
 }
 
 if (isset($_GET['id_menu'])) {
     $id_per_menu = (int) $_GET['id_menu'];
+}else{
+  header("Location: /campuseats/pages/auth/logout.php");
+  exit();
 }
 
 include "../../database/koneksi.php";
@@ -18,10 +24,11 @@ require_role('penjual');
 <?php
 
 $ambil_data = mysqli_query($koneksi,"
-SELECT nama_menu AS menu, harga FROM menu WHERE id_menu = '$id_per_menu'
+SELECT nama_menu AS menu, harga, gambar FROM menu WHERE id_menu = '$id_per_menu'
 ");
 
 $data = mysqli_fetch_assoc($ambil_data);
+
 
 ?>
 
@@ -43,6 +50,10 @@ $data = mysqli_fetch_assoc($ambil_data);
     <form action="proses_edit_menu.php" method="POST" enctype="multipart/form-data" class="space-y-4 bg-white p-6 rounded-lg shadow border">
       <input type="hidden" name="id_menu" value="<?= $id_per_menu ?>" />
       <input type="hidden" name="id_penjual" value="<?= $id_per_penjual ?>" />
+
+      <!-- gambar menu -->
+      <img src="/campuseats/<?= htmlspecialchars($data['gambar']) ?>" alt="Gambar Kantin" class="w-64 h-64 object-cover rounded" />
+
 
       <!-- Nama Menu -->
       <div>

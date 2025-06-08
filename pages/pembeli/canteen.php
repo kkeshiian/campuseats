@@ -14,6 +14,14 @@ JOIN
 
 $result = $conn->query($sql);
 
+if (isset($_GET['id_pembeli'])) {
+    $id_per_pembeli = (int) $_GET['id_pembeli'];
+}else{
+  header("Location: /campuseats/pages/auth/logout.php");
+  exit();
+}
+
+
 require_once '../../middleware/role_auth.php';
 
 require_role('pembeli');
@@ -57,25 +65,29 @@ require_role('pembeli');
       data-aos="fade-up" data-aos-duration="1000"
     >
       <?php
-        if ($result ->num_rows >0) {
+        if ($result->num_rows > 0) {
           while ($kantin = $result->fetch_assoc()) {
+            if ($kantin['gambar'] == null || $kantin['gambar'] == '') {
+              $kantin['gambar'] = "assets/img/default-canteen.jpg";
+            }
             echo '
-            <div class="flex flex-col justify-between h-full bg-white rounded-lg shadow-lg border border-black p-4">
-              <div>
-                <img src="/campuseats/' . htmlspecialchars(str_replace('\\', '/', $kantin["gambar"])) . '" alt="Kantin Image" class="rounded-t-lg w-full h-36 object-cover" />
-                <div class="pt-4 pb-4">
-                  <h2 class="text-xl font-semibold">' . htmlspecialchars($kantin["nama"]) . '</h2>
-                  <p class="text-gray-600">Fakultas ' . htmlspecialchars($kantin["fakultas"]) . '</p>
+              <div class="flex flex-col justify-between h-full bg-white rounded-lg shadow-lg border border-black p-4">
+                <div>
+                  <img src="/campuseats/' . htmlspecialchars(str_replace('\\', '/', $kantin["gambar"])) . '" alt="Kantin Image" class="rounded-t-lg w-full h-36 object-cover" />
+                  <div class="pt-4 pb-4">
+                    <h2 class="text-xl font-semibold">' . htmlspecialchars($kantin["nama"]) . '</h2>
+                    <p class="text-gray-600">Fakultas ' . htmlspecialchars($kantin["fakultas"]) . '</p>
+                  </div>
                 </div>
-              </div>
-              <div>
-                <a href="menu.php?id=' . urlencode($kantin["id"]) . '" class="btn bg-kuning text-black rounded-lg px-4 py-2 hover:bg-yellow-600 w-full text-center">Lihat Menu</a>
-              </div>
-            </div>';
+                <div>
+                  <a href="menu.php?id=' . urlencode($kantin["id"]) . '" class="btn bg-kuning text-black rounded-lg px-4 py-2 hover:bg-yellow-600 w-full text-center">Lihat Menu</a>
+                </div>
+              </div>';
           }
-        }else{
+        } else {
           echo "<p class='col-span-full text-center'>Tidak ada data kantin.</p>";
         }
+
         $conn->close();
         ?>
   

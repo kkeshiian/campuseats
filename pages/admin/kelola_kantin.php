@@ -34,7 +34,7 @@ if (isset($_POST['submit'])) {
 <body class="min-h-screen flex flex-col">
   <?php include '../../partials/navbar-admin.php'; ?>
 
-  <main class="w-[90%] max-w-6xl mx-auto mt-6">
+  <main class="w-[90%] max-w-6xl mx-auto mt-6 mb-6">
     <div class="flex items-center justify-between mb-4">
       <h2 class="text-3xl font-bold text-gray-800">Manage Canteen</h2>
       <div class="space-x-2">
@@ -48,7 +48,7 @@ if (isset($_POST['submit'])) {
     $ambil_data_user = mysqli_query($koneksi, "SELECT * FROM user WHERE Role='penjual'");
     ?>
 
-    <div class="overflow-x-auto bg-white border rounded-lg shadow">
+    <div class="overflow-x-auto bg-white border rounded-lg shadow mb-6">
       <?php if (mysqli_num_rows($ambil_data_user) == 0) : ?>
         <p class="text-center text-lg p-6 text-gray-600">Tidak ada data kantin yang ditemukan.</p>
       <?php else : ?>

@@ -1,6 +1,9 @@
 <?php
 if (isset($_GET['id_penjual'])) {
     $id_per_penjual = (int) $_GET['id_penjual'];
+}else{
+  header("Location: /campuseats/pages/auth/logout.php");
+  exit();
 }
 
 include "../../database/koneksi.php";
@@ -10,6 +13,9 @@ require_once '../../middleware/role_auth.php';
 
 
 require_role('penjual');
+
+$ambil_data_kantin = mysqli_query($koneksi, "SELECT * FROM penjual WHERE id_penjual = '$id_per_penjual'");
+$row_penjual =  mysqli_fetch_assoc($ambil_data_kantin);
 ?>
 
 <!DOCTYPE html>
@@ -25,13 +31,20 @@ require_role('penjual');
 
   </head>
   <body class="min-h-screen flex flex-col">
-    <?php include '../../partials/navbar-penjual.php'; ?>
+    <?php include '../../partials/navbar-penjual.php'; 
+    $gambar_kantin_default = "/campuseats/assets/img/default-canteen.jpg";
+    ?>
 
     <main class="w-[90%] mx-auto mt-6 max-w-2xl" data-aos="fade-up" data-aos-duration="1000">
       <h2 class="text-2xl font-bold mb-4">Manage Canteen</h2>
 
       <form action="proses_kelola_kantin.php" method="POST" enctype="multipart/form-data" class="space-y-4 bg-white p-6 rounded-lg shadow border">
-        <input type="hidden" name="id_penjual" value="<?= $id_per_penjual ?>" />  
+        <input type="hidden" name="id_penjual" value="<?= $id_per_penjual ?>" />
+          <?php
+          $src_gambar = "/campuseats/" . ($row_penjual['gambar'] ?: "/assets/img/default-canteen.jpg");
+          ?>
+          <img src="<?= htmlspecialchars($src_gambar) ?>" alt="Gambar Kantin" class="w-64 h-64 object-cover rounded" />
+
         <!-- Canteen Name -->
          <?php
          $ambil_data = mysqli_query($koneksi, "
