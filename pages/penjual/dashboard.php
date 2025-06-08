@@ -77,18 +77,23 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['submit'])) {
       <div data-aos="fade-up" data-aos-duration="1000">
         Date: <h4 id="tanggalHariIni" class="text-2xl font-bold mb-4"></h4>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-        <div class="bg-white border border-black rounded-lg p-4 text-center">
-          <img src="/campuseats/<?= $data['gambar'] ?>" alt="Gambar Kantin" class="w-32 h-32 object-cover rounded" />
-          <h3 class="text-lg font-semibold"><?=$nama_kantin?></h3>
-          <p class="text-xl font-bold text-kuning"><?=$nama_fakultas?></p>
+        <div class="flex items-center gap-4 bg-white border border-black rounded-lg p-4 text-center">
+          <div class="mx-auto">
+            <h3 class="text-lg font-semibold text-black"><?=$nama_fakultas?></h3>
+            <p class="text-2xl font-bold text-kuning"><?=$nama_kantin?></p>
+          </div>
         </div>
-        <div class="bg-white border border-black rounded-lg p-4 text-center">
-          <h3 class="text-lg font-semibold">Today's income</h3>
-          <p class="text-xl font-bold text-kuning"><?=number_format($total_keseluruhan, 0, ',', '.')?></p>
+        <div class="bg-white border border-black rounded-lg p-4 text-center flex items-center">
+          <div class="mx-auto">
+            <h3 class="text-lg font-semibold">Today's income</h3>
+            <p class="text-2xl font-bold text-kuning">Rp <?=number_format($total_keseluruhan, 0, ',', '.')?></p>
+          </div>
         </div>
-        <div class="bg-white border border-black rounded-lg p-4 text-center">
-          <h3 class="text-lg font-semibold">Today's orders</h3>
-          <p class="text-xl font-bold text-kuning"><?=$total_orderan?> Orders</p>
+        <div class="bg-white border border-black rounded-lg p-4 text-center  flex items-center">
+          <div class="mx-auto">
+            <h3 class="text-lg font-semibold">Today's orders</h3>
+            <p class="text-2xl font-bold text-kuning"><?=$total_orderan?> Orders</p>
+          </div>
         </div>
       </div>
 
@@ -130,7 +135,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['submit'])) {
                   ?>
                 </select>
               </fieldset>
-              <button type="submit" name="submit" class="btn btn-sm bg-kuning w-full text-white rounded-lg">Update</button>
+              <button type="submit" name="submit" class="btn btn-sm bg-kuning w-full text-white rounded-lg mt-2">Update</button>
             </form>
           </div>
         <?php endforeach; ?>

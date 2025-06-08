@@ -67,7 +67,8 @@ include '../../partials/navbar-pembeli.php';
 ?>
 
 
-<div class="flex w-[90%] mx-auto mt-4 mb-4 p-2 border border-black rounded-xl shadow-sm bg-white" data-aos="fade-down" data-aos-duration="1000">
+<div class="flex w-full max-w-md mx-6 md:mx-auto m-6 p-4 border border-black rounded-xl shadow-sm bg-white"
+data-aos="fade-down" data-aos-duration="1000">
    <div class="mx-auto flex items-center gap-6">
      <!-- Bagian kiri: gambar -->
     <?php
@@ -75,7 +76,7 @@ include '../../partials/navbar-pembeli.php';
         $row_penjual['gambar']= "assets/img/default-canteen.jpg";
     }
     ?>
-    <div class="w-1/3">
+    <div class="w-64">
       <img src="/campuseats/<?= $row_penjual['gambar'] ?>" alt="Gambar Kantin <?= htmlspecialchars($row_penjual['nama_kantin']) ?>" class="rounded-lg object-cover w-full h-32 md:h-40" />
     </div>
 
@@ -85,12 +86,11 @@ include '../../partials/navbar-pembeli.php';
 
         <?php if (!empty($row_penjual['link'])): ?>
         <a href="<?= $row_penjual['link'] ?>" target="_blank"
-           class="inline-block bg-kuning text-white px-4 py-2 rounded-md hover:bg-blue-700 transition duration-200 w-max">
+           class="inline-block bg-kuning text-black px-4 py-2 rounded-md hover:bg-yellow-600 transition duration-200 w-max">
            Direction to Canteen
         </a>
         <?php endif; ?>
     </div>
-
    </div>
 </div>
 

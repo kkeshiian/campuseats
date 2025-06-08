@@ -44,38 +44,42 @@ $data = mysqli_fetch_assoc($ambil_data);
 <body class="min-h-screen flex flex-col">
   <?php include '../../partials/navbar-penjual.php'; ?>
 
-  <main class="w-[90%] mx-auto mt-6 max-w-xl">
+  <main class="w-[90%] mx-auto mt-6 max-w-xl mb-4">
     <h2 class="text-2xl font-bold mb-4 text-center">Edit Menu</h2>
 
-    <form action="proses_edit_menu.php" method="POST" enctype="multipart/form-data" class="space-y-4 bg-white p-6 rounded-lg shadow border">
+    <form action="proses_edit_menu.php" method="POST" enctype="multipart/form-data" class="space-y-4 bg-white p-6 rounded-lg shadow border border-black">
       <input type="hidden" name="id_menu" value="<?= $id_per_menu ?>" />
       <input type="hidden" name="id_penjual" value="<?= $id_per_penjual ?>" />
 
-      <!-- gambar menu -->
-      <img src="/campuseats/<?= htmlspecialchars($data['gambar']) ?>" alt="Gambar Kantin" class="w-64 h-64 object-cover rounded" />
+      <div class="flex flex-col md:flex-row gap-6">
+        <!-- gambar menu -->
+        <img src="/campuseats/<?= htmlspecialchars($data['gambar']) ?>" alt="Gambar Kantin" class="w-64 h-64 object-cover rounded border border-black" />
 
 
-      <!-- Nama Menu -->
-      <div>
-        <label class="block font-semibold mb-1">Menu Name</label>
-        <input type="text" name="nama" class="input input-bordered w-full" required value="<?= htmlspecialchars($data['menu']) ?>" />
-      </div>
+        <div>
+          <!-- Nama Menu -->
+          <div class="mb-4">
+            <label class="block font-semibold mb-1">Menu Name</label>
+            <input type="text" name="nama" class="input input-bordered w-full" required value="<?= htmlspecialchars($data['menu']) ?>" />
+          </div>
 
-      <!-- Harga -->
-      <div>
-        <label class="block font-semibold mb-1">Price (Rp)</label>
-        <input type="number" name="harga" class="input input-bordered w-full" required min="0" value="<?= htmlspecialchars($data['harga']) ?>" />
-      </div>
+          <!-- Harga -->
+          <div class="mb-4">
+            <label class="block font-semibold mb-1">Price (Rp)</label>
+            <input type="number" name="harga" class="input input-bordered w-full" required min="0" value="<?= htmlspecialchars($data['harga']) ?>" />
+          </div>
 
-      <!-- Gambar Lama & Upload Gambar Baru -->
-      <div>
-        <label class="block font-semibold mb-1">Change Picture</label>
-        <input type="file" name="gambar" accept="image/*" class="file-input file-input-bordered w-full" />
-      </div>
+          <!-- Gambar Lama & Upload Gambar Baru -->
+          <div class="mb-4">
+            <label class="block font-semibold mb-1">Change Picture</label>
+            <input type="file" name="gambar" accept="image/*" class="file-input file-input-bordered w-full" />
+          </div>
 
-      <!-- Tombol Simpan -->
-      <div class="flex justify-end">
-        <button type="submit" class="btn bg-kuning text-white hover:bg-yellow-600">Save Changes</button>
+          <!-- Tombol Simpan -->
+          <div class="flex justify-end">
+            <button type="submit" class="btn bg-kuning text-white hover:bg-yellow-600">Save Changes</button>
+          </div>
+        </div>
       </div>
     </form>
   </main>

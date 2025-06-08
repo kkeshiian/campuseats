@@ -38,7 +38,7 @@ if (isset($_FILES['gambar']) && $_FILES['gambar']['error'] === UPLOAD_ERR_OK) {
 $berhasil = tambahMenu($koneksi, $id_penjual, $nama_menu, $harga, $gambar_baru);
 
 if ($berhasil) {
-    header("Location: kelola_menu.php?id_penjual=$id_penjual");
+    header("Location: tambah-menu.php?id_penjual=$id_penjual&success=true");
     exit;
 } else {
     echo "Gagal menambah menu.";
