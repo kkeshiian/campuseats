@@ -47,7 +47,7 @@ include "../../database/model.php";
     $query = "SELECT SUM(quantity) AS qty, SUM(total) AS total 
               FROM riwayat_pembelian 
               WHERE nama_kantin = '$nama_kantin_penjual' 
-              AND tanggal >= DATE_SUB(CURDATE(), INTERVAL 7 DAY) AND status = 'selesai'";
+              AND tanggal >= DATE_SUB(CURDATE(), INTERVAL 7 DAY) AND status = 'Done'";
     $ambil_data = mysqli_query($koneksi, $query);
     $data = mysqli_fetch_assoc($ambil_data);
 
@@ -55,7 +55,7 @@ include "../../database/model.php";
                       FROM riwayat_pembelian 
                       WHERE nama_kantin = '$nama_kantin_penjual' 
                       AND tanggal >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)
-                      AND status = 'selesai'
+                      AND status = 'Done'
                       GROUP BY hari 
                       ORDER BY total_hari DESC 
                       LIMIT 1";
@@ -69,7 +69,7 @@ include "../../database/model.php";
         SELECT DAYNAME(tanggal) as hari, SUM(total) as total 
         FROM riwayat_pembelian 
         WHERE nama_kantin = '$nama_kantin_penjual' 
-          AND tanggal >= DATE_SUB(CURDATE(), INTERVAL 6 DAY) AND status = 'selesai'
+        AND tanggal >= DATE_SUB(CURDATE(), INTERVAL 6 DAY) AND status = 'Done'
         GROUP BY hari
       ";
 

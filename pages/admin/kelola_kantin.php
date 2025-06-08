@@ -41,7 +41,7 @@ if (isset($_POST['submit'])) {
     <div class="flex items-center justify-between mb-4">
       <h2 class="text-3xl font-bold text-gray-800">Manage Canteen</h2>
       <div class="space-x-2">
-        <a href="tambah_kantin.php" class="btn bg-kuning text-white rounded-lg hover:bg-yellow-600 cursor-pointer">
+        <a href="tambah_kantin.php?id_admin=<?=$id_admin?>" class="btn bg-kuning text-white rounded-lg hover:bg-yellow-600 cursor-pointer">
           + Add Canteen
         </a>
       </div>
@@ -89,7 +89,6 @@ if (isset($_POST['submit'])) {
                 <td class="p-3"><?= htmlspecialchars($nama_fakultas) ?></td>
                 <td class="p-3 space-x-2">
                   <a
-                    href="#"
                     class="btn btn-sm bg-red-500 rounded-lg text-white hover:bg-red-600 transition"
                     onclick="confirmDelete(<?= $row_user['id_user'] ?>, <?= $id_admin ?>)"
                   >
@@ -97,7 +96,6 @@ if (isset($_POST['submit'])) {
                   </a>
 
                   <a
-                    href="#"
                     class="btn btn-sm bg-kuning rounded-lg text-white hover:bg-yellow-600 transition"
                     onclick="confirmAuthorization(<?= $row_user['id_user'] ?>, <?= $id_admin ?>)"
                   >

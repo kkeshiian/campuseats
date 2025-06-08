@@ -156,15 +156,15 @@ require_role('penjual');
   const errorParam = urlParams.get('error');
 
   if (successParam === 'true') {
-    notyf.success("Changes saved successfully!");
+    notyf.success("Menu changed successfully!");
   } else if (successParam === 'hapus') {
-    notyf.success("Menu berhasil dihapus!");
+    notyf.success("Menu deleted succefully!");
   }
 
   if (errorParam === 'true') {
-    notyf.error("Failed to save changes!");
+    notyf.error("Failed to changed menu!");
   } else if (errorParam === 'hapus') {
-    notyf.error("Gagal menghapus menu!");
+    notyf.error("Failed to deleted menu!");
   }
 
 </script>
