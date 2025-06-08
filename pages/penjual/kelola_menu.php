@@ -8,9 +8,12 @@ if (isset($_GET['id_penjual'])) {
 
 include "../../database/koneksi.php";
 include "../../database/model.php";
+
 require_once '../../middleware/role_auth.php';
+
 require_role('penjual');
 ?>
+
 
 <!DOCTYPE html>
 <html data-theme="light" class="bg-background">
@@ -21,9 +24,8 @@ require_role('penjual');
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;400;600&display=swap" rel="stylesheet" />
     <title>Kelola Menu</title>
     <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
-    <!-- SweetAlert -->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+
   </head>
   <body class="min-h-screen flex flex-col">
     <?php include '../../partials/navbar-penjual.php'; ?>
@@ -31,6 +33,7 @@ require_role('penjual');
     <main class="w-[90%] mx-auto mt-6" data-aos="fade-up" data-aos-duration="1000">
       <div class="flex justify-between items-center">
         <h2 class="text-2xl font-bold mb-4">Manage Menu</h2>
+        <!-- Tombol Tambah Menu -->
         <div class="mb-6">
           <a href="tambah-menu.php?id_penjual=<?= $id_per_penjual ?>" class="btn bg-kuning text-white font-semibold rounded-lg px-4 py-2 hover:bg-yellow-600">
             + Add Menu
@@ -38,6 +41,7 @@ require_role('penjual');
         </div>
       </div>
 
+      <!-- Tabel Daftar Menu -->
       <div class="overflow-x-auto bg-white border">
         <?php
         $ambil_data_menu = mysqli_query($koneksi, "SELECT id_menu, nama_menu AS menu, harga FROM menu WHERE id_penjual = '$id_per_penjual'");
@@ -61,17 +65,14 @@ require_role('penjual');
           $no = 1;
           while ($menu = mysqli_fetch_assoc($ambil_data_menu)) {
             $harga = number_format($menu['harga'], 0, ',', '.');
-            $edit_url = "edit-menu.php?id_menu={$menu['id_menu']}&id_penjual=$id_per_penjual";
-            $delete_url = "hapus-menu.php?id_menu={$menu['id_menu']}&id_penjual=$id_per_penjual";
-
             echo "
               <tr class='text-center'>
                 <td>$no</td>
                 <td>{$menu['menu']}</td>
                 <td>Rp $harga</td>
                 <td class='text-center'>
-                  <a href='#' class='btn btn-sm bg-blue-500 text-white mr-2' onclick=\"confirmEdit('$edit_url')\">Edit</a>
-                  <a href='#' class='btn btn-sm bg-red-500 text-white' onclick=\"confirmDelete('$delete_url')\">Delete</a>
+                  <a href='edit-menu.php?id_menu={$menu['id_menu']}&id_penjual=$id_per_penjual' class='btn btn-sm bg-blue-500 text-white mr-2'>Edit</a>
+                  <a href='hapus-menu.php?id_menu={$menu['id_menu']}&id_penjual=$id_per_penjual' class='btn btn-sm bg-red-500 text-white' onclick='return confirm(\"Are you sure you want to delete this menu item?\")'>Delete</a>
                 </td>
               </tr>
             ";
@@ -86,41 +87,9 @@ require_role('penjual');
         ?>
       </div>
     </main>
-
     <script>
-      AOS.init();
-
-      function confirmEdit(url) {
-        Swal.fire({
-          title: 'Edit Menu',
-          text: "Are you sure you want to edit this menu item?",
-          icon: 'question',
-          showCancelButton: true,
-          confirmButtonColor: '#3085d6',
-          cancelButtonColor: '#FFB43B',
-          confirmButtonText: 'Yes, edit it!'
-        }).then((result) => {
-          if (result.isConfirmed) {
-            window.location.href = url;
-          }
-        });
-      }
-
-      function confirmDelete(url) {
-        Swal.fire({
-          title: 'Are you sure?',
-          text: "This action cannot be undone. The menu will be deleted permanently.",
-          icon: 'warning',
-          showCancelButton: true,
-          confirmButtonColor: '#e3342f',
-          cancelButtonColor: '#FFB43B',
-          confirmButtonText: 'Yes, delete'
-        }).then((result) => {
-          if (result.isConfirmed) {
-            window.location.href = url;
-          }
-        });
-      }
-    </script>
+  AOS.init({
+  });
+</script>
   </body>
 </html>
