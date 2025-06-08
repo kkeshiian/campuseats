@@ -1,3 +1,4 @@
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <div class="navbar bg-base-100 shadow-sm">
   <div class="navbar-start">
     <div class="dropdown">
@@ -16,8 +17,28 @@
   <a class="btn btn-ghost normal-case text-xl">CampusEats</a>
   </div>
   <div class="navbar-end flex items-center gap-4 z-10">
-    <a href="/campuseats/pages/auth/logout.php" class="bg-kuning text-white p-2 px-4 rounded hover:bg-yellow-600 transition">
+    <a id="logoutBtn" href="/campuseats/pages/auth/logout.php" class="bg-kuning text-white p-2 px-4 rounded hover:bg-yellow-600 transition">
       Logout
     </a>
   </div>
 </div>
+
+<script>
+  document.getElementById('logoutBtn').addEventListener('click', function(e) {
+    e.preventDefault();
+    Swal.fire({
+      title: 'Logout Confirmation',
+      text: "Are you sure you want to logout?",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#FFB43B',
+      confirmButtonText: 'Yes, logout',
+      cancelButtonText: 'Cancel'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        window.location.href = "/campuseats/pages/auth/logout.php";
+      }
+    });
+  });
+</script>

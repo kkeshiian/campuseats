@@ -100,27 +100,27 @@ include "../../database/model.php";
 
     <div data-aos="fade-up" data-aos-duration="1000">
       <div class="grid grid-cols-1 md:grid-cols-2 gap-2 mb-6">
-      <div class="bg-white shadow rounded p-4 border">
+      <div class="bg-white shadow rounded-lg p-4 border border-black">
         <h3 class="text-sm text-black font-medium">Total Orders This Week</h3>
         <p class="text-xl font-bold text-kuning"><?= $data['qty'] ?? 0 ?></p>
       </div>
-      <div class="bg-white shadow rounded p-4 border">
+      <div class="bg-white shadow rounded-lg p-4 border border-black">
         <h3 class="text-sm text-black font-medium">Total Income</h3>
         <p class="text-xl font-bold text-kuning">Rp <?= number_format($data['total'] ?? 0, 0, ',', '.') ?></p>
       </div>
-      <div class="bg-white shadow rounded p-4 border">
+      <div class="bg-white shadow rounded-lg p-4 border border-black">
         <h3 class="text-sm text-black font-medium">Best Selling Day</h3>
         <p class="text-xl font-bold text-kuning"><?= $best_day['hari'] ?? '—' ?></p>
       </div>
       <!-- keterangan 7 hari terakhir itu dari tanggal berapa ke tanggal berapa -->
-      <div class="bg-white shadow rounded p-4 border">
+      <div class="bg-white shadow rounded-lg p-4 border border-black">
         <h3 class="text-sm text-black font-medium">7 Days Latest</h3>
         <p class="text-xl font-bold text-kuning"><?= $tanggal_awal . ' - ' . $tanggal_akhir ?></p>
       </div>
     </div>
 
     <!-- Chart -->
-    <div class="bg-white p-4 rounded shadow border mb-6">
+    <div class="bg-white p-4 rounded-lg shadow border border-black mb-6">
       <h3 class="text-lg font-semibold mb-4">Sales in the Last 7 Days</h3>
       <canvas id="weeklyChart" height="80"></canvas>
     </div>

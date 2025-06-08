@@ -16,36 +16,6 @@ $row_penjual = mysqli_fetch_assoc($query_penjual);
 $query_menu = mysqli_query($koneksi, "SELECT * FROM menu WHERE id_penjual = '$id'"); 
 $kantin = $row_penjual['nama_kantin'];
 
-
-// $stmt = $conn->prepare("SELECT 
-//     menu.id_menu AS id, 
-//     menu.id_penjual AS kantin_id, 
-//     menu.nama_menu AS nama, 
-//     menu.harga, 
-//     menu.gambar, 
-//     penjual.nama_kantin AS kantin,
-//     penjual.link AS link,
-//     penjual.gambar AS gambar_kantin
-//     FROM penjual LEFT JOIN menu ON menu.id_penjual = penjual.id_penjual WHERE penjual.id_penjual = ?");
-
-    
-// $stmt->bind_param("i", $id);
-// $stmt->execute();
-// $result = $stmt->get_result();
-
-// // Ambil info nama kantin & link dulu
-// $kantin = '';
-// $lokasiMaps = '';
-// $gambar_kantin = '';
-
-// if ($result->num_rows > 0) {
-//     $row = $result->fetch_assoc();
-//     $kantin = $row['kantin'];
-//     $lokasiMaps = $row['link'];
-//     $gambar_kantin = $row['gambar_kantin'];
-//     $result->data_seek(0); // reset pointer agar bisa di-loop lagi
-// }
-
 require_once '../../middleware/role_auth.php';
 require_role('pembeli');
 ?>
@@ -57,15 +27,19 @@ require_role('pembeli');
     <link href="/campuseats/dist/output.css" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;400;600&display=swap" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+
+    <!-- Notyf -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf/notyf.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/notyf/notyf.min.js"></script>
+
     <title>Menu Kantin</title>
 </head>
-<body class="min-h-screen flex flex-col mb-4">
+<body class="min-h-screen flex flex-col">
 
 <?php
 $activePage = 'canteen';
 include '../../partials/navbar-pembeli.php';
 ?>
-
 
 <div class="flex w-full max-w-md mx-6 md:mx-auto m-6 p-4 border border-black rounded-xl shadow-sm bg-white"
 data-aos="fade-down" data-aos-duration="1000">
@@ -86,7 +60,7 @@ data-aos="fade-down" data-aos-duration="1000">
 
         <?php if (!empty($row_penjual['link'])): ?>
         <a href="<?= $row_penjual['link'] ?>" target="_blank"
-           class="inline-block bg-kuning text-black px-4 py-2 rounded-md hover:bg-yellow-600 transition duration-200 w-max">
+           class="inline-block bg-kuning text-black px-4 py-2 rounded-md hover:bg-yellow-600 transition duration-200 w-max text-base">
            Direction to Canteen
         </a>
         <?php endif; ?>
@@ -95,7 +69,7 @@ data-aos="fade-down" data-aos-duration="1000">
 </div>
 
 <!-- Tempat menampilkan menu -->
-<div id="card-container" class="grid grid-cols-2 md:grid-cols-5 gap-4 w-[90%] mx-auto mt-4" data-aos="fade-up" data-aos-duration="1000">
+<div id="card-container" class="flex-grow grid grid-cols-2 md:grid-cols-5 gap-4 w-[90%] mx-auto mt-4" data-aos="fade-up" data-aos-duration="1000">
     <?php
     
         if (mysqli_num_rows($query_menu) > 0) {
@@ -136,6 +110,33 @@ document.addEventListener('DOMContentLoaded', function () {
     updateCartUI();
 });
 
+const notyf = new Notyf({
+  duration: 2000,
+  position: {
+    x: 'right',
+    y: 'top',
+  },
+  types: [
+    {
+      type: 'success',
+      background: '#FFB43B',
+      icon: {
+        className: 'notyf__icon--success',
+        tagName: 'i',
+      }
+    },
+    {
+      type: 'error',
+      background: '#d63031',
+      icon: {
+        className: 'notyf__icon--error',
+        tagName: 'i',
+      }
+    }
+  ]
+});
+
+
 function setupCartButtons() {
     document.querySelectorAll('.add-to-cart').forEach(button => {
         button.addEventListener('click', () => {
@@ -149,7 +150,7 @@ function setupCartButtons() {
             if (cart.length > 0) {
                 const existingKantin = cart[0].kantin;
                 if (kantin !== existingKantin) {
-                    alert("Tidak bisa menambahkan menu dari kantin berbeda. Silakan selesaikan pesanan kantin sebelumnya terlebih dahulu.");
+                    notyf.error("Cannot add items from a different canteen.");
                     return;
                 }
             }
@@ -169,6 +170,7 @@ function setupCartButtons() {
             }
 
             localStorage.setItem('cart', JSON.stringify(cart));
+            notyf.success(`${nama} successfully added to cart.`);
             updateCartUI();
         });
     });

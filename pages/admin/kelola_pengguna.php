@@ -28,6 +28,9 @@ if (isset($_POST['submit'])) {
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;400;600&display=swap" rel="stylesheet" />
   <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <!-- Notyf CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf/notyf.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/notyf/notyf.min.js"></script>
   <title>Dashboard Admin - Manage User</title>
 </head>
 <body class="min-h-screen flex flex-col">
@@ -129,5 +132,25 @@ if (isset($_POST['submit'])) {
   }
 </script>
 
+<script>
+    const notyf = new Notyf({
+      duration: 3000,
+      position: { x: 'right', y: 'top' },
+      types: [
+        {
+          type: 'success',
+          background: '#28a745',
+          icon: { className: 'notyf__icon--success', tagName: 'i' }
+        }
+      ]
+    });
+
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('success') === 'true') {
+      notyf.success('User password updated successfully!');
+      // opsional: kamu bisa bersihkan URL supaya param success hilang setelah toast muncul
+      history.replaceState(null, '', window.location.pathname);
+    }
+  </script>
 </body>
 </html>

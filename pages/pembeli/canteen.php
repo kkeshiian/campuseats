@@ -48,13 +48,13 @@ require_role('pembeli');
     
 
   </head>
-  <body class="min-h-screen flex flex-col mb-4">
+  <body class="min-h-screen flex flex-col">
     <?php 
     $activePage = 'canteen';
     include '../../partials/navbar-pembeli.php'; ?>
     
     <!-- main content --> 
-    <h2 class="mx-auto text-2xl font-bold m-4">
+    <h2 class="mx-auto text-2xl font-bold m-4" data-aos="fade-up" data-aos-duration="1000">
       Where do You want to eat today?
     </h2> 
 
@@ -92,6 +92,9 @@ require_role('pembeli');
         ?>
   
   </div>
+  <?php
+  include '../../partials/footer.php';
+  ?>
   <script>
       AOS.init({
       });

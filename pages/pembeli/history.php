@@ -22,6 +22,7 @@ if (isset($_GET['id_pembeli'])) {
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;400;600&display=swap" rel="stylesheet" />
   <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
   <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
   <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
 
@@ -32,18 +33,17 @@ if (isset($_GET['id_pembeli'])) {
   include '../../partials/navbar-pembeli.php'; 
   ?>
 
-  <h2 class="text-2xl font-bold mx-auto m-4" data-aos="fade-up" data-aos-duration="1000">Riwayat Pembelian</h2>
+  <h2 class="text-2xl font-bold mx-auto m-4">Purchase History</h2>
 
-  <div class="w-[90%] mx-auto mb-10" data-aos="fade-up" data-aos-duration="1000">
-
+  <div class="w-[90%] mx-auto mb-10">
     <div class="overflow-x-auto bg-white">
       <?php
       $ambil_data = mysqli_query($koneksi, "SELECT * FROM riwayat_pembelian WHERE id_pembeli='$id_pembeli' ORDER BY order_id, nama_kantin, tanggal");
-      
+    
       if (mysqli_num_rows($ambil_data) == 0) {
-        echo "<p class='text-xl mx-auto m-4 text-center'>Ayo! Jangan lupa order di Campuseats ya</p>";
+        echo "<p class='text-base mx-auto m-4 text-center text-gray-500'>No order history yet.</p>";
         return;
-      }else{
+      } else{
           echo "
             <table class='table w-full'>
               <thead class='bg-kuning text-white'>

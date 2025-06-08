@@ -19,6 +19,11 @@ include "../../database/model.php";
   <link href="/campuseats/dist/output.css" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;400;600&display=swap" rel="stylesheet" />
   <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
+
+  <!-- jquery wajib untuk notify.js -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf/notyf.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/notyf/notyf.min.js"></script>
+
   <title>Dashboard Admin</title>
 </head>
 <body class="min-h-screen flex flex-col">
@@ -70,7 +75,6 @@ include "../../database/model.php";
       </div>
     </div>
 
-
     <!-- Statistik -->
     <div class="grid grid-cols-2 md:grid-cols-2 gap-2 mb-2">
       <div class="bg-white border border-black rounded-lg p-4 text-center shadow">
@@ -84,21 +88,45 @@ include "../../database/model.php";
     </div>
 
     <!-- Navigasi Kelola -->
-     <?php
-
-     ?>
     <div class="grid grid-cols-2 md:grid-cols-2 gap-2">
       <!-- kelola pengguna -->
-      <a href='kelola_pengguna.php?id_admin=<?=$id_admin?>' class="bg-white border border-black rounded-lg p-4 text-center hover:bg-gray-100 transition">
+      <a href='kelola_pengguna.php?id_admin=<?= $id_admin ?>' class="bg-white border border-black rounded-lg p-4 text-center hover:bg-gray-100 transition">
         <h4 class="text-lg font-semibold mb-2">Manage CampusEats's User</h4>
         <p class="text-gray-600 text-sm">Look and delete Campuseats's User data.</p>
       </a>
       <!-- kelola kantin -->
-      <a href="kelola_kantin.php?id_admin=<?=$id_admin?>" class="bg-white border border-black rounded-lg p-4 text-center hover:bg-gray-100 transition">
+      <a href="kelola_kantin.php?id_admin=<?= $id_admin ?>" class="bg-white border border-black rounded-lg p-4 text-center hover:bg-gray-100 transition">
         <h4 class="text-lg font-semibold mb-2">Manage Campuseats's Canteen</h4>
         <p class="text-gray-600 text-sm">Add, edit, and delete Campuseats's Canteen data.</p>
       </a>
     </div>
   </main>
+
+  <script>
+  const notyf = new Notyf({
+    duration: 3000,
+    position: { x: 'right', y: 'top' },
+    types: [
+      {
+        type: 'success',
+        background: '#FFB43B',
+        icon: { className: 'notyf__icon--success', tagName: 'i' }
+      },
+      {
+        type: 'error',
+        background: '#d63031',
+        icon: { className: 'notyf__icon--error', tagName: 'i' }
+      }
+    ]
+  });
+
+  const urlParams = new URLSearchParams(window.location.search);
+  if (urlParams.get('success') === 'true') {
+    notyf.success("Profile updated successfully!");
+  }
+  if (urlParams.get('error') === 'error') {
+    notyf.error("Name and Position must be filled in!");
+  }
+</script>
 </body>
 </html>

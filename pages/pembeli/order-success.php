@@ -2,6 +2,11 @@
 require_once '../../middleware/role_auth.php';
 $orderId = $_GET['order_id'] ?? 'UNKNOWN';
 require_role('pembeli');
+
+if (isset($_GET['id_pembeli'])) {
+  $id_per_pembeli = $_GET['id_pembeli'];
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -31,8 +36,8 @@ require_role('pembeli');
         Pembayaran untuk <strong>Order ID #<?= htmlspecialchars($orderId) ?></strong> telah berhasil diproses.
       </p>
 
-      <a href="/campuseats/pages/pembeli/canteen.php" class="inline-block mt-4 bg-yellow-500 hover:bg-yellow-600 text-white font-semibold py-2 px-4 rounded transition duration-300">
-        Kembali ke Beranda
+      <a href="/campuseats/pages/pembeli/history.php?id_pembeli=<?= $id_per_pembeli ?>" class="inline-block mt-4 bg-yellow-500 hover:bg-yellow-600 text-white font-semibold py-2 px-4 rounded transition duration-300">
+        Lihat History Pesanan
       </a>
 
     </div>
