@@ -8,9 +8,6 @@ if (isset($_GET['id_penjual'])) {
 
 if (isset($_GET['id_menu'])) {
     $id_per_menu = (int) $_GET['id_menu'];
-}else{
-  header("Location: /campuseats/pages/auth/logout.php");
-  exit();
 }
 
 include "../../database/koneksi.php";

@@ -42,7 +42,7 @@ if (isset($_FILES['gambar']) && $_FILES['gambar']['error'] === UPLOAD_ERR_OK) {
 $berhasil = updateInfoMenu($koneksi, $id_menu, $nama_menu, $harga, $gambar_baru);
 
 if ($berhasil) {
-    header("Location: kelola_menu.php?id_penjual=" . $id_penjual);
+    header("Location: kelola_menu.php?id_penjual=" . $id_per_penjual );
     exit;
 } else {
     echo "Gagal update menu.";
