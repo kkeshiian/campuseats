@@ -76,7 +76,7 @@ if (isset($_POST['submit'])) {
             while ($row_user = mysqli_fetch_assoc($ambil_data_user)) :
               $id_user_penjual = $row_user['id_user'];
               $ambil_fakultas = mysqli_query($koneksi, 
-              "SELECT fakultas.nama_fakultas, fakultas.link, penjual.nama_kantin
+              "SELECT fakultas.nama_fakultas, penjual.nama_kantin
                FROM penjual 
                JOIN fakultas ON penjual.id_fakultas = fakultas.id_fakultas 
                WHERE penjual.id_user = '$id_user_penjual'");

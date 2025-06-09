@@ -26,13 +26,13 @@ if (isset($_FILES['gambar']) && $_FILES['gambar']['error'] === UPLOAD_ERR_OK) {
         if (move_uploaded_file($tmp_file, $path_simpan)) {
             $gambar_baru = 'assets/' . $nama_file_baru;
         } else {
-            die("Gagal memindahkan file gambar.");
+            $gambar_baru = 'assets/default-menu.jpg';
         }
     } else {
-        die("Format gambar tidak didukung.");
+        $gambar_baru = 'assets/default-menu.jpg';
     }
 } else {
-    die("File gambar tidak diupload atau error.");
+    $gambar_baru = 'assets/default-menu.jpg';
 }
 
 $berhasil = tambahMenu($koneksi, $id_penjual, $nama_menu, $harga, $gambar_baru);
