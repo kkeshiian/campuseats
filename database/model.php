@@ -13,26 +13,29 @@ function tambah_pembeli($koneksi, $id_user){
 
 
 function registrasi($koneksi, $nama, $username, $password, $role) {
-        mysqli_query($koneksi, "
-            INSERT INTO user SET
-            nama = '$nama',
-            username = '$username',
-            password = '$password',
-            Role = '$role'       
-        ");
-        $cek_role = $role;
+    $ambil_data_usn = mysqli_query($koneksi, "SELECT username FROM user WHERE username = '$username'");
 
-        if ($cek_role=='pembeli') {
-            $id_user_baru = mysqli_insert_id($koneksi);
+    if (mysqli_num_rows($ambil_data_usn) > 0) {
+        return false;
+    }
 
-            tambah_pembeli($koneksi, $id_user_baru);
-        }
-        
-        return true;
+    $query = mysqli_query($koneksi, "
+        INSERT INTO user (nama, username, password, role)
+        VALUES ('$nama', '$username', '$password', '$role')
+    ");
+
+    if ($role == 'pembeli') {
+        $id_user_baru = mysqli_insert_id($koneksi);
+        tambah_pembeli($koneksi, $id_user_baru);
+    }
+
+    return true;
 }
+
 
 function registrasiPenjual($koneksi, $username, $nama_penjual, $nama_kantin, $id_fakultas, $password, $link) {
         $username = mysqli_real_escape_string($koneksi, $username);
+        
         mysqli_query($koneksi, "
             INSERT INTO user SET
             nama = '$nama_penjual',

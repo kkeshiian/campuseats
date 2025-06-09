@@ -97,7 +97,7 @@ if (isset($_POST['submit'])) {
           <label class="label" for="password">Password</label>
           <input id="password" type="password" name="password" class="input input-bordered w-full rounded-lg" />
           <p class="text-gray-500 mt-1 text-xs leading-snug">
-            Password must be at least 8 characters, include uppercase, lowercase, a number,<br />
+            Password must be at least 8 characters, include uppercase, lowercase, a number,
             and a special symbol (e.g., !@#$%^&*).
           </p>
         </div>
