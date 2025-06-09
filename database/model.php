@@ -195,8 +195,12 @@ function updateInfoMenu($koneksi, $id_menu, $nama_menu, $harga, $gambar = null){
 }
 function tambahMenu($koneksi, $id_penjual, $nama_menu, $harga, $gambar) {
     $nama_menu = mysqli_real_escape_string($koneksi, $nama_menu);
-    $gambar = mysqli_real_escape_string($koneksi, $gambar);
 
+    if (empty($gambar)) {
+        $gambar = 'assets/default-menu.jpg';
+    }
+
+    $gambar = mysqli_real_escape_string($koneksi, $gambar);
     $id_penjual = (int) $id_penjual;
     $harga = (int) $harga;
 
@@ -205,6 +209,7 @@ function tambahMenu($koneksi, $id_penjual, $nama_menu, $harga, $gambar) {
 
     return mysqli_query($koneksi, $query);
 }
+
 function updateInfoKantin($koneksi, $id_penjual, $nama_kantin, $link, $id_fakultas, $foto_baru = null) {
     $path_gambar = "assets/" . $foto_baru;
     if ($foto_baru) {
