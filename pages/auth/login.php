@@ -102,7 +102,7 @@ if (isset($_POST['submit'])) {
       </form>
 
       <p class="mt-4 text-center text-sm text-gray-600">
-        Belum punya akun? 
+        Don't have an account?
         <a href="register.php" class="text-yellow-600 hover:underline">Register</a>
       </p>
     </div>

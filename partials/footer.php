@@ -20,7 +20,7 @@
 
     <!-- Developers -->
     <div>
-      <h3 class="text-lg font-semibold text-black mb-2">Development Team</h3>
+      <h3 class="text-lg font-semibold text-black">Development Team</h3>
       <ul class="text-sm space-y-1">
         <li class="hover:text-black transition">Randy Febrian</li>
         <li class="hover:text-black transition">Muhammad Rizky</li>
@@ -30,7 +30,7 @@
   </div>
 
   <!-- Bottom Bar -->
-  <div class="text-center text-xs py-4 text-black">
+  <div class="text-center text-xs py-2 text-black">
     &copy; 2025 CampusEats. All rights reserved.
   </div>
 </footer>

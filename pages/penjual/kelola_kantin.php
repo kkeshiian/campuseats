@@ -34,13 +34,15 @@
     <script src="https://cdn.jsdelivr.net/npm/notyf/notyf.min.js"></script>
   </head>
   <body class="min-h-screen flex flex-col">
-    <?php include '../../partials/navbar-penjual.php'; ?>
+    <?php 
+    $activePage = 'manage_canteen_seller';
+    include '../../partials/navbar-penjual.php'; ?>
     <?php $gambar_kantin_default = "/campuseats/assets/img/default-canteen.jpg"; ?>
 
     <main class="w-[90%] mx-auto mt-6 max-w-5xl mb-4" data-aos="fade-up" data-aos-duration="1000">
       <h2 class="text-2xl font-bold mb-4" data-aos="fade-right" data-aos-duration="1000">Manage Canteen</h2>
 
-      <form action="proses_kelola_kantin.php" method="POST" enctype="multipart/form-data" class="space-y-4 bg-white p-6 rounded-lg shadow border border-black">
+      <form action="proses_kelola_kantin.php" method="POST" enctype="multipart/form-data" class=" bg-white p-6 rounded-lg shadow border border-black">
         <?php
         $ambil_data = mysqli_query($koneksi, "
             SELECT penjual.nama_kantin, penjual.link, penjual.gambar, fakultas.nama_fakultas, fakultas.id_fakultas 
@@ -93,7 +95,7 @@
               </div>
 
               <div class="flex justify-end">
-                <button type="submit" name="submit" class="btn bg-kuning text-white hover:bg-yellow-600">Save Changes</button>
+                <button type="submit" name="submit" class="btn bg-kuning text-white hover:bg-yellow-600 rounded-lg">Save Changes</button>
               </div>
             </div>
           </div>

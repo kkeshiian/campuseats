@@ -34,67 +34,64 @@ if (isset($_POST['submit'])) {
   <title>Dashboard Admin - Manage User</title>
 </head>
 <body class="min-h-screen flex flex-col">
-  <?php include '../../partials/navbar-admin.php'; ?>
+  <?php
+  $activePage = 'kelola_pengguna';
+  include '../../partials/navbar-admin.php'; ?>
 
   <main class="w-[90%] max-w-5xl mx-auto mt-6">
-    <div class="flex items-center justify-between mb-4">
-      <h2 class="text-3xl font-bold text-gray-800">Manage User</h2>
+    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4 gap-2">
+      <h2 class="text-2xl sm:text-3xl font-bold text-black">Manage User</h2>
     </div>
 
-    <?php
-    $ambil_data_user = mysqli_query($koneksi, "SELECT * FROM user WHERE Role='pembeli'");
-    ?>
+  <?php
+  $ambil_data_user = mysqli_query($koneksi, "SELECT * FROM user WHERE Role='pembeli'");
+  ?>
 
-    <div class="overflow-x-auto bg-white border rounded-lg shadow">
-        <?php if (mysqli_num_rows($ambil_data_user) == 0) : ?>
-          <p class="text-center text-lg p-6 text-gray-600">Tidak ada data user yang ditemukan.</p>
-        <?php else : ?>
-          <table class="table w-full text-center">
-            <thead class="bg-kuning text-white">
-              <tr>
-                <th class="p-3">No</th>
-                <th class="p-3">Full Name</th>
-                <th class="p-3">Username</th>
-                <th class="p-3">Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              <?php
-              $no = 1;
-              while ($row_user = mysqli_fetch_assoc($ambil_data_user)) :
-              ?>
-                <tr class="hover:bg-gray-50">
-                  <td class="p-3"><?= $no ?></td>
-                  <td class="p-3"><?= htmlspecialchars($row_user['nama']) ?></td>
-                  <td class="p-3"><?= htmlspecialchars($row_user['username']) ?></td>
-                  <td class="p-3 space-x-2">
-                    <!-- Tombol Delete (opsional: bisa juga pakai SweetAlert nanti) -->
-                    <a
-                      class="btn btn-sm bg-red-500 rounded-lg text-white hover:bg-red-600 transition"
-                      onclick="confirmDelete(<?= $row_user['id_user'] ?>, <?= $id_admin ?>)"
-                    >
-                      Delete
-                    </a>
+  <div class="overflow-x-auto bg-white border rounded-lg shadow">
+    <?php if (mysqli_num_rows($ambil_data_user) == 0) : ?>
+      <p class="text-center text-lg p-6 text-gray-600">No user data found.</p>
+    <?php else : ?>
+      <table class="table w-full text-sm sm:text-base text-center">
+        <thead class="bg-kuning text-white">
+          <tr>
+            <th class="p-2 sm:p-3">No</th>
+            <th class="p-2 sm:p-3">Full Name</th>
+            <th class="p-2 sm:p-3">Username</th>
+            <th class="p-2 sm:p-3">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <?php
+          $no = 1;
+          while ($row_user = mysqli_fetch_assoc($ambil_data_user)) :
+          ?>
+            <tr class="hover:bg-gray-50">
+              <td class="p-2 sm:p-3"><?= $no ?></td>
+              <td class="p-2 sm:p-3"><?= htmlspecialchars($row_user['nama']) ?></td>
+              <td class="p-2 sm:p-3"><?= htmlspecialchars($row_user['username']) ?></td>
+              <td class="p-2 sm:p-3 flex flex-col sm:flex-row justify-center items-center gap-2">
+                <a
+                  class="btn btn-sm bg-kuning text-white hover:bg-yellow-600 transition rounded-lg"
+                  onclick="confirmAuthorization(<?= $row_user['id_user'] ?>, <?= $id_admin ?>)">
+                  Authorization
+                </a>
+                <a
+                  class="btn btn-sm bg-red-500 text-white hover:bg-red-600 transition rounded-lg"
+                  onclick="confirmDelete(<?= $row_user['id_user'] ?>, <?= $id_admin ?>)">
+                  Delete
+                </a>
+              </td>
+            </tr>
+          <?php
+          $no++;
+          endwhile;
+          ?>
+        </tbody>
+      </table>
+    <?php endif; ?>
+  </div>
+</main>
 
-
-                    <!-- Tombol Authorization dengan SweetAlert -->
-                    <a
-                      class="btn btn-sm bg-kuning rounded-lg text-white hover:bg-yellow-600 transition"
-                      onclick="confirmAuthorization(<?= $row_user['id_user'] ?>, <?= $id_admin ?>)"
-                    >
-                      Authorization
-                    </a>
-                  </td>
-                </tr>
-              <?php
-              $no++;
-              endwhile;
-              ?>
-            </tbody>
-          </table>
-        <?php endif; ?>
-    </div>
-  </main>
 
 <script>
   function confirmAuthorization(id_pembeli, id_admin) {

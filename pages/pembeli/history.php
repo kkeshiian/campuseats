@@ -33,10 +33,10 @@ if (isset($_GET['id_pembeli'])) {
   include '../../partials/navbar-pembeli.php'; 
   ?>
 
-  <h2 class="text-2xl font-bold mx-auto m-4">Purchase History</h2>
+  <h2 class="text-2xl font-bold mx-auto m-4" data-aos="fade-up" data-aos-duration="1000">Purchase History</h2>
 
-  <div class="w-[90%] mx-auto mb-10">
-    <div class="overflow-x-auto bg-white">
+  <div class="w-[90%] mx-auto mb-10" data-aos="fade-up" data-aos-duration="1000">
+    <div class="overflow-x-auto bg-white border border-black rounded-lg shadow-md">
       <?php
       $ambil_data = mysqli_query($koneksi, "SELECT * FROM riwayat_pembelian WHERE id_pembeli='$id_pembeli' ORDER BY order_id, nama_kantin, tanggal");
     

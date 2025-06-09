@@ -78,15 +78,15 @@ data-aos="fade-down" data-aos-duration="1000">
                 $harga = (int)$row_menu['harga'];
                 $gambar = htmlspecialchars($row_menu['gambar']);
     ?>
-    <div class="flex flex-col justify-between bg-white rounded-lg shadow-lg border border-black p-4">
-        <div>
-            <img src="/campuseats/<?= $gambar ?>" alt="<?= $nama ?>" class="rounded-t-lg w-full h-36 object-cover" />
-            <div class="pt-4 pb-4">
-                <h2 class="text-xl font-semibold"><?= $nama ?></h2><br>
+    <div class="flex flex-col justify-between bg-white rounded-lg shadow-lg border border-black">
+        <div class="p-4">
+            <img src="/campuseats/<?= $gambar ?>" alt="<?= $nama ?>" class="rounded-t-lg w-full h-36 object-cover mb-1" />
+            <div class="">
+                <h2 class="text-xl font-semibold"><?= $nama ?></h2>
                 <p class="text-gray-600">Rp <?= number_format($harga, 0, ',', '.') ?></p>
             </div>
         </div>
-        <div>
+        <div class="p-4">
             <button
                 class="btn bg-kuning text-sm text-black rounded-lg px-4 py-2 hover:bg-yellow-600 w-full text-center add-to-cart"
                 data-nama="<?= $nama ?>"

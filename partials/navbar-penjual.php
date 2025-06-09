@@ -5,7 +5,7 @@ $id_penjual = isset($_SESSION['id_penjual']) ? $_SESSION['id_penjual'] : null;
 <!-- Include SweetAlert2 -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-<div class="navbar bg-base-100 shadow-sm">
+<div class="sticky top-0 z-50 bg-base-100 shadow-sm navbar">
   <div class="navbar-start">
     <div class="dropdown">
       <div tabindex="0" role="button" class="btn btn-ghost lg:hidden">
@@ -13,7 +13,7 @@ $id_penjual = isset($_SESSION['id_penjual']) ? $_SESSION['id_penjual'] : null;
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h8m-8 6h16" /> 
         </svg>
       </div>
-      <ul tabindex="0" class="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
+      <ul tabindex="0" class="menu menu-sm dropdown-content bg-base-100 rounded-box z-50 mt-3 w-52 p-2 shadow">
         <li><a href="../../pages/penjual/dashboard.php<?= $id_penjual ? '?id_penjual=' . $id_penjual : '' ?>" class="<?= ($activePage == 'dashboard_seller') ? 'underline decoration-kuning decoration-1 underline-offset-4 ' :  '' ?>">Dashboard</a></li>
         <li><a href="/campuseats/pages/penjual/kelola_menu.php<?= $id_penjual ? '?id_penjual=' . $id_penjual : '' ?>" class="<?= ($activePage == 'manage_menu_seller') ? 'underline decoration-kuning decoration-1 underline-offset-4' :  '' ?>">Manage Menu</a></li>
         <li><a href="/campuseats/pages/penjual/kelola_kantin.php<?= $id_penjual ? '?id_penjual=' . $id_penjual : '' ?>" class="<?= ($activePage == 'manage_canteen_seller') ? 'underline decoration-kuning decoration-1 underline-offset-4' :  '' ?>">Manage Canteen</a></li>

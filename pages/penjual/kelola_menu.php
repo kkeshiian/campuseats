@@ -28,66 +28,74 @@ require_role('penjual');
   <title>Kelola Menu</title>
 </head>
 <body class="min-h-screen flex flex-col">
-  <?php include '../../partials/navbar-penjual.php'; ?>
+  <?php 
+  $activePage = 'manage_menu_seller';
+  include '../../partials/navbar-penjual.php'; ?>
 
-  <main class="w-[90%] mx-auto mt-6" data-aos="fade-up" data-aos-duration="1000">
-    <div class="flex justify-between items-center">
-      <h2 class="text-2xl font-bold mb-4" data-aos="fade-right" data-aos-duration="1000">Manage Menu</h2>
-      <!-- Tombol Tambah Menu -->
-      <div class="mb-6">
-        <a href="tambah-menu.php?id_penjual=<?= $id_per_penjual ?>" class="btn bg-kuning text-white font-semibold rounded-lg px-4 py-2 hover:bg-yellow-600">
-          + Add Menu
-        </a>
-      </div>
+  <main class="w-full max-w-7xl mx-auto mt-6 px-4 sm:px-6 lg:px-8" data-aos="fade-up" data-aos-duration="1000">
+  <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6">
+    <h2 class="text-2xl font-bold mb-4 sm:mb-0" data-aos="fade-right" data-aos-duration="1000">Manage Menu</h2>
+    <!-- Tombol Tambah Menu -->
+    <div>
+      <a href="tambah-menu.php?id_penjual=<?= $id_per_penjual ?>" 
+         class="btn bg-kuning text-white font-semibold rounded-lg px-4 py-2 hover:bg-yellow-600 whitespace-nowrap">
+        + Add Menu
+      </a>
     </div>
+  </div>
 
-    <!-- Tabel Daftar Menu -->
-    <div class="overflow-x-auto bg-white rounded-lg shadow border border-black">
-      <?php
-      $ambil_data_menu = mysqli_query($koneksi, "SELECT id_menu, nama_menu AS menu, harga FROM menu WHERE id_penjual = '$id_per_penjual'");
+  <!-- Tabel Daftar Menu -->
+  <div class="overflow-x-auto bg-white rounded-lg shadow border border-black">
+    <?php
+    $ambil_data_menu = mysqli_query($koneksi, "SELECT id_menu, nama_menu AS menu, harga FROM menu WHERE id_penjual = '$id_per_penjual'");
 
-      if (mysqli_num_rows($ambil_data_menu) == 0) {
-        echo "<p class='text-base mx-auto m-4 text-center text-gray-500 '>No menu has been added yet</p>";
-      } else {
-        echo "
-          <table class='table w-full text-center'>
-            <thead class='bg-kuning text-white'>
-              <tr>
-                <th>No</th>
-                <th>Menu Name</th>
-                <th>Price</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody>
-        ";
-
-        $no = 1;
-        while ($menu = mysqli_fetch_assoc($ambil_data_menu)) {
-          $harga = number_format($menu['harga'], 0, ',', '.');
-          echo "
+    if (mysqli_num_rows($ambil_data_menu) == 0) {
+      echo "<p class='text-base mx-auto m-4 text-center text-gray-500'>No menu has been added yet</p>";
+    } else {
+      echo "
+        <table class='table w-full min-w-[600px] text-center'>
+          <thead class='bg-kuning text-white'>
             <tr>
-              <td>$no</td>
-              <td>{$menu['menu']}</td>
-              <td>Rp $harga</td>
-              <td class='space-x-2'>
-                <button onclick=\"confirmEdit({$menu['id_menu']}, $id_per_penjual)\" class='btn btn-sm bg-blue-500 text-white hover:bg-blue-600'>Edit</button>
-                <button onclick=\"confirmDelete({$menu['id_menu']}, $id_per_penjual)\" class='btn btn-sm bg-red-500 text-white hover:bg-red-600'>Delete</button>
-              </td>
+              <th class='px-2 py-3'>No</th>
+              <th class='px-2 py-3'>Menu Name</th>
+              <th class='px-2 py-3'>Price</th>
+              <th class='px-2 py-3'>Action</th>
             </tr>
-          ";
-          $no++;
-        }
+          </thead>
+          <tbody>
+      ";
 
+      $no = 1;
+      while ($menu = mysqli_fetch_assoc($ambil_data_menu)) {
+        $harga = number_format($menu['harga'], 0, ',', '.');
         echo "
-            </tbody>
-          </table>
+          <tr class='hover:bg-gray-100'>
+            <td class='px-2 py-2'>$no</td>
+            <td class='px-2 py-2'>{$menu['menu']}</td>
+            <td class='px-2 py-2'>Rp $harga</td>
+            <td class='px-2 py-2 space-x-2 whitespace-nowrap'>
+              <button onclick=\"confirmEdit({$menu['id_menu']}, $id_per_penjual)\" 
+                      class='btn btn-sm bg-kuning rounded-lg text-white hover:bg-yellow-600'>
+                Edit Menu
+              </button>
+              <button onclick=\"confirmDelete({$menu['id_menu']}, $id_per_penjual)\" 
+                      class='btn btn-sm bg-red-500 text-white hover:bg-red-600 rounded-lg'>
+                Delete
+              </button>
+            </td>
+          </tr>
         ";
+        $no++;
       }
-      ?>
-    </div>
-  </main>
 
+      echo "
+          </tbody>
+        </table>
+      ";
+    }
+    ?>
+  </div>
+</main>
   <script>
     AOS.init();
 
@@ -158,8 +166,10 @@ require_role('penjual');
   if (successParam === 'true') {
     notyf.success("Menu changed successfully!");
   } else if (successParam === 'hapus') {
-    notyf.success("Menu deleted succefully!");
-  }
+    notyf.success("Menu deleted successfully!");
+  } else if (successParam === 'tambah') {
+  notyf.success("Menu added successfully!");
+}
 
   if (errorParam === 'true') {
     notyf.error("Failed to changed menu!");

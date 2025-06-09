@@ -84,13 +84,11 @@ if (isset($_POST['submit'])) {
           <div class="flex-1 min-w-[300px] space-y-6">
             <h2 class="text-xl font-semibold border-b pb-2 mb-4">Authentication Admin</h2>
             <input type="hidden" name="id_admin" value="<?= $id_admin ?>" />  
-            <!-- Admin Name -->
             <div>
               <label class="block font-semibold mb-1">Admin Name</label>
               <input type="text" name="nama" value="<?= htmlspecialchars($username['username']) ?>" class="input input-bordered w-full"  />
             </div>
 
-            <!-- password -->
             <div>
               <label class="block font-semibold mb-1">Admin Password</label>
               <input type="password" name="password" value="" class="input input-bordered w-full"  />
@@ -100,20 +98,19 @@ if (isset($_POST['submit'])) {
           <div class="flex-1 min-w-[300px] space-y-6">
             <h2 class="text-xl font-semibold border-b pb-2 mb-4">Authentication User</h2>
             <input type="hidden" name="id_user" value="<?= $id_user ?>" />  
-            <!-- Penjual Name -->
             <div>
               <label class="block font-semibold mb-1">Username Sellerr</label>
               <input type="text" name="username" value="" class="input input-bordered w-full"  />
             </div>
 
-            <!-- password -->
             <div>
               <label class="block font-semibold mb-1">New Seller Password</label>
               <input type="password" name="new_password" value="" class="input input-bordered w-full"  />
             </div>
-                <div class="flex justify-end">
-                    <button type="submit" name="submit" class="btn bg-kuning text-white rounded-lg hover:bg-yellow-600">Save Changes</button>
-                </div>
+            <div class="flex justify-between mt-6">
+              <a href="kelola_pengguna.php?id_admin=<?= $id_admin ?>" class="btn btn-outline border-kuning border-1 rounded-lg">← Manage Canteen</a>
+              <button type="submit" name="submit" class="btn bg-kuning text-white rounded-lg hover:bg-yellow-600">Save Changes</button>
+            </div>
           </div>
         </div>
       </form>

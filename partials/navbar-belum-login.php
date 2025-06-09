@@ -14,7 +14,7 @@
       <a href="/campuseats/pages/auth/login.php" class="bg-kuning text-white p-2 px-4 rounded hover:bg-yellow-600 transition">
         Login
       </a>
-      <a href="/campuseats/pages/auth/register.php" class=" mr-10 text-yellow-500 border border-1 border-kuning p-2 px-4 rounded hover:bg-gray-300 transition">
+      <a href="/campuseats/pages/auth/register.php" class="text-yellow-500 border border-1 border-kuning p-2 px-4 rounded hover:bg-gray-300 transition">
         Register
       </a>
     </div>
