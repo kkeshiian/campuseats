@@ -38,7 +38,7 @@ if (isset($_POST['submit'])) {
 
                 if ($update_result) {
                     // Redirect ke kelola_pengguna dengan success toast
-                    header("Location: kelola_pengguna.php?id_admin=$id_admin&success=true");
+                    header("Location: kelola_pengguna.php?id_admin=". $id_admin. "&success=true");
                     exit;
                 } else {
                     $error_message = "Gagal memperbarui password pengguna.";

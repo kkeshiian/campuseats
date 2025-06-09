@@ -70,7 +70,6 @@ if (isset($_POST['submit'])) {
                   <td class="p-3 space-x-2">
                     <!-- Tombol Delete (opsional: bisa juga pakai SweetAlert nanti) -->
                     <a
-                      href="#"
                       class="btn btn-sm bg-red-500 rounded-lg text-white hover:bg-red-600 transition"
                       onclick="confirmDelete(<?= $row_user['id_user'] ?>, <?= $id_admin ?>)"
                     >
@@ -80,7 +79,6 @@ if (isset($_POST['submit'])) {
 
                     <!-- Tombol Authorization dengan SweetAlert -->
                     <a
-                      href="#"
                       class="btn btn-sm bg-kuning rounded-lg text-white hover:bg-yellow-600 transition"
                       onclick="confirmAuthorization(<?= $row_user['id_user'] ?>, <?= $id_admin ?>)"
                     >
@@ -147,8 +145,7 @@ if (isset($_POST['submit'])) {
 
     const urlParams = new URLSearchParams(window.location.search);
     if (urlParams.get('success') === 'true') {
-      notyf.success('User password updated successfully!');
-      // opsional: kamu bisa bersihkan URL supaya param success hilang setelah toast muncul
+      notyf.success('User data updated successfully!');
       history.replaceState(null, '', window.location.pathname);
     }
   </script>

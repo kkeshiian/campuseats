@@ -1,8 +1,11 @@
 <?php
-/*
 if (isset($_GET['id_admin'])) {
     $id_admin = (int) $_GET['id_admin'];
 }
+
+include "../../database/koneksi.php";
+include "../../database/model.php";
+
 $ambil_data = mysqli_query($koneksi, "
 SELECT nama_fakultas, id_fakultas FROM fakultas");
 $data = mysqli_fetch_assoc($ambil_data);
@@ -32,7 +35,6 @@ if (isset($_POST['submit'])) {
         exit();
     }
 }
-*/
 ?>
 
 <!DOCTYPE html>
@@ -53,7 +55,7 @@ if (isset($_POST['submit'])) {
     <main class="w-[90%] mx-auto mt-6 max-w-xl">
       <h2 class="text-2xl font-bold mb-4 text-center">Add New Canteen</h2>
 
-      <form action="proses_tambah_kantin.php" method="POST" enctype="multipart/form-data"
+      <form method="POST" enctype="multipart/form-data"
   class="space-y-6 bg-white p-6 rounded-lg shadow border border-black" id="menuForm">
 
         <input type="hidden" name="id_admin" value="<?= htmlspecialchars($id_admin) ?>">
@@ -81,12 +83,12 @@ if (isset($_POST['submit'])) {
                 <select name="id_fakultas" class="select select-bordered w-full" required>
                 <option value="">-- Select Faculty --</option>
                 <?php
-                /*
+                
                 while ($fakultas = mysqli_fetch_assoc($queryFakultas)) {
                     $selected = ($fakultas['id_fakultas'] == $id_fakultas_terpilih) ? 'selected' : '';
                     echo "<option value='{$fakultas['id_fakultas']}' $selected>{$fakultas['nama_fakultas']}</option>";
                 }
-                */
+                
                 ?>
                 </select>
             </div>
