@@ -11,7 +11,7 @@ require_role('pembeli');
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link href="/campuseats/dist/output.css" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;400;600&display=swap" rel="stylesheet" />
-  <title>About Us - Tim Pengembang</title>
+  <title>About Us</title>
 
   <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
@@ -21,7 +21,7 @@ require_role('pembeli');
 <?php include '../../partials/navbar-pembeli.php'; ?>
 
 <main class="flex-grow container mx-auto px-4">
-  <h1 class="text-2xl font-bold mb-8 text-center text-black m-4" data-aos="fade-up" data-aos-duration="1000">Tim Pengembang</h1>
+  <h1 class="text-2xl font-bold mb-6 text-center text-black m-4" data-aos="fade-up" data-aos-duration="1000">Development Team</h1>
   
   <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
     <!-- UI/UX Designer -->

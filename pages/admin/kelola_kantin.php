@@ -24,7 +24,7 @@ if (isset($_POST['submit'])) {
 <html data-theme="light" class="bg-background">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link href="/campuseats/dist/output.css" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;400;600&display=swap" rel="stylesheet" />
   <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
@@ -35,13 +35,17 @@ if (isset($_POST['submit'])) {
   <script src="https://cdn.jsdelivr.net/npm/notyf/notyf.min.js"></script>
 </head>
 <body class="min-h-screen flex flex-col">
-  <?php include '../../partials/navbar-admin.php'; ?>
+  <?php 
+  $activePage = 'kelola_kantin';
+  include '../../partials/navbar-admin.php'; 
+  ?>
 
-  <main class="w-[90%] max-w-6xl mx-auto mt-6 mb-6">
-    <div class="flex items-center justify-between mb-4">
-      <h2 class="text-3xl font-bold text-gray-800">Manage Canteen</h2>
-      <div class="space-x-2">
-        <a href="tambah_kantin.php?id_admin=<?=$id_admin?>" class="btn bg-kuning text-white rounded-lg hover:bg-yellow-600 cursor-pointer">
+  <main class="w-full max-w-7xl mx-auto mt-6 mb-6 px-4 sm:px-6 lg:px-8">
+    <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-4 gap-4">
+      <h2 class="text-2xl sm:text-3xl font-bold text-black">Manage Canteen</h2>
+      <div class="flex-shrink-0">
+        <a href="tambah_kantin.php?id_admin=<?= $id_admin ?>" 
+           class="btn bg-kuning text-white rounded-lg hover:bg-yellow-600 cursor-pointer px-4 py-2 text-sm sm:text-base">
           + Add Canteen
         </a>
       </div>
@@ -53,17 +57,17 @@ if (isset($_POST['submit'])) {
 
     <div class="overflow-x-auto bg-white border rounded-lg shadow mb-6">
       <?php if (mysqli_num_rows($ambil_data_user) == 0) : ?>
-        <p class="text-center text-lg p-6 text-gray-600">Tidak ada data kantin yang ditemukan.</p>
+        <p class="text-center text-lg p-6 text-gray-600">No canteen data found.</p>
       <?php else : ?>
-        <table class="table w-full text-center">
+        <table class="table-auto min-w-full text-center border-collapse border border-gray-200">
           <thead class="bg-kuning text-white">
             <tr>
-              <th class="p-3">No</th>
-              <th class="p-3">Full Name</th>
-              <th class="p-3">Username</th>
-              <th class="p-3">Nama Kantin</th>
-              <th class="p-3">Fakultas</th>
-              <th class="p-3">Action</th>
+              <th class="p-3 border border-kuning">No</th>
+              <th class="p-3 border border-kuning">Full Name</th>
+              <th class="p-3 border border-kuning">Username</th>
+              <th class="p-3 border border-kuning">Nama Kantin</th>
+              <th class="p-3 border border-kuning">Fakultas</th>
+              <th class="p-3 border border-kuning">Action</th>
             </tr>
           </thead>
           <tbody>
@@ -81,26 +85,24 @@ if (isset($_POST['submit'])) {
               $nama_fakultas = $row_fakultas['nama_fakultas'] ?? '-';
               $nama_kantin = $row_fakultas['nama_kantin'] ?? '-';
             ?>
-              <tr class="hover:bg-gray-50">
-                <td class="p-3"><?= $no ?></td>
-                <td class="p-3"><?= htmlspecialchars($row_user['nama']) ?></td>
-                <td class="p-3"><?= htmlspecialchars($row_user['username']) ?></td>
-                <td class="p-3"><?= htmlspecialchars($nama_kantin) ?></td>
-                <td class="p-3"><?= htmlspecialchars($nama_fakultas) ?></td>
-                <td class="p-3 space-x-2">
-                  <a
-                    class="btn btn-sm bg-red-500 rounded-lg text-white hover:bg-red-600 transition"
-                    onclick="confirmDelete(<?= $row_user['id_user'] ?>, <?= $id_admin ?>)"
-                  >
-                    Delete
-                  </a>
-
-                  <a
-                    class="btn btn-sm bg-kuning rounded-lg text-white hover:bg-yellow-600 transition"
-                    onclick="confirmAuthorization(<?= $row_user['id_user'] ?>, <?= $id_admin ?>)"
-                  >
+              <tr class="hover:bg-gray-50 border border-gray-100">
+                <td class="p-3 border border-gray-200"><?= $no ?></td>
+                <td class="p-3 border border-gray-200"><?= htmlspecialchars($row_user['nama']) ?></td>
+                <td class="p-3 border border-gray-200"><?= htmlspecialchars($row_user['username']) ?></td>
+                <td class="p-3 border border-gray-200"><?= htmlspecialchars($nama_kantin) ?></td>
+                <td class="p-3 border border-gray-200"><?= htmlspecialchars($nama_fakultas) ?></td>
+                <td class="p-3 border border-gray-200 space-x-2 whitespace-nowrap">
+                  <button
+                    class="btn btn-sm bg-kuning rounded-lg text-white hover:bg-yellow-600 transition px-3 py-1"
+                    onclick="confirmAuthorization(<?= $row_user['id_user'] ?>, <?= $id_admin ?>)">
                     Authorization
-                  </a>
+                  </button>
+
+                  <button
+                    class="btn btn-sm bg-red-500 rounded-lg text-white hover:bg-red-600 transition px-3 py-1"
+                    onclick="confirmDelete(<?= $row_user['id_user'] ?>, <?= $id_admin ?>)">
+                    Delete
+                  </button>
                 </td>
               </tr>
             <?php
@@ -163,7 +165,7 @@ if (isset($_POST['submit'])) {
     const urlParams = new URLSearchParams(window.location.search);
     if (urlParams.get('success') === 'true') {
       notyf.success('User password updated successfully!');
-      // opsional: kamu bisa bersihkan URL supaya param success hilang setelah toast muncul
+      // Optional: remove success param after notification
       history.replaceState(null, '', window.location.pathname);
     }
   </script>

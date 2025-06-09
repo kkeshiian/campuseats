@@ -38,7 +38,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['submit'])) {
 
   </head>
   <body class="min-h-screen flex flex-col">
-    <?php include '../../partials/navbar-penjual.php'; ?>
+    <?php 
+    $activePage = 'dashboard_seller';
+    include '../../partials/navbar-penjual.php'; ?>
 
     <main class="w-[90%] mx-auto mt-6">
       <h2 class="text-2xl font-bold mb-4" data-aos="fade-right" data-aos-duration="1000">Seller Dashboard</h2>
@@ -105,7 +107,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['submit'])) {
         <p class="text-gray-500 text-base text-center">No orders yet</p>
         <?php else: ?>
           <?php foreach ($daftar_pesanan_hari_ini as $pesanan): ?>
-            <div class="bg-white border border-black rounded-lg p-4 flex justify-between items-center">
+            <div class="bg-white border border-black rounded-lg p-4 flex justify-between items-center gap-4">
               <div>
                 <p class="font-bold text-xl mb-1"><?= $pesanan["menu"] ?></p>
                 <p class="text-l mt-1 mb-1">Order ID: <?= $pesanan["order_id"] ?></p>

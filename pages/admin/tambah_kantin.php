@@ -56,7 +56,7 @@ if (isset($_POST['submit'])) {
       <h2 class="text-2xl font-bold mb-4 text-center">Add New Canteen</h2>
 
       <form method="POST" enctype="multipart/form-data"
-  class="space-y-6 bg-white p-6 rounded-lg shadow border border-black" id="menuForm">
+  class="space-y-6 bg-white p-6 rounded-lg shadow border border-black mb-8" id="menuForm">
 
         <input type="hidden" name="id_admin" value="<?= htmlspecialchars($id_admin) ?>">
 
@@ -120,7 +120,6 @@ if (isset($_POST['submit'])) {
             </div>
         </div>
         </form>
-
     </main>
   </body>
 </html>

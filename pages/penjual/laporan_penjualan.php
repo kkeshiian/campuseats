@@ -35,68 +35,66 @@ include "../../database/model.php";
 
     <!-- Summary -->
     <!-- Kode PHP -->
-    <?php
-    $tanggal_akhir = (new DateTime('now', new DateTimeZone('Asia/Jakarta')))->format('d M Y');
-    $tanggal_awal = date('d M Y', strtotime('-6 days'));
+  <?php
+  date_default_timezone_set('Asia/Jakarta');
 
-    $sql = "SELECT nama_kantin FROM penjual WHERE id_penjual = $id_per_penjual";
-    $result = mysqli_query($koneksi, $sql);
-    $row = mysqli_fetch_assoc($result);
-    $nama_kantin_penjual = $row['nama_kantin'];
+  $tanggal_akhir = (new DateTime('now'))->format('d M Y');
+  $tanggal_awal = date('d M Y', strtotime('-6 days'));
 
-    $query = "SELECT SUM(quantity) AS qty, SUM(total) AS total 
-              FROM riwayat_pembelian 
-              WHERE nama_kantin = '$nama_kantin_penjual' 
-              AND tanggal >= DATE_SUB(CURDATE(), INTERVAL 7 DAY) AND status = 'Done'";
-    $ambil_data = mysqli_query($koneksi, $query);
-    $data = mysqli_fetch_assoc($ambil_data);
+  // Ambil nama kantin
+  $sql = "SELECT nama_kantin FROM penjual WHERE id_penjual = $id_per_penjual";
+  $result = mysqli_query($koneksi, $sql);
+  $row = mysqli_fetch_assoc($result);
+  $nama_kantin_penjual = $row['nama_kantin'];
 
-    $best_day_query = "SELECT DAYNAME(tanggal) AS hari, SUM(total) AS total_hari 
-                      FROM riwayat_pembelian 
-                      WHERE nama_kantin = '$nama_kantin_penjual' 
-                      AND tanggal >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)
-                      AND status = 'Done'
-                      GROUP BY hari 
-                      ORDER BY total_hari DESC 
-                      LIMIT 1";
+  // Total transaksi 7 hari terakhir
+  $query = "SELECT SUM(quantity) AS qty, SUM(total) AS total 
+            FROM riwayat_pembelian 
+            WHERE nama_kantin = '$nama_kantin_penjual' 
+            AND tanggal >= DATE_SUB(CURDATE(), INTERVAL 6 DAY) 
+            AND status = 'Done'";
+  $ambil_data = mysqli_query($koneksi, $query);
+  $data = mysqli_fetch_assoc($ambil_data);
 
+  // Best day berdasarkan total
+  $best_day_query = "SELECT DAYNAME(tanggal) AS hari, SUM(total) AS total_hari 
+                    FROM riwayat_pembelian 
+                    WHERE nama_kantin = '$nama_kantin_penjual' 
+                    AND tanggal >= DATE_SUB(CURDATE(), INTERVAL 6 DAY)
+                    AND status = 'Done'
+                    GROUP BY hari 
+                    ORDER BY total_hari DESC 
+                    LIMIT 1";
+  $best_day_result = mysqli_query($koneksi, $best_day_query);
+  $best_day = mysqli_fetch_assoc($best_day_result);
 
-    $best_day_result = mysqli_query($koneksi, $best_day_query);
-    $best_day = mysqli_fetch_assoc($best_day_result);
+  // ==== BAGIAN UNTUK CHART 7 HARI TERAKHIR ====
+  $sales_data = [];
+  $labels = [];
 
-    // kode php untuk bagian chart
-          $weekly_sales_query = "
-        SELECT DAYNAME(tanggal) as hari, SUM(total) as total 
-        FROM riwayat_pembelian 
-        WHERE nama_kantin = '$nama_kantin_penjual' 
-        AND tanggal >= DATE_SUB(CURDATE(), INTERVAL 6 DAY) AND status = 'Done'
-        GROUP BY hari
-      ";
+  for ($i = 6; $i >= 0; $i--) {
+      $date_obj = new DateTime("-$i days", new DateTimeZone('Asia/Jakarta'));
+      $date = $date_obj->format('Y-m-d');
+      $day_label = $date_obj->format('D');
+      $labels[] = $day_label;
 
-      $weekly_sales_result = mysqli_query($koneksi, $weekly_sales_query);
+      $query = "SELECT SUM(total) as total FROM riwayat_pembelian 
+                WHERE nama_kantin = '$nama_kantin_penjual' 
+                AND DATE(tanggal) = '$date' 
+                AND status = 'Done'";
 
-      // Map hari ke index Senin-Minggu
-      $hari_mapping = [
-        'Monday' => 0,
-        'Tuesday' => 1,
-        'Wednesday' => 2,
-        'Thursday' => 3,
-        'Friday' => 4,
-        'Saturday' => 5,
-        'Sunday' => 6
-      ];
-
-      // Isi default 0 untuk semua hari
-      $sales_data = array_fill(0, 7, 0);
-
-      while ($row = mysqli_fetch_assoc($weekly_sales_result)) {
-        $hari_index = $hari_mapping[$row['hari']] ?? null;
-        if ($hari_index !== null) {
-          $sales_data[$hari_index] = (int)$row['total'];
-        }
+      $result = mysqli_query($koneksi, $query);
+      if (!$result) {
+          die("Query error: " . mysqli_error($koneksi));
       }
+      $row = mysqli_fetch_assoc($result);
+      $sales_data[] = (int)($row['total'] ?? 0);
+  }
 
-    ?>
+
+  // Nanti di bagian HTML/JS Chart, kamu bisa pakai:
+  ?>
+
 
     <div data-aos="fade-up" data-aos-duration="1000">
       <div class="grid grid-cols-1 md:grid-cols-2 gap-2 mb-6">
@@ -130,45 +128,50 @@ include "../../database/model.php";
 
   </main>
   <script>
-    const salesData = <?= json_encode($sales_data) ?>;
+    const chartLabels = <?= json_encode($labels) ?>;
+    const chartData = <?= json_encode($sales_data) ?>;
   </script>
     <script>
-      const isMobile = window.innerWidth < 768;
-      const weeklyChart = new Chart(document.getElementById('weeklyChart'), {
-        type: 'bar',
-        data: {
-          labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-          datasets: [{
-            label: isMobile ? '' : 'Sales (Rp)',
-            data: salesData,
-            borderColor: '#facc15',
-            backgroundColor: '#fde68a',
-            fill: true,
-            tension: 0.4,
-            pointRadius: 5,
-            pointBackgroundColor: '#facc15'
-          }]
-        },
-        options: {
-          responsive: true,
-          scales: {
-            y: {
-              display: !isMobile,
-              beginAtZero: true,
-              ticks: {
-                callback: function(value) {
-                  return 'Rp ' + value.toLocaleString();
+      window.addEventListener('DOMContentLoaded', () => {
+        const isMobile = window.innerWidth < 768;
+        const ctx = document.getElementById('weeklyChart').getContext('2d');
+        new Chart(ctx, {
+          type: 'bar',
+          data: {
+            labels: chartLabels,
+            datasets: [{
+              label: isMobile ? '' : 'Sales (Rp)',
+              data: chartData,
+              borderColor: '#facc15',
+              backgroundColor: '#fde68a',
+              fill: true,
+              tension: 0.4,
+              pointRadius: 5,
+              pointBackgroundColor: '#facc15'
+            }]
+          },
+          options: {
+            responsive: true,
+            scales: {
+              y: {
+                display: !isMobile,
+                beginAtZero: true,
+                ticks: {
+                  callback: function(value) {
+                    return 'Rp ' + value.toLocaleString();
+                  }
                 }
               }
-            }
-          },
-          plugins: {
-            legend: {
-              display: !isMobile
+            },
+            plugins: {
+              legend: {
+                display: !isMobile
+              }
             }
           }
-        }
+        });
       });
+
     </script>
 
     <script>

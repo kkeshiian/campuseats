@@ -27,7 +27,9 @@ include "../../database/model.php";
   <title>Dashboard Admin</title>
 </head>
 <body class="min-h-screen flex flex-col">
-  <?php include '../../partials/navbar-admin.php'; ?>
+  <?php
+  $activePage = 'dashboard';
+  include '../../partials/navbar-admin.php'; ?>
 
   <main class="w-[90%] mx-auto mt-6">
     <h2 class="text-2xl font-bold mb-6">Dashboard Admin</h2>

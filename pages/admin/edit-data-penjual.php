@@ -111,9 +111,10 @@ if (isset($_POST['submit'])) {
               <label class="block font-semibold mb-1">New Seller Password</label>
               <input type="password" name="new_password" value="" class="input input-bordered w-full"  />
             </div>
-                <div class="flex justify-end">
-                    <button type="submit" name="submit" class="btn bg-kuning text-white rounded-lg hover:bg-yellow-600">Save Changes</button>
-                </div>
+            <div class="flex justify-between mt-6">
+              <a href="kelola_pengguna.php?id_admin=<?= $id_admin ?>" class="btn btn-outline border-kuning border-1 rounded-lg">← Manage Canteen</a>
+              <button type="submit" name="submit" class="btn bg-kuning text-white rounded-lg hover:bg-yellow-600">Save Changes</button>
+            </div>
           </div>
         </div>
       </form>
