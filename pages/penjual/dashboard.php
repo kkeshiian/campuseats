@@ -34,7 +34,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['submit'])) {
     <title>Seller Dashboard</title>
 
     <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf/notyf.min.css" />
 
   </head>
   <body class="min-h-screen flex flex-col">
@@ -114,7 +115,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['submit'])) {
                 <p class="text-l mt-1 mb-1">Date: <?= $pesanan["tanggal"] ?></p>
                 <p class="text-sm text-gray-500">Quantity: <?= $pesanan["qty"] ?></p>
                 <p class="text-sm text-gray-500">Total: Rp <?= number_format($pesanan["total"]) ?></p>
-                <p class="text-sm text-gray-500 mt-1">Note: <?php
+                <p class="text-sm text-black mt-1 font-semibold">Note: <?php
                 if ($pesanan["notes"]=='' or $pesanan["notes"]==null) {
                   echo "-";
                 }else{
@@ -162,4 +163,30 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['submit'])) {
     AOS.init({
     });
   </script>
+  <script src="https://cdn.jsdelivr.net/npm/notyf/notyf.min.js"></script>
+<script>
+  const notyf = new Notyf({
+    duration: 3000,
+    position: { x: 'right', y: 'top' },
+    types: [
+      {
+        type: 'success',
+        background: '#FFB43B',
+        icon: { className: 'notyf__icon--success', tagName: 'i' }
+      },
+      {
+        type: 'error',
+        background: '#d63031',
+        icon: { className: 'notyf__icon--error', tagName: 'i' }
+      }
+    ]
+  });
+
+  const urlParams = new URLSearchParams(window.location.search);
+  if (urlParams.get('success') === '1') {
+    notyf.success('Successfully logged in as Seller!');
+    // Hapus parameter agar toast tidak muncul lagi saat reload
+    window.history.replaceState({}, document.title, window.location.pathname + window.location.search.replace(/([&?])success=1/, '').replace(/([&?])$/, ''));
+  }
+</script>
 </html>

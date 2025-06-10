@@ -111,7 +111,7 @@ if (isset($_POST['submit'])) {
             <input id="new_password" type="password" name="new_password" class="input input-bordered w-full"  />
           </div>
           <div class="flex justify-between mt-6">
-            <a href="kelola_pembeli.php?id_admin=<?= $id_admin ?>" class="btn btn-outline border-kuning border-1 rounded-lg">← Manage User</a>
+            <a href="kelola_pengguna.php?id_admin=<?= $id_admin ?>" class="btn btn-outline border-kuning border-1 rounded-lg">← Manage User</a>
             <button type="submit" name="submit" class="btn bg-kuning text-white hover:bg-kuning rounded-lg">Save Changes</button>
           </div>
         </div>

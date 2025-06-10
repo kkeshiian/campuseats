@@ -87,7 +87,6 @@ require_role('penjual');
         ";
         $no++;
       }
-
       echo "
           </tbody>
         </table>
@@ -178,5 +177,11 @@ require_role('penjual');
   }
 
 </script>
+
+<script>
+  console.log("URL: " + window.location.href);
+  console.log("success param: ", new URLSearchParams(window.location.search).get("success"));
+</script>
+
 </body>
 </html>

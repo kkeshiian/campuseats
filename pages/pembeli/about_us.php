@@ -18,7 +18,9 @@ require_role('pembeli');
 </head>
 <body class="flex flex-col min-h-screen">
 
-<?php include '../../partials/navbar-pembeli.php'; ?>
+<?php
+$activePage = 'about_us';
+include '../../partials/navbar-pembeli.php'; ?>
 
 <main class="flex-grow container mx-auto px-4">
   <h1 class="text-2xl font-bold mb-6 text-center text-black m-4" data-aos="fade-up" data-aos-duration="1000">Development Team</h1>
