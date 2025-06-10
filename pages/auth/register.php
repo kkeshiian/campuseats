@@ -47,7 +47,7 @@ if (isset($_POST['submit'])) {
 
             if ($hasil) {
                 // Redirect with success flag
-                header("Location: login.php?success=1");
+                header("Location: login.php?success=true");
                 exit();
             } else {
                 $error = "Registration failed, username might already be taken.";

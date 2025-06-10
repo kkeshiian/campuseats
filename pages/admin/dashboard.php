@@ -129,6 +129,11 @@ include "../../database/model.php";
   if (urlParams.get('error') === 'error') {
     notyf.error("Name and Position must be filled in!");
   }
+  if (urlParams.get('success') === '1') {
+    notyf.success('Successfully logged in as Admin!');
+    // Hapus parameter agar toast tidak muncul lagi saat reload
+    window.history.replaceState({}, document.title, window.location.pathname + window.location.search.replace(/([&?])success=1/, '').replace(/([&?])$/, ''));
+  }
 </script>
 </body>
 </html>

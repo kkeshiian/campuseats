@@ -21,9 +21,9 @@ $activePage = isset($activePage) ? $activePage : '';
       >
         <li><a href="../../index.php" class="<?= ($activePage == 'index') ? 'underline decoration-kuning decoration-1 underline-offset-4 ' :  '' ?>">Home</a></li>
         <li><a href="/campuseats/pages/pembeli/canteen.php<?= $id_pembeli ? '?id_pembeli=' . $id_pembeli : '' ?>" class="<?= ($activePage == 'canteen') ? 'underline decoration-kuning decoration-1 underline-offset-4' :  '' ?>">Canteen</a></li>
-        <li><a href="/campuseats/pages/pembeli/history.php<?= $id_pembeli ? '?id_pembeli=' . $id_pembeli : '' ?>" class="<?= ($activePage == 'history') ? 'underline decoration-kuning decoration-1 underline-offset-4' :  '' ?>">History</a></li>
         <li><a href="/campuseats/pages/pembeli/cart.php<?= $id_pembeli ? '?id_pembeli=' . $id_pembeli : '' ?>" class="<?= ($activePage == 'cart') ? 'underline decoration-kuning decoration-1 underline-offset-4' :  '' ?>">Cart</a></li>
-        <li><a href="/campuseats/pages/pembeli/about_us.php">About Us</a></li>
+        <li><a href="/campuseats/pages/pembeli/history.php<?= $id_pembeli ? '?id_pembeli=' . $id_pembeli : '' ?>" class="<?= ($activePage == 'history') ? 'underline decoration-kuning decoration-1 underline-offset-4' :  '' ?>">History</a></li>
+        <li><a href="/campuseats/pages/pembeli/about_us.php<?= $id_pembeli ? '?id_pembeli=' . $id_pembeli : '' ?>" class="<?= ($activePage == 'about_us') ? 'underline decoration-kuning decoration-1 underline-offset-4' :  '' ?>">About Us</a></li>
       </ul>
     </div>
     <a class="btn btn-ghost normal-case text-xl">CampusEats</a>
@@ -32,9 +32,9 @@ $activePage = isset($activePage) ? $activePage : '';
   <div class="navbar-center hidden lg:flex">
     <ul class="menu menu-horizontal px-1">
       <li><a href="/campuseats/pages/pembeli/canteen.php<?= $id_pembeli ? '?id_pembeli=' . $id_pembeli : '' ?>" class="<?= ($activePage == 'canteen') ? 'underline decoration-kuning decoration-1 underline-offset-4' :  '' ?>">Canteen</a></li>
-      <li><a href="/campuseats/pages/pembeli/history.php<?= $id_pembeli ? '?id_pembeli=' . $id_pembeli : '' ?>" class="<?= ($activePage == 'history') ? 'underline decoration-kuning decoration-1 underline-offset-4' :  '' ?>">History</a></li>
       <li><a href="/campuseats/pages/pembeli/cart.php<?= $id_pembeli ? '?id_pembeli=' . $id_pembeli : '' ?>" class="<?= ($activePage == 'cart') ? 'underline decoration-kuning decoration-1 underline-offset-4' :  '' ?>">Cart</a></li>
-      <li><a href="/campuseats/pages/pembeli/about_us.php">About Us</a></li>
+      <li><a href="/campuseats/pages/pembeli/history.php<?= $id_pembeli ? '?id_pembeli=' . $id_pembeli : '' ?>" class="<?= ($activePage == 'history') ? 'underline decoration-kuning decoration-1 underline-offset-4' :  '' ?>">History</a></li>
+      <li><a href="/campuseats/pages/pembeli/about_us.php<?= $id_pembeli ? '?id_pembeli=' . $id_pembeli : '' ?>" class="<?= ($activePage == 'about_us') ? 'underline decoration-kuning decoration-1 underline-offset-4' :  '' ?>">About Us</a></li>
     </ul>
   </div>
 

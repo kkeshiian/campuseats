@@ -69,7 +69,7 @@ data-aos="fade-down" data-aos-duration="1000">
 </div>
 
 <!-- Tempat menampilkan menu -->
-<div id="card-container" class="flex-grow grid grid-cols-2 md:grid-cols-5 gap-4 w-[90%] mx-auto mt-4" data-aos="fade-up" data-aos-duration="1000">
+<div id="card-container" class="flex-grow grid grid-cols-2 md:grid-cols-5 gap-4 w-[90%] mx-auto mb-8" data-aos="fade-up" data-aos-duration="1000">
     <?php
     
         if (mysqli_num_rows($query_menu) > 0) {
@@ -80,7 +80,7 @@ data-aos="fade-down" data-aos-duration="1000">
     ?>
     <div class="flex flex-col justify-between bg-white rounded-lg shadow-lg border border-black">
         <div class="p-4">
-            <img src="/campuseats/<?= $gambar ?>" alt="<?= $nama ?>" class="rounded-t-lg w-full h-36 object-cover mb-1" />
+            <img src="/campuseats/<?= $gambar ?>" alt="<?= $nama ?>" class="rounded-t-lg w-full h-48 object-cover mb-1" />
             <div class="">
                 <h2 class="text-xl font-semibold"><?= $nama ?></h2>
                 <p class="text-gray-600">Rp <?= number_format($harga, 0, ',', '.') ?></p>

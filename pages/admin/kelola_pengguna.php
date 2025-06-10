@@ -141,10 +141,20 @@ if (isset($_POST['submit'])) {
     });
 
     const urlParams = new URLSearchParams(window.location.search);
+    const successParam = urlParams.get('success');
+    const errorParam = urlParams.get('error');
+
     if (urlParams.get('success') === 'true') {
       notyf.success('User data updated successfully!');
       history.replaceState(null, '', window.location.pathname);
+    } else if (urlParams.get('success') === 'hapus') {
+      notyf.error('Successfully deleted user!');
+      history.replaceState(null, '', window.location.pathname);
     }
   </script>
+  <script>
+  console.log("URL: " + window.location.href);
+  console.log("success param: ", new URLSearchParams(window.location.search).get("success"));
+</script>
 </body>
 </html>

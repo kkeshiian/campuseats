@@ -176,6 +176,8 @@ function hapusMenu($koneksi, $id_menu, $id_penjual){
     "DELETE FROM menu WHERE id_menu='$id_menu'"
     );
     header("Location: /campuseats/pages/penjual/kelola_menu.php?id_penjual=".$id_penjual);
+    $result = mysqli_query($koneksi, "DELETE FROM menu WHERE id_menu='$id_menu'");
+    return $result;
     exit();
 }
 
@@ -253,7 +255,9 @@ function hapusPembeli($koneksi, $id_pembeli, $id_admin){
 
     "DELETE FROM user WHERE id_user='$id_pembeli'"
     );
+    $result = mysqli_query($koneksi, "DELETE FROM pembeli WHERE id_user='$id_pembeli'");
     header("Location: /campuseats/pages/admin/kelola_pengguna.php?id_admin=".$id_admin);
+    return $result;
     exit();
 }
 
@@ -263,6 +267,8 @@ function hapusPenjual($koneksi, $id_penjual, $id_admin){
     "DELETE FROM user WHERE id_user='$id_penjual'"
     );
     header("Location: /campuseats/pages/admin/kelola_kantin.php?id_admin=".$id_admin);
+    $result = mysqli_query($koneksi, "DELETE FROM menu WHERE id_penjual='$id_penjual'");
+    return $result;
     exit();
 }
 

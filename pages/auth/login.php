@@ -7,6 +7,7 @@ $error = '';
 $success = '';
 
 if (isset($_POST['submit'])) {
+    $success = '';
     $username = trim($_POST['username']);
     $password = trim($_POST['password']);
 
@@ -28,7 +29,7 @@ if (isset($_POST['submit'])) {
                 if ($row = mysqli_fetch_assoc($id_penjual_query)) {
                     $id_penjual = $row['id_penjual'];
                     $_SESSION['id_penjual'] = $id_penjual;
-                    header("Location: /campuseats/pages/penjual/dashboard.php?id_penjual=" . $id_penjual);
+                    header("Location: /campuseats/pages/penjual/dashboard.php?id_penjual=$id_penjual&success=1");
                     exit();
                 }
 
@@ -39,7 +40,7 @@ if (isset($_POST['submit'])) {
                 if ($row = mysqli_fetch_assoc($id_pembeli_query)) {
                     $id_pembeli = $row['id_pembeli'];
                     $_SESSION['id_pembeli'] = $id_pembeli;
-                    header("Location: /campuseats/pages/pembeli/canteen.php?id_pembeli=" . $id_pembeli);
+                    header("Location: /campuseats/pages/pembeli/canteen.php?id_pembeli=$id_pembeli&success=1");
                     exit();
                 }
             } elseif ($_SESSION['Role']=='Admin') {
@@ -49,17 +50,13 @@ if (isset($_POST['submit'])) {
                 if ($row = mysqli_fetch_assoc($id_admin_query)) {
                     $id_admin = $row['id_admin'];
                     $_SESSION['id_admin'] = $id_admin;
-                    header("Location: /campuseats/pages/admin/dashboard.php?id_admin=" . $id_admin);
+                    header("Location: /campuseats/pages/admin/dashboard.php?id_admin=$id_admin&success=1");
                     exit();
                 }
             }
         } else {
             $error = 'wrong_credentials';
         }
-    }
-
-    if (isset($_GET['success']) && $_GET['success'] == 1) {
-        $success = 'Anda berhasil registrasi, silakan login.';
     }
 }
 ?>
@@ -112,10 +109,41 @@ if (isset($_POST['submit'])) {
   <script src="https://cdn.jsdelivr.net/npm/notyf/notyf.min.js"></script>
   <script>
     const notyf = new Notyf({
-      duration: 3000,
-      position: { x: 'right', y: 'top' },
-      dismissible: false // no close button
-    });
+    duration: 2000,
+    position: {
+      x: 'right',
+      y: 'top',
+    },
+    types: [
+      {
+        type: 'success',
+        background: '#FFB43B',
+        icon: {
+          className: 'notyf__icon--success',
+          tagName: 'i',
+        }
+      },
+      {
+        type: 'error',
+        background: '#d63031',
+        icon: {
+          className: 'notyf__icon--error',
+          tagName: 'i',
+        }
+      }
+    ]
+  });
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const successParam = urlParams.get('success');
+
+    if (successParam == 'true') {
+      notyf.success('Registration successful! Please log in.');
+      const url = new URL(window.location);
+      url.searchParams.delete('success');
+      window.history.replaceState({}, document.title, url.pathname);
+
+    }
 
     <?php if ($error === 'wrong_credentials'): ?>
       notyf.error('Incorrect username or password!');
