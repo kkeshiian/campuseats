@@ -1,6 +1,7 @@
 <?php
-if (isset($_GET['id'])) {
-    $id = (int) $_GET['id'];
+if (isset($_GET['id_kantin']) && isset($_GET['id_pembeli'])) {
+    $id = (int) $_GET['id_kantin'];
+    $id_per_pembeli = (int) $_GET['id_pembeli'];
 }else{
   header("Location: /campuseats/pages/auth/logout.php");
   exit();
@@ -105,10 +106,18 @@ data-aos="fade-down" data-aos-duration="1000">
 </div>
 
 <script>
+  const idPembeli = <?= json_encode($id_per_pembeli) ?>;
+  const cartKey = `cart_user_${idPembeli}`;
+</script>
+
+
+<script>
 document.addEventListener('DOMContentLoaded', function () {
     setupCartButtons();
     updateCartUI();
 });
+
+
 
 const notyf = new Notyf({
   duration: 2000,
@@ -145,7 +154,7 @@ function setupCartButtons() {
             const gambar = button.dataset.gambar;
             const kantin = button.dataset.kantin;
 
-            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            let cart = JSON.parse(localStorage.getItem(cartKey)) || [];
 
             if (cart.length > 0) {
                 const existingKantin = cart[0].kantin;
@@ -169,15 +178,15 @@ function setupCartButtons() {
                 });
             }
 
-            localStorage.setItem('cart', JSON.stringify(cart));
-            notyf.success(`${nama} successfully added to cart.`);
+            localStorage.setItem(cartKey, JSON.stringify(cart));
+            notyf.success(`${nama} successfully added to your cart.`);
             updateCartUI();
         });
     });
 }
 
 function updateCartUI() {
-    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+    const cart = JSON.parse(localStorage.getItem(cartKey)) || [];
     const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
     const cartCountElement = document.getElementById('cart-count');
     if (cartCountElement) {

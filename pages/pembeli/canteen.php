@@ -21,6 +21,8 @@ if (isset($_GET['id_pembeli'])) {
   exit();
 }
 
+include "../../database/koneksi.php";
+include "../../database/model.php";
 
 require_once '../../middleware/role_auth.php';
 
@@ -80,7 +82,7 @@ require_role('pembeli');
                   </div>
                 </div>
                 <div>
-                  <a href="menu.php?id=' . urlencode($kantin["id"]) . '" class="btn bg-kuning text-black rounded-lg px-4 py-2 hover:bg-yellow-600 w-full text-center">Lihat Menu</a>
+                  <a href="menu.php?id_kantin=' . urlencode($kantin["id"]) . '&id_pembeli=' . urlencode($id_per_pembeli) . '" class="btn bg-kuning text-black rounded-lg px-4 py-2 hover:bg-yellow-600 w-full text-center">Lihat Menu</a>
                 </div>
               </div>';
           }
@@ -100,6 +102,13 @@ require_role('pembeli');
       });
     </script>
     <script src="https://cdn.jsdelivr.net/npm/notyf/notyf.min.js"></script>
+
+<?php
+$ambi_nama_pembeli = mysqli_query($koneksi, "SELECT nama FROM pembeli WHERE id_pembeli='$id_per_pembeli'");
+$data = mysqli_fetch_assoc($ambi_nama_pembeli);
+$nama_user=$data['nama'];
+?>
+
 <script>
   const notyf = new Notyf({
     duration: 3000,
@@ -119,8 +128,9 @@ require_role('pembeli');
   });
 
   const urlParams = new URLSearchParams(window.location.search);
+  const userName = <?=json_encode($nama_user)?>;
   if (urlParams.get('success') === '1') {
-    notyf.success('Successfully logged in!');
+    notyf.success(`Successfully logged in! Welcome to Campuseats ${userName}`);
     // Hapus parameter agar toast tidak muncul lagi saat reload
     window.history.replaceState({}, document.title, window.location.pathname + window.location.search.replace(/([&?])success=1/, '').replace(/([&?])$/, ''));
   }
