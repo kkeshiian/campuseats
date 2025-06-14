@@ -5,7 +5,7 @@ require_role('pembeli');
 
 if (isset($_GET['id_pembeli'])) {
   $id_per_pembeli = $_GET['id_pembeli'];
-}else{
+} else {
   header("Location: /campuseats/pages/auth/logout.php");
   exit();
 }
@@ -27,32 +27,33 @@ if (isset($_GET['id_pembeli'])) {
 </head>
 <body class="min-h-screen flex flex-col overflow-hidden">
 
-
-
 <?php 
 $activePage = 'cart';
 include '../../partials/navbar-pembeli.php'; 
 ?>
 
+<!-- Overlay gelap -->
+<div id="overlay" class="hidden fixed inset-0 bg-black bg-opacity-60 z-[99998]"></div>
+
+<!-- Modal Pilihan Pembayaran -->
+<div id="paymentModal" class="hidden fixed inset-0 flex items-center justify-center z-[99999] rounded-lg p-8">
+  <div class="bg-white p-6 rounded-lg w-full max-w-xs text-center">
+    <h2 class="text-lg font-bold mb-4">Choose your payment method</h2>
+    <div class="flex flex-col space-y-2">
+      <button id="checkoutButton" class="mt-2 bg-kuning text-white px-4 py-2 rounded-lg transition hover:bg-yellow-600">
+        Cashless
+      </button>
+      <button id="payCash" class="mt-2 bg-kuning text-white px-4 py-2 rounded-lg transition hover:bg-yellow-600">
+        Cash
+      </button>
+      <button onclick="closeModal()" class="text-red-500 hover:underline mt-2">Back</button>
+    </div>
+  </div>
+</div>
+
 <div class="w-full max-w-4xl mx-auto m-4" data-aos="fade-up" data-aos-duration="1000">
   <h1 class="text-2xl font-bold mb-4 text-center">Your Cart</h1>
   <div id="cartContainer" class="space-y-4 p-4 shadow-md border border-1 border-black rounded-lg mx-4"></div>
-
-  <!-- Modal Pilihan Pembayaran -->
-  <div id="paymentModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[999999]">
-    <div class="bg-white p-6 rounded-lg w-full max-w-xs text-center">
-      <h2 class="text-lg font-bold mb-4">Choose your payment method</h2>
-      <div class="flex flex-col space-y-2">
-        <button id="checkoutButton" class="mt-2 bg-kuning text-white px-4 py-2 rounded hover:bg-yellow-600">
-          Cashless
-        </button>
-        <button id="payCash" class="mt-2 bg-kuning text-white px-4 py-2 rounded hover:bg-yellow-600">
-          Cash
-        </button>
-        <button onclick="closeModal()" class="text-red-500 hover:underline mt-2">Back</button>
-      </div>
-    </div>
-  </div>
 
   <div class="text-right mt-4 mx-4">
     <p class="text-xl font-semibold">Total: Rp <span id="totalHarga">0</span></p>
@@ -72,16 +73,14 @@ include '../../partials/navbar-pembeli.php';
     const totalHargaElem = document.getElementById('totalHarga');
     container.innerHTML = '';
 
-  if (cart.length === 0) {
-    container.innerHTML = '<p class="text-center text-gray-500">Empty.</p>';
-    totalHargaElem.textContent = '0';
-
-    document.getElementById('choosePaymentMethod').style.display = 'none';
-    return;
-  } else {
-    document.getElementById('choosePaymentMethod').style.display = 'inline-block';
-  }
-
+    if (cart.length === 0) {
+      container.innerHTML = '<p class="text-center text-gray-500">Empty.</p>';
+      totalHargaElem.textContent = '0';
+      document.getElementById('choosePaymentMethod').style.display = 'none';
+      return;
+    } else {
+      document.getElementById('choosePaymentMethod').style.display = 'inline-block';
+    }
 
     let total = 0;
 
@@ -225,61 +224,58 @@ include '../../partials/navbar-pembeli.php';
     });
   });
 
-
   document.getElementById('choosePaymentMethod').addEventListener('click', function () {
     document.getElementById('paymentModal').classList.remove('hidden');
+    document.getElementById('overlay').classList.remove('hidden');
   });
+
   function closeModal() {
-  document.getElementById('paymentModal').classList.add('hidden');
-}
-
-document.getElementById('payCash').addEventListener('click', function () {
-  closeModal();
-  handleCashPayment();
-});
-
-function handleCashPayment() {
-  const cart = JSON.parse(localStorage.getItem(cartKey)) || [];
-
-  if (cart.length === 0) {
-    alert("Keranjang kosong.");
-    return;
+    document.getElementById('paymentModal').classList.add('hidden');
+    document.getElementById('overlay').classList.add('hidden');
   }
 
-  let total = 0;
-  cart.forEach(item => {
-    total += Math.round(item.harga * item.quantity);
+  document.getElementById('payCash').addEventListener('click', function () {
+    closeModal();
+    handleCashPayment();
   });
 
-  total = Math.round(total);
+  function handleCashPayment() {
+    const cart = JSON.parse(localStorage.getItem(cartKey)) || [];
 
-  const order_id = "ORD" + Date.now() + Math.floor(Math.random() * 1000);
+    if (cart.length === 0) {
+      alert("Keranjang kosong.");
+      return;
+    }
 
-  fetch('save_order.php', {
-    method: 'POST',
-    headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify({
-      order_id: order_id,
-      id_pembeli: idPembeli,
-      cart: cart,
-      tipe: "cash", // ini penting!
-      status_pembayaran: "unpaid"
+    let total = 0;
+    cart.forEach(item => {
+      total += Math.round(item.harga * item.quantity);
+    });
+
+    const order_id = "ORD" + Date.now() + Math.floor(Math.random() * 1000);
+
+    fetch('save_order.php', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        order_id: order_id,
+        id_pembeli: idPembeli,
+        cart: cart,
+        tipe: "cash",
+        status_pembayaran: "unpaid"
+      })
     })
-  })
-  .then(res => res.json())
-  .then(data => {
-    localStorage.removeItem(cartKey);
-    window.location.href = "order-success.php?order_id=" + order_id + "&id_pembeli=" + idPembeli;
-  })
-  .catch(err => {
-    console.error(err);
-    alert("Gagal menyimpan pesanan cash.");
-  });
-}
+    .then(res => res.json())
+    .then(data => {
+      localStorage.removeItem(cartKey);
+      window.location.href = "order-success.php?order_id=" + order_id + "&id_pembeli=" + idPembeli;
+    })
+    .catch(err => {
+      console.error(err);
+      alert("Gagal menyimpan pesanan cash.");
+    });
+  }
 
-
-</script>
-<script>
   AOS.init({});
 </script>
 
