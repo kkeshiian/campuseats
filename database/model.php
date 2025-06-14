@@ -84,7 +84,7 @@ function login($koneksi, $username, $password) {
     return false;
 }
 
-function saveOrderSimple($koneksi, $order_id, $id_pembeli, $cart, $created_at = null) {
+function saveOrderSimple($koneksi, $order_id, $id_pembeli, $cart, $created_at = null, $tipe='cashless', $status_pembayaran) {
     if (!$created_at) {
         $created_at = date('Y-m-d H:i:s');
     }
@@ -100,9 +100,9 @@ function saveOrderSimple($koneksi, $order_id, $id_pembeli, $cart, $created_at = 
         $tanggal = $created_at;
         
         $query = "INSERT INTO riwayat_pembelian 
-                  (order_id, id_pembeli, nama_kantin, menu, quantity, harga, total, status, notes) 
+                  (order_id, id_pembeli, nama_kantin, menu, quantity, harga, total, status, notes, tipe, status_pembayaran) 
                   VALUES 
-                  ('$order_id', '$id_pembeli','$nama_kantin', '$menu', $quantity, $harga, $total, '$status', '$note')";
+                  ('$order_id', '$id_pembeli','$nama_kantin', '$menu', $quantity, $harga, $total, '$status', '$note', '$tipe', '$status_pembayaran')";
         
         $result = mysqli_query($koneksi, $query);
         
@@ -136,13 +136,29 @@ function history_pembeli($koneksi, $id_pembeli){
     foreach ($rows as $data_history) {
         echo "<tr>";
 
-        if (!in_array($data_history['order_id'], $printed_order_ids)) {
-            $rowspan_order = $orders_count[$data_history['order_id']];
-            echo "<td rowspan='$rowspan_order'>$no</td>";
-            echo "<td rowspan='$rowspan_order'>{$data_history['order_id']}</td>";
-            $printed_order_ids[] = $data_history['order_id'];
-            $no++;
+    if (!in_array($data_history['order_id'], $printed_order_ids)) {
+        $rowspan_order = $orders_count[$data_history['order_id']];
+        echo "<td rowspan='$rowspan_order'>$no</td>";
+        echo "<td rowspan='$rowspan_order'>";
+
+        echo "{$data_history['order_id']}";
+
+        $order_id = $data_history['order_id'];
+        $cek_query = mysqli_query($koneksi, "SELECT COUNT(*) as total, SUM(CASE WHEN status_pembayaran = 'paid' THEN 1 ELSE 0 END) as paid 
+                                            FROM riwayat_pembelian WHERE order_id = '$order_id'");
+        $cek_result = mysqli_fetch_assoc($cek_query);
+
+        if ($cek_result['total'] == $cek_result['paid']) {
+            echo "<br><a href='invoice.php?order_id=$order_id' target='_blank' class='text-kuning'>Download Invoice</a>";
         }
+
+        echo "</td>";
+
+        $printed_order_ids[] = $data_history['order_id'];
+        $no++;
+    }
+
+
 
         $key = $data_history['order_id'] . '|' . $data_history['nama_kantin'];
         if (!in_array($key, $printed_kantin)) {
@@ -156,6 +172,8 @@ function history_pembeli($koneksi, $id_pembeli){
         echo "<td>Rp" . number_format($data_history['harga']) . "</td>";
         echo "<td>Rp" . number_format($data_history['total']) . "</td>";
         echo "<td>{$data_history['status']}</td>";
+        echo "<td>{$data_history['tipe']}</td>";
+        echo "<td>{$data_history['status_pembayaran']}</td>";
         echo "<td>{$data_history['tanggal']}</td>";
 
         echo "</tr>";
@@ -242,18 +260,19 @@ function updateStatusPesanan($koneksi, $order_id, $status, $menu){
     $result = mysqli_query($koneksi, $query);
 
     if ($result && $status === 'Done') {
-        // kita ambil id_pembeli
+        $updatePembayaran = mysqli_query($koneksi, "UPDATE riwayat_pembelian SET status_pembayaran='paid' WHERE order_id='$order_id' AND menu='$menu'");
+    }
+
+    if ($result && $status === 'Ready to Pickup') {
         $ambil_id_pembeli = mysqli_query($koneksi, "SELECT id_pembeli FROM riwayat_pembelian WHERE order_id = '$order_id'");
         $data_pembeli = mysqli_fetch_assoc($ambil_id_pembeli);
         $id_pembeli = $data_pembeli['id_pembeli'] ?? null;
 
-        // kita ambil id_user
         if ($id_pembeli) {
             $ambil_id_user = mysqli_query($koneksi, "SELECT id_user FROM pembeli WHERE id_pembeli = '$id_pembeli'");
             $data_user = mysqli_fetch_assoc($ambil_id_user);
             $id_user = $data_user['id_user'] ?? null;
 
-            // kita ambil nomor WA
             if ($id_user) {
                 $ambil_nomor_wa = mysqli_query($koneksi, "SELECT nomor_wa FROM user WHERE id_user = '$id_user'");
                 $data_wa = mysqli_fetch_assoc($ambil_nomor_wa);
@@ -261,7 +280,7 @@ function updateStatusPesanan($koneksi, $order_id, $status, $menu){
 
                 if ($nomor_wa) {
                     is_done($koneksi, $order_id, $menu, $id_user, $nomor_wa);
-                    kirimNotifikasiDone($koneksi, $order_id, $menu, $id_user);
+                    kirimNotifikasiDone($koneksi);
                 }
             }
         }
@@ -269,6 +288,7 @@ function updateStatusPesanan($koneksi, $order_id, $status, $menu){
 
     return $result;
 }
+
 
 
 function hapusMenu($koneksi, $id_menu, $id_penjual){

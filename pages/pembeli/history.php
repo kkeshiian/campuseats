@@ -52,7 +52,9 @@ if (isset($_GET['id_pembeli'])) {
                   <th>Jumlah Pesanan</th>
                   <th>Harga</th>
                   <th>Total</th>
-                  <th>Status</th>
+                  <th>Status Pesanan</th>
+                  <th>Jenis Pembayaran</th>
+                  <th>Status Pembayaran</th>
                   <th>Tanggal dan Waktu</th>
                 </tr>
               </thead>

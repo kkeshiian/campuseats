@@ -60,10 +60,25 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['submit'])) {
       $nama_fakultas = $data_fakultas['nama_fakultas'];
 
       $ambil_data_riwayat_pembelian = mysqli_query($koneksi,
-    "SELECT quantity AS qty, total, status, menu, order_id, tanggal, notes FROM riwayat_pembelian WHERE nama_kantin = '$nama_kantin' ORDER BY tanggal DESC");
+    "SELECT quantity AS qty, total, status, menu, order_id, tanggal, notes, tipe, status_pembayaran FROM riwayat_pembelian WHERE nama_kantin = '$nama_kantin' ORDER BY tanggal DESC");
       $total_keseluruhan = 0;
       $total_orderan = 0;
       $daftar_pesanan_hari_ini = []; 
+
+        // Ambil nama kantin
+  $sql = "SELECT nama_kantin FROM penjual WHERE id_penjual = $id_per_penjual";
+  $result = mysqli_query($koneksi, $sql);
+  $row = mysqli_fetch_assoc($result);
+  $nama_kantin_penjual = $row['nama_kantin'];
+
+  // Total transaksi 7 hari terakhir
+  $query = "SELECT SUM(quantity) AS qty, SUM(total) AS total 
+            FROM riwayat_pembelian 
+            WHERE nama_kantin = '$nama_kantin_penjual' 
+            AND tanggal >= DATE_SUB(CURDATE(), INTERVAL 6 DAY) 
+            AND status = 'Done'";
+  $ambil_data = mysqli_query($koneksi, $query);
+  $data = mysqli_fetch_assoc($ambil_data);
 
 
       while ($row = mysqli_fetch_assoc($ambil_data_riwayat_pembelian)) {
@@ -90,7 +105,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['submit'])) {
         <div class="bg-white border border-black rounded-lg p-4 text-center flex items-center">
           <div class="mx-auto">
             <h3 class="text-lg font-semibold">Today's income</h3>
-            <p class="text-2xl font-bold text-kuning">Rp <?=number_format($total_keseluruhan, 0, ',', '.')?></p>
+            <p class="text-2xl font-bold text-kuning">Rp <?=number_format($data['total'], 0, ',', '.')?></p>
           </div>
         </div>
         <div class="bg-white border border-black rounded-lg p-4 text-center  flex items-center">
@@ -115,6 +130,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['submit'])) {
                 <p class="font-bold text-xl mb-1"><?= $pesanan["menu"] ?></p>
                 <p class="text-l mt-1 mb-1">Order ID: <?= $pesanan["order_id"] ?></p>
                 <p class="text-l mt-1 mb-1">Date: <?= $pesanan["tanggal"] ?></p>
+                <p class="text-l mt-1 mb-1">Type Payment: <?= $pesanan["tipe"] ?></p>
+                <p class="text-l mt-1 mb-1">Payment Status: <?= $pesanan["status_pembayaran"] ?></p>
                 <p class="text-sm text-gray-500">Quantity: <?= $pesanan["qty"] ?></p>
                 <p class="text-sm text-gray-500">Total: Rp <?= number_format($pesanan["total"]) ?></p>
                 <p class="text-sm text-black mt-1 font-semibold">Note: <?php
@@ -125,7 +142,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['submit'])) {
                 }
                 ?></p>
               </div>
-              <form method="post">
+              <form method="post" onsubmit="return konfirmasiSebelumSubmit(this);">
                 <input type="hidden" name="id" value="<?= $pesanan["order_id"] ?>">
                 <input type="hidden" name="menu" value="<?= $pesanan["menu"] ?>">
 
@@ -162,6 +179,22 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['submit'])) {
       </div>
     </main>
   </body>
+
+  <script>
+    function konfirmasiSebelumSubmit(form) {
+        const statusSelect = form.querySelector('select[name="status"]');
+        const selectedStatus = statusSelect.value;
+
+        if (selectedStatus === "Done") {
+            const konfirmasi = confirm("Are you sure you want to change this order status to 'Done'? You can't change it again afterward.");
+            return konfirmasi;
+        }
+
+        return true;
+    }
+  </script>
+
+
   <script>
     const hariIni = new Date();
     const opsiFormat = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' };

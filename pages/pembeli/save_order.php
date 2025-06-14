@@ -23,6 +23,12 @@ if (empty($order_id) || empty($id_pembeli) || !is_array($cart) || count($cart) =
 
 $created_at = $data['created_at'] ?? null;
 
-$result = saveOrderSimple($koneksi, $order_id, $id_pembeli, $cart);
+$allowed_tipe = ['cash', 'cashless'];
+$allowed_status = ['paid', 'pending'];
+
+$tipe = in_array($data['tipe'] ?? '', $allowed_tipe) ? $data['tipe'] : 'cashless';
+$status_pembayaran = in_array($data['status_pembayaran'] ?? '', $allowed_status) ? $data['status_pembayaran'] : (($tipe === 'cash') ? 'pending' : 'paid');
+
+$result = saveOrderSimple($koneksi, $order_id, $id_pembeli, $cart, $created_at, $tipe, $status_pembayaran);
 
 echo json_encode($result);
