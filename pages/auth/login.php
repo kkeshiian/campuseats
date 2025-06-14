@@ -102,6 +102,10 @@ if (isset($_POST['submit'])) {
         Don't have an account?
         <a href="register.php" class="text-yellow-600 hover:underline">Register</a>
       </p>
+      <p class="mt-4 text-center text-sm text-gray-600">
+        Forget your password?
+        <a href="input_email.php" class="text-yellow-600 hover:underline">Reset Password</a>
+      </p>
     </div>
   </div>
 
@@ -136,13 +140,19 @@ if (isset($_POST['submit'])) {
 
     const urlParams = new URLSearchParams(window.location.search);
     const successParam = urlParams.get('success');
+    const resetParam = urlParams.get('reset');
 
     if (successParam == 'true') {
       notyf.success('Registration successful! Please log in.');
       const url = new URL(window.location);
       url.searchParams.delete('success');
       window.history.replaceState({}, document.title, url.pathname);
-
+    }
+    if (resetParam == 'true') {
+      notyf.success('Change Password successful! Please log in.');
+      const url = new URL(window.location);
+      url.searchParams.delete('success');
+      window.history.replaceState({}, document.title, url.pathname);
     }
 
     <?php if ($error === 'wrong_credentials'): ?>

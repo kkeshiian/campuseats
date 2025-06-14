@@ -25,13 +25,14 @@ function validate_password($password) {
 }
 
 if (isset($_POST['submit'])) {
-    // Trim all fields to check empty
     $nama_lengkap = trim($_POST['nama'] ?? '');
     $username = trim($_POST['username'] ?? '');
     $password = $_POST['password'] ?? '';
     $konfirmasi_password = $_POST['konfirmasi_password'] ?? '';
+    $email = $_POST['email'] ?? '';
+    $nomor_wa = $_POST['nomor_wa'] ?? '';
 
-    if ($nama_lengkap === '' || $username === '' || $password === '' || $konfirmasi_password === '') {
+    if ($nama_lengkap === '' || $username === '' || $password === '' || $konfirmasi_password === '' || $email === '' || $nomor_wa === '') {
         $error = 'Please fill in all fields.';
     } else if ($password !== $konfirmasi_password) {
         $error = 'Password and confirmation do not match.';
@@ -43,18 +44,39 @@ if (isset($_POST['submit'])) {
             $password_hash = password_hash($password, PASSWORD_DEFAULT);
             $role = $_POST['role'] ?? 'pembeli';
 
-            $hasil = registrasi($koneksi, $nama_lengkap, $username, $password_hash, $role);
+            $hasil = registrasi($koneksi, $nama_lengkap, $username, $password_hash, $role, $email, 
+            $nomor_wa);
 
-            if ($hasil) {
-                // Redirect with success flag
-                header("Location: login.php?success=true");
-                exit();
+            if ($hasil===true) {
+                // Ambil id_user setelah berhasil registrasi
+                $cek_id_user = mysqli_query($koneksi, "SELECT id_user FROM user WHERE email = '$email'");
+                $data_id_user = mysqli_fetch_assoc($cek_id_user);
+                $id_user = $data_id_user['id_user'] ?? null;
+
+                if ($id_user) {
+                    session_start(); 
+                    $_SESSION['id_user'] = $id_user;
+
+                    // Kirim OTP
+                    $kirim_otp = verif_otp($koneksi, $nama_lengkap, $email);
+
+                    if ($kirim_otp) {
+                        header("Location: verif-otp.php?success=true&id_user=" . $id_user);
+                        exit();
+                    } else {
+                        $error = "Failed to send OTP. Please try again.";
+                    }
+                } else {
+                    $error = "User ID not found after registration.";
+                }
             } else {
-                $error = "Registration failed, username might already be taken.";
+              // menyesuaikan sesuai dengan errornya apa dari mysqlinya 
+              $error = $hasil;
             }
         }
     }
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -90,8 +112,16 @@ if (isset($_POST['submit'])) {
           <input id="nama" type="text" name="nama" class="input input-bordered w-full rounded-lg" value="<?= htmlspecialchars($nama_lengkap ?? '') ?>" />
         </div>
         <div>
+          <label class="label" for="nama">Email</label>
+          <input id="email" type="email" name="email" class="input input-bordered w-full rounded-lg" value="<?= htmlspecialchars($email ?? '') ?>" />
+        </div>
+        <div>
           <label class="label" for="username">Username</label>
           <input id="username" type="text" name="username" class="input input-bordered w-full rounded-lg" value="<?= htmlspecialchars($username ?? '') ?>" />
+        </div>
+        <div>
+          <label class="label" for="nama">Whatsapp Number</label>
+          <input id="number" type="text" name="nomor_wa" class="input input-bordered w-full rounded-lg" value="<?= htmlspecialchars($nomor_wa ?? '') ?>" />
         </div>
         <div>
           <label class="label" for="password">Password</label>
@@ -124,13 +154,14 @@ if (isset($_POST['submit'])) {
     const notyf = new Notyf({
       duration: 3000,
       position: { x: 'right', y: 'top' },
-      dismissible: false  // no close button
+      dismissible: true
     });
 
-    <?php if (!empty($error)): ?>
-      notyf.error(<?= json_encode($error) ?>);
+    <?php if (isset($error) && !empty($error)): ?>
+      notyf.error(<?= json_encode(htmlspecialchars($error, ENT_QUOTES, 'UTF-8')) ?>);
     <?php endif; ?>
   </script>
+
 
   <script>
     AOS.init();

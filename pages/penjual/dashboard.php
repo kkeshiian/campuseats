@@ -76,6 +76,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['submit'])) {
           }
 
       }
+      
       ?>
       <div data-aos="fade-up" data-aos-duration="1000">
         Date: <h4 id="tanggalHariIni" class="text-2xl font-bold mb-4"></h4>
@@ -108,6 +109,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['submit'])) {
         <p class="text-gray-500 text-base text-center">No orders yet</p>
         <?php else: ?>
           <?php foreach ($daftar_pesanan_hari_ini as $pesanan): ?>
+            
             <div class="bg-white border border-black rounded-lg p-4 flex justify-between items-center gap-4">
               <div>
                 <p class="font-bold text-xl mb-1"><?= $pesanan["menu"] ?></p>
@@ -128,9 +130,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['submit'])) {
                 <input type="hidden" name="menu" value="<?= $pesanan["menu"] ?>">
 
                 <fieldset class="fieldset w-36 md:w-64">
+                  <?php $isDone = $pesanan["status"] === "Done"; ?>
                   <legend class="fieldset-legend">Order Status</legend>
                   <select name="status" id="status" required
-                    class="select select-bordered w-full">
+                    class="select select-bordered w-full"
+                     <?= $isDone ? 'disabled' : '' ?>>
+                    >
                     <option value="">Waiting to Confirm</option>
                     <?php
                     $statuses = ["Being Cooked" => "Being Cooked", "Ready to Pickup" => "Ready to Pickup", "Done" => "Done"];
@@ -141,7 +146,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['submit'])) {
                     ?>
                   </select>
                 </fieldset>
-                <button type="submit" name="submit" class="btn btn-sm bg-kuning w-full text-white rounded-lg mt-2">Update</button>
+                <button type="submit" name="submit" class="btn btn-sm bg-kuning w-full text-white rounded-lg mt-2" <?= $isDone ? 'disabled' : '' ?>>
+                  Update
+                </button>
+                <?php if ($isDone): ?>
+                  <p class="text-sm text-gray-500 mt-1 italic">Order has been marked as Done. Status can't be changed.</p>
+                <?php endif; ?>
+
               </form>
             </div>
           <?php endforeach; ?>

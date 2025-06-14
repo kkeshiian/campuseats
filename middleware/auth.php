@@ -4,7 +4,9 @@ session_start();
 $allowedPaths = [
     '/campuseats/index.php',
     '/campuseats/pages/auth/login.php',
-    '/campuseats/pages/auth/register.php'
+    '/campuseats/pages/auth/register.php',
+    '/campuseats/pages/auth/verif-otp.php',
+    '/campuseats/pages/auth/send-otp.php'
 ];
 
 $currentPath = $_SERVER['PHP_SELF'];
