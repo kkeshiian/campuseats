@@ -115,7 +115,7 @@ function saveOrderSimple($koneksi, $order_id, $id_pembeli, $cart, $created_at = 
 }
 
 function history_pembeli($koneksi, $id_pembeli){
-    $ambil_data = mysqli_query($koneksi, "SELECT * FROM riwayat_pembelian WHERE id_pembeli='$id_pembeli' ORDER BY order_id, nama_kantin, tanggal");
+    $ambil_data = mysqli_query($koneksi, "SELECT * FROM riwayat_pembelian WHERE id_pembeli='$id_pembeli' ORDER BY tanggal DESC, order_id DESC, nama_kantin, tanggal");
     $orders_count = [];
     $kantin_count = [];
     $rows = [];

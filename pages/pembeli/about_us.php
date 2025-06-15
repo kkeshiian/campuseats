@@ -48,6 +48,9 @@ include '../../partials/navbar-pembeli.php'; ?>
     </div>
   </div>
 </main>
+  <?php
+  include '../../partials/footer.php';
+  ?>
 
 <script>
   AOS.init({
