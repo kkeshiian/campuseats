@@ -33,10 +33,10 @@ if (isset($_GET['resend']) && $id_user) {
         $otp_result = resend_otp_reset_password($koneksi, $id_user, $nama_user, $email_user);
 
         if ($otp_result) {
-            header("Location: verif-otp.php?resent=success&id_user=".$id_user);
+            header("Location: verif-otp-reset.php?resent=success&id_user=".$id_user);
             exit();
         } else {
-            header("Location: verif-otp.php?resent=failed");
+            header("Location: verif-otp-reset.php?resent=failed&id_user=".$id_user);
             exit();
         }
 

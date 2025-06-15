@@ -13,9 +13,9 @@ export default {
   theme: {
     extend: {
       colors: {
-        primary: "#6b7280", // Menambahkan warna primary
-        accent: "#4caf50", // Menambahkan warna green
-        background: "#f9fafb", // Menambahkan warna background
+        primary: "#6b7280", 
+        accent: "#4caf50", 
+        background: "#f9fafb",
         kuning: "#FFB43B",
       },
       fontFamily: {
