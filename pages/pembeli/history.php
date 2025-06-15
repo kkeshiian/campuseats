@@ -45,17 +45,17 @@ if (isset($_GET['id_pembeli'])) {
             <table class='table w-full'>
               <thead class='bg-kuning text-white'>
                 <tr>
-                  <th>No</th>
+                 <th>No</th>
                   <th>Order ID</th>
-                  <th>Kantin</th>
+                  <th>Canteen</th>
                   <th>Menu</th>
-                  <th>Jumlah Pesanan</th>
-                  <th>Harga</th>
+                  <th>Quantity</th>
+                  <th>Price</th>
                   <th>Total</th>
-                  <th>Status Pesanan</th>
-                  <th>Jenis Pembayaran</th>
-                  <th>Status Pembayaran</th>
-                  <th>Tanggal dan Waktu</th>
+                  <th>Status</th>
+                  <th>Method</th>
+                  <th>Status</th>
+                  <th>Date & Time</th>
                 </tr>
               </thead>
               <tbody>";

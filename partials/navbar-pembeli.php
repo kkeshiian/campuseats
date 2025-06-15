@@ -19,7 +19,6 @@ $activePage = isset($activePage) ? $activePage : '';
         role="menu"
         aria-label="Mobile Navigation Menu"
       >
-        <li><a href="../../index.php" class="<?= ($activePage == 'index') ? 'underline decoration-kuning decoration-1 underline-offset-4 ' :  '' ?>">Home</a></li>
         <li><a href="/campuseats/pages/pembeli/canteen.php<?= $id_pembeli ? '?id_pembeli=' . $id_pembeli : '' ?>" class="<?= ($activePage == 'canteen') ? 'underline decoration-kuning decoration-1 underline-offset-4' :  '' ?>">Canteen</a></li>
         <li><a href="/campuseats/pages/pembeli/cart.php<?= $id_pembeli ? '?id_pembeli=' . $id_pembeli : '' ?>" class="<?= ($activePage == 'cart') ? 'underline decoration-kuning decoration-1 underline-offset-4' :  '' ?>">Cart</a></li>
         <li><a href="/campuseats/pages/pembeli/history.php<?= $id_pembeli ? '?id_pembeli=' . $id_pembeli : '' ?>" class="<?= ($activePage == 'history') ? 'underline decoration-kuning decoration-1 underline-offset-4' :  '' ?>">History</a></li>

@@ -33,7 +33,7 @@ if (isset($_POST['submit'])) {
   <script src="https://cdn.jsdelivr.net/npm/notyf/notyf.min.js"></script>
   <title>Dashboard Admin - Manage User</title>
 </head>
-<body class="min-h-screen flex flex-col">
+<body class="min-h-screen flex flex-col mb-4">
   <?php
   $activePage = 'kelola_pengguna';
   include '../../partials/navbar-admin.php'; ?>

@@ -34,19 +34,25 @@ $activePage = 'cart';
 include '../../partials/navbar-pembeli.php'; 
 ?>
 
-<div class="w-full max-w-4xl mx-auto m-4" data-aos="fade-up" data-aos-duration="1000">
-  <h1 class="text-2xl font-bold mb-4 text-center">Your Cart</h1>
-  <div id="cartContainer" class="space-y-4 p-4 shadow-md border border-1 border-black rounded-lg mx-4"></div>
-
+  <div class="w-full max-w-4xl mx-auto m-4" data-aos="fade-up" data-aos-duration="1000">
+    <h1 class="text-2xl font-bold mb-4 text-center">Your Cart</h1>
+    <div id="cartContainer" class="space-y-4 p-4 shadow-md border border-1 border-black rounded-lg mx-4"></div>
+  <div class="text-right mt-4 mx-4">
+    <p class="text-xl font-semibold">Total: Rp <span id="totalHarga">0</span></p>
+    <button id="choosePaymentMethod" class="mt-2 bg-kuning text-white px-4 py-2 rounded-lg hover:bg-yellow-600">
+      Choose Payment
+    </button>
+  </div>  
+  </div>
   <!-- Modal Pilihan Pembayaran -->
   <div id="paymentModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[999999]">
     <div class="bg-white p-6 rounded-lg w-full max-w-xs text-center">
       <h2 class="text-lg font-bold mb-4">Choose your payment method</h2>
       <div class="flex flex-col space-y-2">
-        <button id="checkoutButton" class="mt-2 bg-kuning text-white px-4 py-2 rounded hover:bg-yellow-600">
+        <button id="checkoutButton" class="mt-2 bg-kuning text-white px-4 py-2 rounded-lg hover:bg-yellow-600">
           Cashless
         </button>
-        <button id="payCash" class="mt-2 bg-kuning text-white px-4 py-2 rounded hover:bg-yellow-600">
+        <button id="payCash" class="mt-2 bg-kuning text-white px-4 py-2 rounded-lg hover:bg-yellow-600">
           Cash
         </button>
         <button onclick="closeModal()" class="text-red-500 hover:underline mt-2">Back</button>
@@ -54,13 +60,8 @@ include '../../partials/navbar-pembeli.php';
     </div>
   </div>
 
-  <div class="text-right mt-4 mx-4">
-    <p class="text-xl font-semibold">Total: Rp <span id="totalHarga">0</span></p>
-    <button id="choosePaymentMethod" class="mt-2 bg-kuning text-white px-4 py-2 rounded hover:bg-yellow-600">
-      Choose Payment
-    </button>
-  </div>  
-</div>
+  
+
 
 <script>
   const idPembeli = <?= json_encode($id_per_pembeli) ?>;

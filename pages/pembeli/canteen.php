@@ -82,7 +82,7 @@ require_role('pembeli');
                   </div>
                 </div>
                 <div>
-                  <a href="menu.php?id_kantin=' . urlencode($kantin["id"]) . '&id_pembeli=' . urlencode($id_per_pembeli) . '" class="btn bg-kuning text-black rounded-lg px-4 py-2 hover:bg-yellow-600 w-full text-center">Lihat Menu</a>
+                  <a href="menu.php?id_kantin=' . urlencode($kantin["id"]) . '&id_pembeli=' . urlencode($id_per_pembeli) . '" class="btn bg-kuning text-black rounded-lg px-4 py-2 hover:bg-yellow-600 w-full text-center">View Menu</a>
                 </div>
               </div>';
           }

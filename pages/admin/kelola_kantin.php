@@ -34,7 +34,7 @@ if (isset($_POST['submit'])) {
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf/notyf.min.css" />
   <script src="https://cdn.jsdelivr.net/npm/notyf/notyf.min.js"></script>
 </head>
-<body class="min-h-screen flex flex-col">
+<body class="min-h-screen flex flex-col mb-4">
   <?php 
   $activePage = 'kelola_kantin';
   include '../../partials/navbar-admin.php'; 

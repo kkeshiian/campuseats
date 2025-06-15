@@ -37,7 +37,7 @@ if (isset($_GET['id_pembeli'])) {
 
       </p>
 
-      <a href="/campuseats/pages/pembeli/history.php?id_pembeli=<?= $id_per_pembeli ?>" class="inline-block mt-4 bg-kuning hover:bg-yellow-600 text-white font-semibold py-2 px-4 rounded transition duration-300">
+      <a href="/campuseats/pages/pembeli/history.php?id_pembeli=<?= $id_per_pembeli ?>" class="inline-block mt-4 bg-kuning hover:bg-yellow-600 text-white font-semibold py-2 px-4 rounded-lg transition duration-300">
         Track Your Order
       </a>
 
