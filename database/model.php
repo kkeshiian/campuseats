@@ -149,7 +149,7 @@ function history_pembeli($koneksi, $id_pembeli){
         $cek_result = mysqli_fetch_assoc($cek_query);
 
         if ($cek_result['total'] == $cek_result['paid']) {
-            echo "<br><a href='invoice.php?order_id=$order_id' target='_blank' class='text-kuning'>Download Invoice</a>";
+            echo "<br><a href='invoice.php?order_id=$order_id' target='_blank' class='text-kuning underline'>Download Invoice</a>";
         }
 
         echo "</td>";

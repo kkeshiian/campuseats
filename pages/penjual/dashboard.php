@@ -18,7 +18,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['submit'])) {
     $menu = $_POST['menu'];
     
     if (updateStatusPesanan($koneksi, $order_id, $status, $menu)) {
-        header("Location: dashboard.php?id_penjual=" . $id_per_penjual);
+        header("Location: dashboard.php?id_penjual=" . $id_per_penjual . "&status=done");
         exit();
     }
 } 
@@ -36,6 +36,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['submit'])) {
     <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf/notyf.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
   </head>
   <body class="min-h-screen flex flex-col">
@@ -117,68 +118,71 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['submit'])) {
       </div>
 
       <!-- List Pesanan Masuk -->
-      <div class="mb-8">
-        <h3 class="text-xl font-semibold mb-2">Incoming orders</h3>
-        <div class="space-y-4">
-        <?php if (count($daftar_pesanan_hari_ini) === 0): ?>
-        <p class="text-gray-500 text-base text-center">No orders yet</p>
-        <?php else: ?>
-          <?php foreach ($daftar_pesanan_hari_ini as $pesanan): ?>
-            
-            <div class="bg-white border border-black rounded-lg p-4 flex justify-between items-center gap-4">
-              <div>
-                <p class="font-bold text-xl mb-1"><?= $pesanan["menu"] ?></p>
-                <p class="text-l mt-1 mb-1">Order ID: <?= $pesanan["order_id"] ?></p>
-                <p class="text-l mt-1 mb-1">Date: <?= $pesanan["tanggal"] ?></p>
-                <p class="text-l mt-1 mb-1">Type Payment: <?= $pesanan["tipe"] ?></p>
-                <p class="text-l mt-1 mb-1">Payment Status: <?= $pesanan["status_pembayaran"] ?></p>
-                <p class="text-sm text-gray-500">Quantity: <?= $pesanan["qty"] ?></p>
-                <p class="text-sm text-gray-500">Total: Rp <?= number_format($pesanan["total"]) ?></p>
-                <p class="text-sm text-black mt-1 font-semibold">Note: <?php
-                if ($pesanan["notes"]=='' or $pesanan["notes"]==null) {
-                  echo "-";
-                }else{
-                  echo"$pesanan[notes]";
-                }
-                ?></p>
-              </div>
-              <form method="post" onsubmit="return konfirmasiSebelumSubmit(this);">
-                <input type="hidden" name="id" value="<?= $pesanan["order_id"] ?>">
-                <input type="hidden" name="menu" value="<?= $pesanan["menu"] ?>">
+        <div class="mb-8">
+          <h3 class="text-xl font-semibold mb-4 text-center md:text-left">Incoming Orders</h3>
+          <div class="space-y-6">
+            <?php if (count($daftar_pesanan_hari_ini) === 0): ?>
+              <p class="text-gray-500 text-base text-center">No orders yet</p>
+            <?php else: ?>
+              <?php foreach ($daftar_pesanan_hari_ini as $pesanan): ?>
+                <div class="bg-white border border-black rounded-lg p-4 flex flex-col md:flex-row md:justify-between md:items-center gap-4 shadow-sm hover:shadow-md transition">
+                  
+                  <!-- Left (Order Info) -->
+                  <div class="flex-1 space-y-1 text-sm md:text-base">
+                    <p class="font-bold text-lg md:text-xl text-black"><?= $pesanan["menu"] ?></p>
 
-                <fieldset class="fieldset w-36 md:w-64">
-                  <?php $isDone = $pesanan["status"] === "Done"; ?>
-                  <legend class="fieldset-legend">Order Status</legend>
-                  <select name="status" id="status" required
-                    class="select select-bordered w-full"
-                     <?= $isDone ? 'disabled' : '' ?>>
-                    >
-                    <option value="">Waiting to Confirm</option>
-                    <?php
-                    $statuses = ["Being Cooked" => "Being Cooked", "Ready to Pickup" => "Ready to Pickup", "Done" => "Done"];
-                    foreach ($statuses as $value => $label) {
-                        $selected = ($pesanan["status"] == $value) ? "selected" : "";
-                        echo "<option value='$value' $selected>$label</option>";
-                    }
-                    ?>
-                  </select>
-                </fieldset>
-                <button type="submit" name="submit" class="btn btn-sm bg-kuning w-full text-white rounded-lg mt-2" <?= $isDone ? 'disabled' : '' ?>>
-                  Update
-                </button>
-                <?php if ($isDone): ?>
-                  <p class="text-sm text-gray-500 mt-1 italic">Order has been marked as Done. Status can't be changed.</p>
-                <?php endif; ?>
+                    <p class="text-gray-500">Order ID: <span class="text-black"><?= $pesanan["order_id"] ?></span></p>
+                    <p class="text-gray-500">Date: <span class="text-black"><?= $pesanan["tanggal"] ?></span></p>
+                    <p class="text-gray-500">Type Payment: <span class="text-black"><?= $pesanan["tipe"] ?></span></p>
+                    <p class="text-gray-500">Payment Status: <span class="text-black"><?= $pesanan["status_pembayaran"] ?></span></p>
+                    <p class="text-gray-500">Quantity: <span class="text-black"><?= $pesanan["qty"] ?></span></p>
+                    <p class="text-gray-500">Total: <span class="text-black">Rp <?= number_format($pesanan["total"]) ?></span></p>
 
-              </form>
-            </div>
-          <?php endforeach; ?>
-        <?php endif; ?>
+                    <p class="text-gray-500 font-medium">Note:
+                      <span class="text-black">
+                        <?= empty($pesanan["notes"]) ? "-" : htmlspecialchars($pesanan["notes"]) ?>
+                      </span>
+                    </p>
+                  </div>
+
+                  <!-- Right (Form) -->
+                  <form method="post" onsubmit="return konfirmasiSebelumSubmit(this);" class="w-full md:w-64">
+                    <input type="hidden" name="id" value="<?= $pesanan["order_id"] ?>">
+                    <input type="hidden" name="menu" value="<?= $pesanan["menu"] ?>">
+
+                    <fieldset class="mb-2">
+                      <?php $isDone = $pesanan["status"] === "Done"; ?>
+                      <label for="status" class="block text-sm font-semibold mb-1">Order Status</label>
+                      <select name="status" id="status" required class="select select-bordered w-full"
+                        <?= $isDone ? 'disabled' : '' ?>>
+                        <option value="">Waiting to Confirm</option>
+                        <?php
+                          $statuses = ["Being Cooked", "Ready to Pickup", "Done"];
+                          foreach ($statuses as $status) {
+                              $selected = ($pesanan["status"] == $status) ? "selected" : "";
+                              echo "<option value='$status' $selected>$status</option>";
+                          }
+                        ?>
+                      </select>
+                    </fieldset>
+
+                    <button type="submit" name="submit"
+                      class="btn btn-sm w-full bg-kuning text-white rounded-lg mt-1 hover:bg-yellow-600"
+                      <?= $isDone ? 'disabled' : '' ?>>
+                      Update
+                    </button>
+
+                    <?php if ($isDone): ?>
+                      <p class="text-sm text-gray-500 mt-1 italic">Order has been marked as Done.</p>
+                    <?php endif; ?>
+                  </form>
+                </div>
+              <?php endforeach; ?>
+            <?php endif; ?>
+          </div>
         </div>
       </div>
-      </div>
     </main>
-  </body>
 
   <script>
     function konfirmasiSebelumSubmit(form) {
@@ -233,4 +237,5 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['submit'])) {
     window.history.replaceState({}, document.title, window.location.pathname + window.location.search.replace(/([&?])success=1/, '').replace(/([&?])$/, ''));
   }
 </script>
+</body>
 </html>
