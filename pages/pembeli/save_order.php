@@ -1,5 +1,8 @@
 <?php
 
+require_once '../../middleware/role_auth.php';
+require_role('pembeli');
+
 include "../../database/koneksi.php";
 include "../../database/model.php";
 

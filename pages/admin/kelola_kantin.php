@@ -170,7 +170,7 @@ if (isset($_POST['submit'])) {
       notyf.success('User data updated successfully!');
       history.replaceState(null, '', window.location.pathname);
     } else if (urlParams.get('success') === 'hapus') {
-      notyf.error('Successfully deleted user!');
+      notyf.success('Successfully deleted user!');
       history.replaceState(null, '', window.location.pathname);
     } else if (urlParams.get('success') === 'true') {
       notyf.success('User password updated successfully!');

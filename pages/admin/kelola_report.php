@@ -39,7 +39,7 @@ include "../../database/model.php";
 
   <div class="overflow-x-auto bg-white border rounded-lg shadow">
     <?php if (mysqli_num_rows($ambil_data_user) == 0) : ?>
-      <p class="text-center text-lg p-6 text-gray-600">No user data found.</p>
+      <p class="text-center text-lg p-6 text-gray-600">No report data found.</p>
     <?php else : ?>
       <table class="table w-full text-sm sm:text-base text-center">
         <thead class="bg-kuning text-white">

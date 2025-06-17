@@ -16,16 +16,12 @@ $result = $conn->query($sql);
 
 if (isset($_GET['id_pembeli'])) {
     $id_per_pembeli = (int) $_GET['id_pembeli'];
-}else{
-  header("Location: /campuseats/pages/auth/logout.php");
-  exit();
 }
 
 include "../../database/koneksi.php";
 include "../../database/model.php";
 
 require_once '../../middleware/role_auth.php';
-
 require_role('pembeli');
 
 ?>

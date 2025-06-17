@@ -8,7 +8,6 @@ include "../../database/koneksi.php";
 include "../../database/model.php";
 
 require_once '../../middleware/role_auth.php';
-
 require_role('Admin');
 
 $hasil = hapusReport($koneksi, $id_per_report, $id_admin);

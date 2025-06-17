@@ -50,7 +50,8 @@ $row_admin = mysqli_fetch_assoc($ambil_data_admin);
   <title>Profile Admin</title>
 </head>
 <body class="min-h-screen flex flex-col">
-  <?php include '../../partials/navbar-admin.php'; ?>
+  <?php $activePage = 'dashboard';
+  include '../../partials/navbar-admin.php'; ?>
 
   <main class="w-full max-w-3xl mx-auto mt-8 px-4">
     <h2 class="text-2xl font-bold mb-6">Edit Admin Profile</h2>

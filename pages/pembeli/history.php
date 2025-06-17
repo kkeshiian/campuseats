@@ -7,9 +7,6 @@ require_role('pembeli');
 
 if (isset($_GET['id_pembeli'])) {
   $id_per_pembeli = $_GET['id_pembeli'];
-}else{
-  header("Location: /campuseats/pages/auth/logout.php");
-  exit();
 }
 ?>
 

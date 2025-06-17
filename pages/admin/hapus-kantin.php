@@ -8,7 +8,6 @@ include "../../database/koneksi.php";
 include "../../database/model.php";
 
 require_once '../../middleware/role_auth.php';
-
 require_role('Admin');
 
 $hasil = hapusPenjual($koneksi, $id_per_penjual, $id_admin);

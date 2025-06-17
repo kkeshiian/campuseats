@@ -2,9 +2,6 @@
 if (isset($_GET['id_kantin']) && isset($_GET['id_pembeli'])) {
     $id = (int) $_GET['id_kantin'];
     $id_per_pembeli = (int) $_GET['id_pembeli'];
-}else{
-  header("Location: /campuseats/pages/auth/logout.php");
-  exit();
 }
 
 include "../../database/koneksi.php";

@@ -1,4 +1,7 @@
 <?php
+require_once '../../middleware/role_auth.php';
+require_role('Admin');
+
     if (isset($_GET['id_admin'])) {
         $id_admin = (int) $_GET['id_admin'];
     }
