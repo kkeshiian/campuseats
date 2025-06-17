@@ -36,8 +36,11 @@ if (isset($_POST['submit'])) {
         $error = 'Please fill in all fields.';
     } else if ($password !== $konfirmasi_password) {
         $error = 'Password and confirmation do not match.';
-    } else {
-        $valid_pass = validate_password($password);
+    } else if (!preg_match('/^[a-zA-Z0-9._%+-]+@mhs\.ulm\.ac\.id$/', $email)) {
+    $error = 'Only email with domain @mhs.ulm.ac.id is allowed.';
+} else {
+    $valid_pass = validate_password($password);
+
         if ($valid_pass !== true) {
             $error = $valid_pass;
         } else {

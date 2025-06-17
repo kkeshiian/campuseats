@@ -17,6 +17,7 @@ $id_admin = isset($_SESSION['id_admin']) ? $_SESSION['id_admin'] : null;
         <li><a href="/campuseats/pages/admin/dashboard.php" class="<?= ($activePage == 'dashboard') ? 'underline decoration-kuning decoration-1 underline-offset-4' : '' ?>">Dashboard</a></li>
         <li><a href="/campuseats/pages/admin/kelola_pengguna.php" class="<?= ($activePage == 'kelola_pengguna') ? 'underline decoration-kuning decoration-1 underline-offset-4' : '' ?>">Manage User</a></li>
         <li><a href="/campuseats/pages/admin/kelola_kantin.php" class="<?= ($activePage == 'kelola_kantin') ? 'underline decoration-kuning decoration-1 underline-offset-4' : '' ?>">Manage Canteen</a></li>
+        <li><a href="/campuseats/pages/admin/kelola_report.php" class="<?= ($activePage == 'report') ? 'underline decoration-kuning decoration-1 underline-offset-4' : '' ?>">Manage Report</a></li>
       </ul>
     </div>
     <a class="btn btn-ghost normal-case text-xl">CampusEats</a>
@@ -28,6 +29,8 @@ $id_admin = isset($_SESSION['id_admin']) ? $_SESSION['id_admin'] : null;
       <li><a href="/campuseats/pages/admin/dashboard.php<?= $id_admin ? '?id_admin=' . $id_admin : '' ?>" class="<?= ($activePage == 'dashboard') ? 'underline decoration-kuning decoration-1 underline-offset-4' : '' ?>">Dashboard</a></li>
       <li><a href="/campuseats/pages/admin/kelola_pengguna.php<?= $id_admin ? '?id_admin=' . $id_admin : '' ?>" class="<?= ($activePage == 'kelola_pengguna') ? 'underline decoration-kuning decoration-1 underline-offset-4' : '' ?>">Manage User</a></li>
       <li><a href="/campuseats/pages/admin/kelola_kantin.php<?= $id_admin ? '?id_admin=' . $id_admin : '' ?>" class="<?= ($activePage == 'kelola_kantin') ? 'underline decoration-kuning decoration-1 underline-offset-4' : '' ?>">Manage Canteen</a></li>
+      <li><a href="/campuseats/pages/admin/kelola_report.php<?= $id_admin ? '?id_admin=' . $id_admin : '' ?>" class="<?= ($activePage == 'report') ? 'underline decoration-kuning decoration-1 underline-offset-4' : '' ?>">Manage Report</a></li>
+
     </ul>
   </div>
 

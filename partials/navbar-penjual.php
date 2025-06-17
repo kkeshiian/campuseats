@@ -18,6 +18,8 @@ $id_penjual = isset($_SESSION['id_penjual']) ? $_SESSION['id_penjual'] : null;
         <li><a href="/campuseats/pages/penjual/kelola_menu.php<?= $id_penjual ? '?id_penjual=' . $id_penjual : '' ?>" class="<?= ($activePage == 'manage_menu_seller') ? 'underline decoration-kuning decoration-1 underline-offset-4' :  '' ?>">Manage Menu</a></li>
         <li><a href="/campuseats/pages/penjual/kelola_kantin.php<?= $id_penjual ? '?id_penjual=' . $id_penjual : '' ?>" class="<?= ($activePage == 'manage_canteen_seller') ? 'underline decoration-kuning decoration-1 underline-offset-4' :  '' ?>">Manage Canteen</a></li>
         <li><a href="/campuseats/pages/penjual/laporan_penjualan.php<?= $id_penjual ? '?id_penjual=' . $id_penjual : '' ?>" class="<?= ($activePage == 'laporan_penjualan') ? 'underline decoration-kuning decoration-1 underline-offset-4' :  '' ?>">Sales Report</a></li>
+        <li><a href="/campuseats/pages/penjual/report_problem.php<?= $id_penjual ? '?id_penjual=' . $id_penjual : '' ?>" class="<?= ($activePage == 'report_problem') ? 'underline decoration-kuning decoration-1 underline-offset-4' :  '' ?>">Report Problem</a></li>
+
       </ul>
     </div>
     <a class="btn btn-ghost normal-case text-xl">CampusEats</a>
@@ -29,6 +31,7 @@ $id_penjual = isset($_SESSION['id_penjual']) ? $_SESSION['id_penjual'] : null;
       <li><a href="/campuseats/pages/penjual/kelola_menu.php<?= $id_penjual ? '?id_penjual=' . $id_penjual : '' ?>" class="<?= ($activePage == 'manage_menu_seller') ? 'underline decoration-kuning decoration-1 underline-offset-4' :  '' ?>">Manage Menu</a></li>
       <li><a href="/campuseats/pages/penjual/kelola_kantin.php<?= $id_penjual ? '?id_penjual=' . $id_penjual : '' ?>" class="<?= ($activePage == 'manage_canteen_seller') ? 'underline decoration-kuning decoration-1 underline-offset-4' :  '' ?>">Manage Canteen</a></li>
       <li><a href="/campuseats/pages/penjual/laporan_penjualan.php<?= $id_penjual ? '?id_penjual=' . $id_penjual : '' ?>" class="<?= ($activePage == 'laporan_penjualan') ? 'underline decoration-kuning decoration-1 underline-offset-4' :  '' ?>">Sales Report</a></li>
+      <li><a href="/campuseats/pages/penjual/report_problem.php<?= $id_penjual ? '?id_penjual=' . $id_penjual : '' ?>" class="<?= ($activePage == 'report_problem') ? 'underline decoration-kuning decoration-1 underline-offset-4' :  '' ?>">Report Problem</a></li>
     </ul>
   </div>
 

@@ -90,7 +90,7 @@ include "../../database/model.php";
     </div>
 
     <!-- Navigasi Kelola -->
-    <div class="grid grid-cols-2 md:grid-cols-2 gap-2">
+    <div class="grid grid-cols-2 md:grid-cols-2 gap-2 mb-2">
       <!-- kelola pengguna -->
       <a href='kelola_pengguna.php?id_admin=<?= $id_admin ?>' class="bg-white border border-black rounded-lg p-4 text-center hover:bg-gray-100 transition">
         <h4 class="text-lg font-semibold mb-2">Manage CampusEats's User</h4>
@@ -100,6 +100,15 @@ include "../../database/model.php";
       <a href="kelola_kantin.php?id_admin=<?= $id_admin ?>" class="bg-white border border-black rounded-lg p-4 text-center hover:bg-gray-100 transition">
         <h4 class="text-lg font-semibold mb-2">Manage Campuseats's Canteen</h4>
         <p class="text-gray-600 text-sm">Add, edit, and delete Campuseats's Canteen data.</p>
+      </a>
+    </div>
+
+    <!-- manage problem -->
+    <div class="grid grid-cols-1 md:grid-cols-1 gap-2 mt-10">
+      <!-- kelola pengguna -->
+      <a href='kelola_report.php?id_admin=<?= $id_admin ?>' class="bg-white border border-black rounded-lg p-4 text-center hover:bg-gray-100 transition">
+        <h4 class="text-lg font-semibold mb-2">Manage CampusEats's Report</h4>
+        <p class="text-gray-600 text-sm">Look and control Campuseats's Problems Report.</p>
       </a>
     </div>
   </main>
