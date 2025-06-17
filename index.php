@@ -12,6 +12,7 @@ $activePage = 'index';
       href="https://fonts.googleapis.com/css2?family=Inter:wght@100;400;600&display=swap"
       rel="stylesheet"
     />
+    <title>Welcome to CampusEats</title>
   </head>
   <body class="min-h-screen flex flex-col">
     <?php include 'partials/navbar-belum-login.php'; ?>

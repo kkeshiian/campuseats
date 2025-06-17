@@ -4,9 +4,6 @@ include "../../database/model.php";
 
 if (isset($_GET['id_penjual'])) {
     $id_per_penjual = (int) $_GET['id_penjual'];
-}else{
-  header("Location: /campuseats/pages/auth/logout.php");
-  exit();
 }
 require_once '../../middleware/role_auth.php';
 

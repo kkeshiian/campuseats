@@ -23,7 +23,8 @@ require_role('penjual');
     <title>CampusEats!</title>
   </head>
   <body class="min-h-screen flex flex-col">
-    <?php include '../../partials/navbar-penjual.php'; ?>
+    <?php $activePage = 'manage_menu_seller';
+    include '../../partials/navbar-penjual.php'; ?>
 
     <main class="w-[90%] mx-auto mt-6 max-w-xl">
       <h2 class="text-2xl font-bold mb-4 text-center">Add New Menu</h2>
