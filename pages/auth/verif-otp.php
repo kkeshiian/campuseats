@@ -56,7 +56,6 @@ if (isset($_GET['resend']) && $id_user) {
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;400;600&display=swap" rel="stylesheet" />
   <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
 
-  <!-- Notyf CSS -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf/notyf.min.css" />
 </head>
 <body class="min-h-screen flex flex-col">
@@ -68,10 +67,8 @@ if (isset($_GET['resend']) && $id_user) {
   <div class="flex justify-center items-center flex-1">
     <div class="bg-white shadow-md rounded-xl p-8 w-full max-w-xl m-4">
       <h2 class="text-2xl font-bold mb-2 text-center">Verification OTP Code</h2>
-      <h5 class="text-lg mb-6 text-center">We have sent an OTP code to your email. Please check your inbox and enter the code below.</h5>
+      <h5 class="text-lg mb-6 text-center text-gray-600">We have sent an OTP code to your email. Please check your inbox and enter the code below.</h5>
     <form method="POST" class="space-y-6" id="otpForm">
-        <h3 class="text-2xl font-bold text-center">OTP Code</h3>
-
     <div class="w-full flex justify-center">
     <input
         type="text"
@@ -99,7 +96,6 @@ if (isset($_GET['resend']) && $id_user) {
     </div>
   </div>
 
-  <!-- Notyf JS -->
   <script src="https://cdn.jsdelivr.net/npm/notyf/notyf.min.js"></script>
   <script>
     const notyf = new Notyf({

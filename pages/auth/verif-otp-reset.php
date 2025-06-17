@@ -75,7 +75,6 @@ if (isset($_GET['resend']) && $id_user) {
         type="text"
         name="otp"
         maxlength="8"
-        pattern="[0-9A-Z]{8}"
         inputmode="text"
         class="w-40 h-14 text-center text-2xl p-2 tracking-widest border border-gray-300 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-yellow-500 uppercase"
         placeholder="--------"
@@ -130,7 +129,7 @@ if (isset($_GET['resend']) && $id_user) {
         const successParam = urlParams.get('success');
         const resentParam = urlParams.get('resent');
 
-        if (successParam === 'true') {
+        if (successParam === 'true3') {
             notyf.success('OTP Code has sent successfully! Please check your email box.');
         }
 

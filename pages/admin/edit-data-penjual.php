@@ -1,47 +1,77 @@
 <?php
-if (isset($_GET['id_admin']) && ($_GET['id_penjual'])) {
+if (isset($_GET['id_admin']) && isset($_GET['id_penjual'])) {
     $id_admin = (int) $_GET['id_admin'];
     $id_user = (int) $_GET['id_penjual'];
 }
-require_once '../../middleware/role_auth.php';
 
+require_once '../../middleware/role_auth.php';
 require_role('Admin');
 
 include "../../database/koneksi.php";
 include "../../database/model.php";
 
+$error_message = '';
+
+// Validasi password
+function validate_password($password) {
+    if (strlen($password) < 8) {
+        return "Password must be at least 8 characters.";
+    }
+    if (!preg_match('/[A-Z]/', $password)) {
+        return "Password must contain at least one uppercase letter.";
+    }
+    if (!preg_match('/[a-z]/', $password)) {
+        return "Password must contain at least one lowercase letter.";
+    }
+    if (!preg_match('/[0-9]/', $password)) {
+        return "Password must contain at least one number.";
+    }
+    if (!preg_match('/[\W_]/', $password)) {
+        return "Password must contain at least one special character (e.g., !@#$%^&*).";
+    }
+    return true;
+}
+
 if (isset($_POST['submit'])) {
-    $id_admin = $_GET['id_admin'];
-    $nama = $_POST['nama'];
-    $password_admin = $_POST['password']; // dari input form
+    $nama = trim($_POST['nama']);
+    $password_admin = trim($_POST['password']);
+    $username_user = trim($_POST['username']);
+    $new_password = trim($_POST['new_password']);
 
-    $id_user = (int) $_GET['id_penjual']; // user yang ingin diubah
-    $username_user = $_POST['username'];
-    $new_password = $_POST['new_password'];
-
-    // Cek autentikasi admin
-    $query_ambil_data_admin = "SELECT * FROM admin WHERE id_admin = '$id_admin'";
-    $result_pertama = mysqli_query($koneksi, $query_ambil_data_admin);
-    $id_user_admin = mysqli_fetch_assoc($result_pertama);
-
-
-    $query = "SELECT * FROM user WHERE id_user = '{$id_user_admin['id_user']}'";
-    $result = mysqli_query($koneksi, $query);
-    $admin = mysqli_fetch_assoc($result);
-
-    if ($admin && password_verify($password_admin, $admin['password'])) {
-        // Password admin cocok, update password pengguna
-        $update_result = updatePasswordPengguna($koneksi, $id_user, $username_user, $new_password);
-
-        if ($update_result) {
-            header("Location: kelola_kantin.php?id_admin=$id_admin&success=true");
-            exit;
-        } else {
-            $error_message = "Gagal memperbarui password pengguna.";
-            echo"alert($error_message)";
-        }
+    if (empty($nama) || empty($password_admin) || empty($username_user) || empty($new_password)) {
+        $error_message = "All fields must be filled.";
     } else {
-        $error_message = "Admin authentication failed. Incorrect username or password.";
+        $valid = validate_password($new_password);
+        if ($valid !== true) {
+            $error_message = $valid;
+        } else {
+            $query_admin = "SELECT * FROM admin WHERE id_admin = '$id_admin'";
+            $result_admin = mysqli_query($koneksi, $query_admin);
+            $admin_row = mysqli_fetch_assoc($result_admin);
+
+            if ($admin_row) {
+                $query_user = "SELECT * FROM user WHERE id_user = '{$admin_row['id_user']}'";
+                $result_user = mysqli_query($koneksi, $query_user);
+                $admin_user = mysqli_fetch_assoc($result_user);
+
+                if ($admin_user && password_verify($password_admin, $admin_user['password'])) {
+                    $hashed_password = password_hash($new_password, PASSWORD_DEFAULT);
+
+                    $update_result = updatePasswordPengguna($koneksi, $id_user, $username_user, $hashed_password);
+
+                    if ($update_result) {
+                        header("Location: kelola_kantin.php?id_admin=$id_admin&success=true");
+                        exit;
+                    } else {
+                        $error_message = "Gagal memperbarui password pengguna.";
+                    }
+                } else {
+                    $error_message = "Admin authentication failed. Incorrect password.";
+                }
+            } else {
+                $error_message = "Admin data not found.";
+            }
+        }
     }
 }
 ?>
@@ -106,9 +136,13 @@ if (isset($_POST['submit'])) {
             <div>
               <label class="block font-semibold mb-1">New Seller Password</label>
               <input type="password" name="new_password" value="" class="input input-bordered w-full"  />
+              <p class="text-gray-500 mt-1 text-xs leading-snug">
+                Password must be at least 8 characters, include uppercase, lowercase, a number,
+                and a special symbol (e.g., !@#$%^&*).
+             </p>
             </div>
             <div class="flex justify-between mt-6">
-              <a href="kelola_pengguna.php?id_admin=<?= $id_admin ?>" class="btn btn-outline border-kuning border-1 rounded-lg">← Manage Canteen</a>
+              <a href="kelola_kantin.php?id_admin=<?= $id_admin ?>" class="btn btn-outline border-kuning border-1 rounded-lg">← Manage Canteen</a>
               <button type="submit" name="submit" class="btn bg-kuning text-white rounded-lg hover:bg-yellow-600">Save Changes</button>
             </div>
           </div>

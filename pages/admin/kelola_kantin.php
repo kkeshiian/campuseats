@@ -30,7 +30,6 @@ if (isset($_POST['submit'])) {
   <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <title>Dashboard Admin - Manage Canteen</title>
-  <!-- Notyf CSS -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf/notyf.min.css" />
   <script src="https://cdn.jsdelivr.net/npm/notyf/notyf.min.js"></script>
 </head>

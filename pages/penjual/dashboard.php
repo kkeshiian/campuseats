@@ -190,44 +190,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['submit'])) {
         const selectedStatus = statusSelect.value;
 
         if (selectedStatus === "Done") {
-            const konfirmasi = confirm("Are you sure you want to change this order status to 'Done'? You can't change it again afterward.");
             return konfirmasi;
         }
 
         return true;
     }
   </script>
-
-  <script>
-    document.querySelectorAll('.form-konfirmasi-status').forEach(function(form) {
-      form.addEventListener('submit', function(e) {
-        const statusSelect = form.querySelector('select[name="status"]');
-        const selectedStatus = statusSelect.value;
-
-        if (selectedStatus === "Done") {
-          e.preventDefault();
-
-          Swal.fire({
-            title: 'Are you sure you want to change the status to Done?',
-            text: "This action cannot be undone.",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#FFB43B',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, update it!',
-            cancelButtonText: 'Cancel'
-          }).then((result) => {
-            if (result.isConfirmed) {
-              form.submit(); // submit form yang sedang diproses
-            }
-          });
-        }
-      });
-    });
-  </script>
-
-
-
 
   <script>
     const hariIni = new Date();
