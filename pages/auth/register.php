@@ -51,7 +51,6 @@ if (isset($_POST['submit'])) {
             $nomor_wa);
 
             if ($hasil===true) {
-                // Ambil id_user setelah berhasil registrasi
                 $cek_id_user = mysqli_query($koneksi, "SELECT id_user FROM user WHERE email = '$email'");
                 $data_id_user = mysqli_fetch_assoc($cek_id_user);
                 $id_user = $data_id_user['id_user'] ?? null;
@@ -60,7 +59,6 @@ if (isset($_POST['submit'])) {
                     session_start(); 
                     $_SESSION['id_user'] = $id_user;
 
-                    // Kirim OTP
                     $kirim_otp = verif_otp($koneksi, $nama_lengkap, $email);
 
                     if ($kirim_otp) {
@@ -73,7 +71,6 @@ if (isset($_POST['submit'])) {
                     $error = "User ID not found after registration.";
                 }
             } else {
-              // menyesuaikan sesuai dengan errornya apa dari mysqlinya 
               $error = $hasil;
             }
         }
@@ -95,17 +92,16 @@ if (isset($_POST['submit'])) {
   <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet" />
   <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
   
-  <!-- Notyf CSS -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf/notyf.min.css" />
 </head>
 
 <body class="min-h-screen flex flex-col relative">
   <?php 
     $activePage = 'register';
-    include '../../partials/navbar-belum-login.php'; 
+    include '../../partials/navbar-page-auth.php'; 
   ?>
 
-  <div class="flex justify-center items-center flex-1">
+  <div class="flex justify-center items-center flex-1 m-4">
     <div class="bg-white shadow-md rounded-xl p-8 w-full max-w-md">
       <h2 class="text-2xl font-bold mb-6 text-center">Register</h2>
 
@@ -151,13 +147,11 @@ if (isset($_POST['submit'])) {
     </div>
   </div>
 
-  <!-- Notyf JS -->
   <script src="https://cdn.jsdelivr.net/npm/notyf/notyf.min.js"></script>
   <script>
     const notyf = new Notyf({
       duration: 3000,
       position: { x: 'right', y: 'top' },
-      dismissible: true
     });
 
     <?php if (isset($error) && !empty($error)): ?>
