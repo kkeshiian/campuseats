@@ -364,6 +364,59 @@ function updateInfoKantin($koneksi, $id_penjual, $nama_kantin, $link, $id_fakult
     }
 }
 
+function updateInfoPembeli($koneksi, $id_pembeli, $nama, $email, $nomor_wa, $foto_baru = null) {
+    $path_gambar = "assets/" . $foto_baru;
+
+    $error='';
+    $success='';
+
+    $ambil_id_user = mysqli_query($koneksi, "SELECT id_user FROM pembeli WHERE id_pembeli='$id_pembeli'");
+    $data_id_user = mysqli_fetch_assoc($ambil_id_user);
+    $id_user = $data_id_user['id_user'];
+
+    $cek_email = mysqli_query($koneksi, "SELECT email FROM user WHERE email='$email' AND id_user != '$id_user'");
+    if (mysqli_num_rows($cek_email)>0) {
+        $error="error: This Email Already Use, Please Use Another Email!";
+        return $error;
+    }
+
+    $cek_nomor_wa = mysqli_query($koneksi, "SELECT nomor_wa FROM user WHERE nomor_wa='$nomor_wa' AND id_user != '$id_user'");
+    if (mysqli_num_rows($cek_nomor_wa)>0) {
+        $error = "error: This Whatsapp Number Already Use, Please Use Another Whatsapp Number!";
+        return $error;
+    }
+
+    // kalau sudah kita cek untuk email dan wa, kita bisa update tabel usernya dulu
+    $update_user = mysqli_query($koneksi, "UPDATE user SET email='$email', nomor_wa='$nomor_wa' WHERE id_user='$id_user'");
+    if (!$update_user) {
+        $error='error: Failed to update your profile, please try again!';
+        return $error;
+    }
+
+    if ($foto_baru) {
+        $sql = "UPDATE pembeli SET 
+                    nama = ?,
+                    gambar = ? 
+                WHERE id_pembeli = ?";
+        $stmt = mysqli_prepare($koneksi, $sql);
+        mysqli_stmt_bind_param($stmt, "ssi", $nama, $path_gambar, $id_pembeli);
+    } else {
+        $sql = "UPDATE pembeli SET 
+                nama = ?
+                WHERE id_pembeli = ?";
+        $stmt = mysqli_prepare($koneksi, $sql);
+        mysqli_stmt_bind_param($stmt, "si", $nama,  $id_pembeli);
+    }
+
+    if (mysqli_stmt_execute($stmt)) {
+        $success='success: Your profile updated succesfully!';
+        return $success;
+    } else {
+        $error='error: Failed to update your profile, please try again!';
+        return $error;
+    }
+}
+
 function updateInfoAdmin($koneksi, $id_admin, $nama, $jabatan){
     $id_admin = mysqli_real_escape_string($koneksi, $id_admin);
     $nama = mysqli_real_escape_string($koneksi, $nama);

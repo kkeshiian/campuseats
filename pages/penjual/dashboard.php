@@ -146,7 +146,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['submit'])) {
                   </div>
 
                   <!-- Right (Form) -->
-                  <form method="post" onsubmit="return konfirmasiSebelumSubmit(this);" class="w-full md:w-64">
+                  <form method="post" class="form-konfirmasi-status w-full md:w-64">
                     <input type="hidden" name="id" value="<?= $pesanan["order_id"] ?>">
                     <input type="hidden" name="menu" value="<?= $pesanan["menu"] ?>">
 
@@ -197,6 +197,36 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['submit'])) {
         return true;
     }
   </script>
+
+  <script>
+    document.querySelectorAll('.form-konfirmasi-status').forEach(function(form) {
+      form.addEventListener('submit', function(e) {
+        const statusSelect = form.querySelector('select[name="status"]');
+        const selectedStatus = statusSelect.value;
+
+        if (selectedStatus === "Done") {
+          e.preventDefault();
+
+          Swal.fire({
+            title: 'Are you sure you want to change the status to Done?',
+            text: "This action cannot be undone.",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#FFB43B',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, update it!',
+            cancelButtonText: 'Cancel'
+          }).then((result) => {
+            if (result.isConfirmed) {
+              form.submit(); // submit form yang sedang diproses
+            }
+          });
+        }
+      });
+    });
+  </script>
+
+
 
 
   <script>
