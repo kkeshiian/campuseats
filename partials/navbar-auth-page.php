@@ -1,0 +1,23 @@
+<div class="navbar bg-base-100 shadow-sm">
+ <div class="dropdown">
+      <label tabindex="0" class="btn btn-ghost lg:hidden" role="button" aria-label="Menu Toggle">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"> 
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h8m-8 6h16" /> 
+        </svg>
+      </label>
+      <ul
+        tabindex="0"
+        class="menu menu-sm dropdown-content bg-base-100 rounded-box z-50 mt-3 w-52 p-2 shadow-lg"
+        role="menu"
+        aria-label="Mobile Navigation Menu"
+      >
+        <li><a href="/campuseats/pages/pembeli/canteen.php<?= $id_pembeli ? '?id_pembeli=' . $id_pembeli : '' ?>" class="<?= ($activePage == 'canteen') ? 'underline decoration-kuning decoration-1 underline-offset-4' :  '' ?>">Canteen</a></li>
+        <li><a href="/campuseats/pages/pembeli/cart.php<?= $id_pembeli ? '?id_pembeli=' . $id_pembeli : '' ?>" class="<?= ($activePage == 'cart') ? 'underline decoration-kuning decoration-1 underline-offset-4' :  '' ?>">Cart</a></li>
+        <li><a href="/campuseats/pages/pembeli/history.php<?= $id_pembeli ? '?id_pembeli=' . $id_pembeli : '' ?>" class="<?= ($activePage == 'history') ? 'underline decoration-kuning decoration-1 underline-offset-4' :  '' ?>">History</a></li>
+        <li><a href="/campuseats/pages/pembeli/about_us.php<?= $id_pembeli ? '?id_pembeli=' . $id_pembeli : '' ?>" class="<?= ($activePage == 'about_us') ? 'underline decoration-kuning decoration-1 underline-offset-4' :  '' ?>">About Us</a></li>
+        <li><a href="/campuseats/pages/pembeli/profile.php<?= $id_pembeli ? '?id_pembeli=' . $id_pembeli : '' ?>" class="<?= ($activePage == 'Profile') ? 'underline decoration-kuning decoration-1 underline-offset-4' :  '' ?>">Profile</a></li>
+      </ul>
+    </div>
+    <a class="btn btn-ghost normal-case text-xl">CampusEats</a>
+  </div>
+</div>

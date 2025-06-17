@@ -13,8 +13,10 @@
     <div>
       <h3 class="text-lg font-semibold text-black mb-2">Pages</h3>
       <ul class="space-y-1 text-sm">
-        <li><a href="/campuseats/index.php" class="hover:underline hover:text-black transition">Home</a></li>
-        <li><a href="/campuseats/pages/pembeli/profile.php" class="hover:underline hover:text-black transition">About CampusEats</a></li>
+        <li>class="hover:underline hover:text-black transition">Canteen</a></li>
+        <li>class="hover:underline hover:text-black transition">Cart</a></li>
+        <li>class="hover:underline hover:text-black transition">History</a></li>
+        <li>class="hover:underline hover:text-black transition">About Us</a></li>
       </ul>
     </div>
 

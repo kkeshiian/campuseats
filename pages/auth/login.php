@@ -76,7 +76,7 @@ if (isset($_POST['submit'])) {
 <body class="min-h-screen flex flex-col">
   <?php 
     $activePage = 'login';
-    include '../../partials/navbar-belum-login.php'; 
+    include '../../partials/navbar-auth-page.php'; 
   ?>
     
   <div class="flex justify-center items-center flex-1">
