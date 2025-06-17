@@ -20,11 +20,14 @@ if (isset($_GET['id_pembeli'])) {
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;400;600&display=swap" rel="stylesheet" />
   <title>Cart</title>
 
+  <!-- Midtrans Snap.js -->
   <script src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="SB-Mid-client-eQfKe1LFpAFOWEcr"></script>
   <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
 </head>
 <body class="min-h-screen flex flex-col overflow-y-auto">
+
+
 
 <?php 
 $activePage = 'cart';
@@ -103,7 +106,7 @@ include '../../partials/navbar-pembeli.php';
             <div class="flex items-center justify-between">
               <div>
                 <p class="text-sm text-gray-700">Subtotal: <span class="font-semibold text-black">Rp ${subtotal.toLocaleString('id-ID')}</span></p>
-                <button class="delete-item text-sm text-red-600 hover:text-red-800 hover:underline transition" data-index="${index}">Delete</button>
+                <button class="delete-item text-sm text-red-600 hover:text-red-800 hover:underline transition" data-index="${index}">Hapus</button>
               </div>
               <div class="flex items-center gap-2">
                 <button class="decrease h-6 w-6 border border-1 border-black text-black flex items-center justify-center rounded-full hover:bg-kuning transition" data-index="${index}">−</button>

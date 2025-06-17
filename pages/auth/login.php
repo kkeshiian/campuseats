@@ -76,7 +76,7 @@ if (isset($_POST['submit'])) {
 <body class="min-h-screen flex flex-col">
   <?php 
     $activePage = 'login';
-    include '../../partials/navbar-page-auth.php'; 
+    include '../../partials/navbar-belum-login.php'; 
   ?>
     
   <div class="flex justify-center items-center flex-1">
@@ -148,8 +148,8 @@ if (isset($_POST['submit'])) {
       url.searchParams.delete('success');
       window.history.replaceState({}, document.title, url.pathname);
     }
-    if (resetParam == 'truee') {
-      notyf.success('Reset Password successful! Please log in.');
+    if (resetParam == 'true') {
+      notyf.success('Change Password successful! Please log in.');
       const url = new URL(window.location);
       url.searchParams.delete('success');
       window.history.replaceState({}, document.title, url.pathname);
