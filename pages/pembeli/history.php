@@ -65,10 +65,13 @@ if (isset($_GET['id_pembeli'])) {
       ?>
     </div>
   </div>
+
+
 </body>
 
 <script>
   AOS.init({
   });
 </script>
+
 </html>
