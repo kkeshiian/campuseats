@@ -17,24 +17,52 @@ $id_fakultas_terpilih = '';
 $error = '';
 $success = '';
 
+function validate_password($password) {
+    if (strlen($password) < 8) {
+        return "Password must be at least 8 characters.";
+    }
+    if (!preg_match('/[A-Z]/', $password)) {
+        return "Password must contain at least one uppercase letter.";
+    }
+    if (!preg_match('/[a-z]/', $password)) {
+        return "Password must contain at least one lowercase letter.";
+    }
+    if (!preg_match('/[0-9]/', $password)) {
+        return "Password must contain at least one number.";
+    }
+    if (!preg_match('/[\W_]/', $password)) {
+        return "Password must contain at least one special character (e.g., !@#$%^&*).";
+    }
+    return true;
+}
+
 if (isset($_POST['submit'])) {
+    $username = $_POST['username'];
+    $nama_penjual = $_POST['nama_penjual'];
+    $nama_kantin = $_POST['nama_kantin'];
+    $id_fakultas = $_POST['id_fakultas'];
+    $link = $_POST['link'];
     if ($_POST['password'] != $_POST['konfirmasi_password']) {
         $error = 'Password and password confirmation do not match.';
     } else {
-        $username = $_POST['username'];
-        $nama_penjual = $_POST['nama_penjual'];
-        $nama_kantin = $_POST['nama_kantin'];
-        $id_fakultas = $_POST['id_fakultas'];
-        $link = $_POST['link'];
-        $password = password_hash($_POST['konfirmasi_password'], PASSWORD_DEFAULT);
+        $password_input = $_POST['password'];
+        $valid_pass = validate_password($password_input);
 
-        $hasil = registrasiPenjual($koneksi, $username, $nama_penjual, 
-        $nama_kantin, $id_fakultas, $password, $link);
-        header("Location: kelola_kantin.php?id_admin=" . $id_admin);
+        if ($valid_pass !== true) {
+            $error = $valid_pass;
+        } else {
+            $password = password_hash($password_input, PASSWORD_DEFAULT);
 
-        exit();
+            $hasil = registrasiPenjual($koneksi, $username, $nama_penjual, 
+            $nama_kantin, $id_fakultas, $password, $link);
+
+            header("Location: kelola_kantin.php?id_admin=" . $id_admin);
+            exit();
+        }
     }
 }
+
+
 ?>
 
 <!DOCTYPE html>
@@ -50,7 +78,8 @@ if (isset($_POST['submit'])) {
     <title>CampusEats!</title>
   </head>
   <body class="min-h-screen flex flex-col">
-    <?php include '../../partials/navbar-admin.php'; ?>
+    <?php   $activePage = 'kelola_kantin'; 
+    include '../../partials/navbar-admin.php'; ?>
 
     <main class="w-[90%] mx-auto mt-6 max-w-xl">
       <h2 class="text-2xl font-bold mb-4 text-center">Add New Canteen</h2>
@@ -65,17 +94,17 @@ if (isset($_POST['submit'])) {
             <div class="flex-1 space-y-4">
             <div>
                 <label class="block font-semibold mb-1">Seller Username</label>
-                <input type="text" name="username" class="input input-bordered w-full" />
+                <input type="text" name="username" class="input input-bordered w-full" value="<?= htmlspecialchars($username ?? '') ?>" />
             </div>
 
             <div>
                 <label class="block font-semibold mb-1">Seller Name</label>
-                <input type="text" name="nama_penjual" class="input input-bordered w-full" required />
+                <input type="text" name="nama_penjual" class="input input-bordered w-full" required value="<?= htmlspecialchars($nama_penjual ?? '') ?>"/>
             </div>
 
             <div>
                 <label class="block font-semibold mb-1">Canteen Name</label>
-                <input type="text" name="nama_kantin" class="input input-bordered w-full" required />
+                <input type="text" name="nama_kantin" class="input input-bordered w-full" required value="<?= htmlspecialchars($nama_kantin ?? '') ?>"/>
             </div>
 
             <div>
@@ -98,7 +127,7 @@ if (isset($_POST['submit'])) {
             <div class="flex-1 flex flex-col justify-between space-y-4">
                 <div>
                     <label class="block font-semibold mb-1">Canteen Maps Link</label>
-                    <input type="text" name="link" class="input input-bordered w-full" required />
+                    <input type="text" name="link" class="input input-bordered w-full" required value="<?= htmlspecialchars($link ?? '') ?>" />
                 </div>
 
                 <div>
@@ -123,3 +152,22 @@ if (isset($_POST['submit'])) {
     </main>
   </body>
 </html>
+
+<!-- Notyf JS -->
+<script src="https://cdn.jsdelivr.net/npm/notyf/notyf.min.js"></script>
+<script>
+const notyf = new Notyf({
+    duration: 3000,
+    position: { x: 'right', y: 'top' },
+    dismissible: true
+});
+
+<?php if (isset($error) && !empty($error)): ?>
+    notyf.error(<?= json_encode(htmlspecialchars($error, ENT_QUOTES, 'UTF-8')) ?>);
+<?php endif; ?>
+</script>
+
+
+<script>
+AOS.init();
+</script>
