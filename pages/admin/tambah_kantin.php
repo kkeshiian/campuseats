@@ -17,26 +17,6 @@ $id_fakultas_terpilih = '';
 $error = '';
 $success = '';
 
-function validate_password($password) {
-    if (strlen($password) < 8) {
-        return "Password must be at least 8 characters.";
-    }
-    if (!preg_match('/[A-Z]/', $password)) {
-        return "Password must contain at least one uppercase letter.";
-    }
-    if (!preg_match('/[a-z]/', $password)) {
-        return "Password must contain at least one lowercase letter.";
-    }
-    if (!preg_match('/[0-9]/', $password)) {
-        return "Password must contain at least one number.";
-    }
-    if (!preg_match('/[\W_]/', $password)) {
-        return "Password must contain at least one special character (e.g., !@#$%^&*).";
-    }
-    return true;
-}
-
-
 if (isset($_POST['submit'])) {
     if ($_POST['password'] != $_POST['konfirmasi_password']) {
         $error = 'Password and password confirmation do not match.';
@@ -123,7 +103,7 @@ if (isset($_POST['submit'])) {
 
                 <div>
                     <label class="block font-semibold mb-1">Password</label>
-                    <input id="password" type="password" name="password" class="input input-bordered w-full" required />
+                    <input type="password" name="password" class="input input-bordered w-full" required />
                 </div>
 
                 <div>
@@ -142,16 +122,4 @@ if (isset($_POST['submit'])) {
         </form>
     </main>
   </body>
-
-  <script src="https://cdn.jsdelivr.net/npm/notyf/notyf.min.js"></script>
-  <script>
-    const notyf = new Notyf({
-      duration: 3000,
-      position: { x: 'right', y: 'top' },
-    });
-
-    <?php if (isset($error) && !empty($error)): ?>
-      notyf.error(<?= json_encode(htmlspecialchars($error, ENT_QUOTES, 'UTF-8')) ?>);
-    <?php endif; ?>
-  </script>
 </html>
