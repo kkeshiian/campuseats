@@ -102,10 +102,10 @@ if (isset($_POST['submit'])) {
 <body class="min-h-screen flex flex-col relative">
   <?php 
     $activePage = 'register';
-    include '../../partials/navbar-belum-login.php'; 
+    include '../../partials/navbar-auth-page.php'; 
   ?>
 
-  <div class="flex justify-center items-center flex-1">
+  <div class="flex justify-center items-center flex-1 m-4">
     <div class="bg-white shadow-md rounded-xl p-8 w-full max-w-md">
       <h2 class="text-2xl font-bold mb-6 text-center">Register</h2>
 

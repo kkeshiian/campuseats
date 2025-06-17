@@ -80,6 +80,10 @@ if (isset($_POST['submit'])) {
         <div>
           <label class="label">Confirmation Your New Password</label>
           <input type="password" required name="konfirmasi_password" class="input input-bordered w-full rounded-lg" />
+          <p class="text-gray-500 mt-1 text-xs leading-snug">
+            Password must be at least 8 characters, include uppercase, lowercase, a number,
+            and a special symbol (e.g., !@#$%^&*).
+          </p>
         </div>
 
         <button type="submit" name="submit" class="btn bg-kuning text-black w-full hover:bg-yellow-600 rounded-lg">

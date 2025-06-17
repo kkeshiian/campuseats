@@ -109,6 +109,10 @@ if (isset($_POST['submit'])) {
           <div>
             <label class="block font-semibold mb-1" for="new_password">Change Password User</label>
             <input id="new_password" type="password" name="new_password" class="input input-bordered w-full"  />
+            <p class="text-gray-500 mt-1 text-xs leading-snug">
+            Password must be at least 8 characters, include uppercase, lowercase, a number,
+            and a special symbol (e.g., !@#$%^&*).
+          </p>
           </div>
           <div class="flex justify-between mt-6">
             <a href="kelola_pengguna.php?id_admin=<?= $id_admin ?>" class="btn btn-outline border-kuning border-1 rounded-lg">← Manage User</a>

@@ -106,7 +106,7 @@ include '../../partials/navbar-pembeli.php';
             <div class="flex items-center justify-between">
               <div>
                 <p class="text-sm text-gray-700">Subtotal: <span class="font-semibold text-black">Rp ${subtotal.toLocaleString('id-ID')}</span></p>
-                <button class="delete-item text-sm text-red-600 hover:text-red-800 hover:underline transition" data-index="${index}">Hapus</button>
+                <button class="delete-item text-sm text-red-600 hover:text-red-800 hover:underline transition" data-index="${index}">Delete</button>
               </div>
               <div class="flex items-center gap-2">
                 <button class="decrease h-6 w-6 border border-1 border-black text-black flex items-center justify-center rounded-full hover:bg-kuning transition" data-index="${index}">−</button>
