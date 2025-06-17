@@ -438,6 +438,17 @@ function hapusPembeli($koneksi, $id_pembeli, $id_admin){
     exit();
 }
 
+function hapusReport($koneksi, $id_report, $id_admin){
+    mysqli_query($koneksi,
+
+    "DELETE FROM report WHERE id_report='$id_report'"
+    );
+    $result = mysqli_query($koneksi, "DELETE FROM pembeli WHERE id_report='$id_report'");
+    header("Location: /campuseats/pages/admin/kelola_report.php?id_admin=".$id_admin);
+    return $result;
+    exit();
+}
+
 function hapusPenjual($koneksi, $id_penjual, $id_admin){
     mysqli_query($koneksi,
 
@@ -727,6 +738,26 @@ function changePassword($koneksi, $password, $id_user){
         return true;
     }else{
         return "Change Password failed: " . mysqli_error($koneksi);
+    }
+}
+
+function submitReport($koneksi, $id_penjual, $id_pembeli, $order_id, $nama_kantin, $tanggal, $kategori, $deskripsi, $bukti){
+    $query = "INSERT INTO report SET
+    id_penjual='$id_penjual',
+    id_pembeli='$id_pembeli',
+    order_id='$order_id',
+    nama_kantin='$nama_kantin',
+    tanggal='$tanggal',
+    kategori='$kategori',
+    deskripsi='$deskripsi',
+    bukti='$bukti'
+    ";
+
+    $uploudReport = mysqli_query($koneksi, $query);
+    if ($uploudReport) {
+        return true;
+    }else{
+        return false;
     }
 }
 
