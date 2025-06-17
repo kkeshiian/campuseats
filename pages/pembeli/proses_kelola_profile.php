@@ -2,6 +2,9 @@
 include '../../database/koneksi.php';
 include '../../database/model.php';
 
+require_once '../../middleware/role_auth.php';
+require_role('pembeli');
+
 $id_pembeli = $_POST['id_pembeli'];
 $nama = $_POST['nama'];
 $email = $_POST['email'];

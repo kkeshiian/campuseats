@@ -5,8 +5,8 @@ include "../../database/model.php";
 if (isset($_GET['id_penjual'])) {
     $id_per_penjual = (int) $_GET['id_penjual'];
 }
-require_once '../../middleware/role_auth.php';
 
+require_once '../../middleware/role_auth.php';
 require_role('penjual');
 
 if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['submit'])) {
@@ -79,16 +79,19 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['submit'])) {
   $data = mysqli_fetch_assoc($ambil_data);
 
 
-      while ($row = mysqli_fetch_assoc($ambil_data_riwayat_pembelian)) {
-          $tanggal_order = date('Y-m-d', strtotime($row['tanggal']));
+  while ($row = mysqli_fetch_assoc($ambil_data_riwayat_pembelian)) {
+      $tanggal_order = date('Y-m-d', strtotime($row['tanggal']));
 
-          if ($tanggal_order === $tanggal_hari_ini) {
-              $total_keseluruhan += $row['total'];
-              $total_orderan += $row['qty'];
-              $daftar_pesanan_hari_ini[] = $row;
-          }
-
+      if ($tanggal_order === $tanggal_hari_ini && $row['status'] === 'Done') {
+          $total_keseluruhan += $row['total'];
+          $total_orderan += $row['qty'];
       }
+
+      if ($tanggal_order === $tanggal_hari_ini) {
+          $daftar_pesanan_hari_ini[] = $row;
+      }
+  }
+
       
       ?>
       <div data-aos="fade-up" data-aos-duration="1000">

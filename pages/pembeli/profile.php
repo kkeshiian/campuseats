@@ -1,9 +1,6 @@
 <?php
 if (isset($_GET['id_pembeli'])) {
   $id_per_pembeli = $_GET['id_pembeli'];
-} else {
-    header("Location: /campuseats/pages/auth/logout.php");
-    exit();
 }
 
 include "../../database/koneksi.php";
@@ -78,7 +75,7 @@ require_role('pembeli');
                 <div class="flex-1">
                     <div class="mb-4">
                         <label class="block font-semibold mb-1">Your Email</label>
-                        <input type="text" name="email" accept="image/*" class="input input-bordered w-full" value="<?= htmlspecialchars($data_user['email']) ?>" />
+                        <input type="email" name="email" accept="image/*" class="input input-bordered w-full" value="<?= htmlspecialchars($data_user['email']) ?>" />
                     </div>
 
                     <div class="mb-4">

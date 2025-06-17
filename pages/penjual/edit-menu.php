@@ -1,16 +1,10 @@
 <?php
 if (isset($_GET['id_penjual'])) {
     $id_per_penjual = (int) $_GET['id_penjual'];
-} else {
-    header("Location: /campuseats/pages/auth/logout.php");
-    exit();
 }
 
 if (isset($_GET['id_menu'])) {
     $id_per_menu = (int) $_GET['id_menu'];
-} else {
-    header("Location: /campuseats/pages/auth/logout.php");
-    exit();
 }
 
 include "../../database/koneksi.php";

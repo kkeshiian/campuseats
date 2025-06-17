@@ -1,6 +1,9 @@
 <?php
 require_once __DIR__ . '/../../vendor/autoload.php'; // pakai Composer autoload modern
 
+require_once '../../middleware/role_auth.php';
+require_role('pembeli');
+
 include '../../database/koneksi.php';
 include '../../database/model.php';
 

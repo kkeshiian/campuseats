@@ -2,8 +2,8 @@
 if (isset($_GET['id_admin'])) {
     $id_admin = (int) $_GET['id_admin'];
 }
-require_once '../../middleware/role_auth.php';
 
+require_once '../../middleware/role_auth.php';
 require_role('Admin');
 
 include "../../database/koneksi.php";

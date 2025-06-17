@@ -5,6 +5,8 @@ $id_admin = isset($_SESSION['id_admin']) ? $_SESSION['id_admin'] : null;
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <div class="navbar bg-base-100 shadow-sm">
+  <link rel="icon" href="../../campuseats/assets/img/logo_campuseats/fix.ico" type="image/x-icon">
+
   <div class="navbar-start">
     <!-- Dropdown hanya muncul di mobile -->
     <div class="dropdown lg:hidden">

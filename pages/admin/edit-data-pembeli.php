@@ -3,8 +3,10 @@ if (isset($_GET['id_admin']) && isset($_GET['id_pembeli'])) {
     $id_admin = (int) $_GET['id_admin'];
     $id_user = (int) $_GET['id_pembeli'];
 }
+
 require_once '../../middleware/role_auth.php';
 require_role('Admin');
+
 include "../../database/koneksi.php";
 include "../../database/model.php";
 
@@ -68,7 +70,8 @@ if (isset($_POST['submit'])) {
   <script src="https://cdn.jsdelivr.net/npm/notyf/notyf.min.js"></script>
 </head>
 <body class="min-h-screen flex flex-col">
-  <?php include '../../partials/navbar-admin.php'; ?>
+  <?php $activePage = 'kelola_pengguna';
+  include '../../partials/navbar-admin.php'; ?>
 
   <main class="mx-auto mt-6 px-4 w-full max-w-screen-xl">
     <h2 class="text-2xl font-bold mb-6 ml-6">Change User Password by Admin</h2> 

@@ -3,8 +3,8 @@ if (isset($_GET['id_admin']) && ($_GET['id_penjual'])) {
     $id_admin = (int) $_GET['id_admin'];
     $id_user = (int) $_GET['id_penjual'];
 }
-require_once '../../middleware/role_auth.php';
 
+require_once '../../middleware/role_auth.php';
 require_role('Admin');
 
 include "../../database/koneksi.php";
